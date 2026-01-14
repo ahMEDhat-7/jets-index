@@ -29,19 +29,19 @@ let CountriesController = class CountriesController {
         return this.countriesService.findAll();
     }
     findOne(id) {
-        return this.countriesService.findOne(+id);
+        return this.countriesService.findOne(id);
     }
     update(id, updateCountryDto) {
-        return this.countriesService.update(+id, updateCountryDto);
+        return this.countriesService.update(id, updateCountryDto);
     }
     remove(id) {
-        return this.countriesService.remove(+id);
+        return this.countriesService.remove(id);
     }
 };
 exports.CountriesController = CountriesController;
 __decorate([
     (0, common_1.Post)(),
-    __param(0, (0, common_1.Body)()),
+    __param(0, (0, common_1.Body)(new common_1.ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_country_dto_1.CreateCountryDto]),
     __metadata("design:returntype", void 0)
@@ -54,22 +54,22 @@ __decorate([
 ], CountriesController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    __param(0, (0, common_1.Param)('id', new common_1.ParseUUIDPipe())),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], CountriesController.prototype, "findOne", null);
 __decorate([
     (0, common_1.Patch)(':id'),
-    __param(0, (0, common_1.Param)('id')),
-    __param(1, (0, common_1.Body)()),
+    __param(0, (0, common_1.Param)('id', new common_1.ParseUUIDPipe())),
+    __param(1, (0, common_1.Body)(new common_1.ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, update_country_dto_1.UpdateCountryDto]),
     __metadata("design:returntype", void 0)
 ], CountriesController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    __param(0, (0, common_1.Param)('id', new common_1.ParseUUIDPipe())),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)

@@ -12,6 +12,8 @@ export declare class Equipment {
     category: EquipmentCategory;
     generation?: string;
     primaryRole?: string;
+    primaryImage?: string;
+    imageUrls?: string[];
     description?: string;
     specs?: Record<string, any>;
     advantages?: string[];

@@ -1,14 +1,29 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  ValidationPipe,
+  ParseUUIDPipe,
+} from '@nestjs/common';
 import { EquipmentVariantsService } from './equipment-variants.service';
 import { CreateEquipmentVariantDto } from './dto/create-equipment-variant.dto';
 import { UpdateEquipmentVariantDto } from './dto/update-equipment-variant.dto';
 
-@Controller('equipment-variants')
+@Controller('eq-var')
 export class EquipmentVariantsController {
-  constructor(private readonly equipmentVariantsService: EquipmentVariantsService) {}
+  constructor(
+    private readonly equipmentVariantsService: EquipmentVariantsService,
+  ) {}
 
   @Post()
-  create(@Body() createEquipmentVariantDto: CreateEquipmentVariantDto) {
+  create(
+    @Body()
+    createEquipmentVariantDto: CreateEquipmentVariantDto,
+  ) {
     return this.equipmentVariantsService.create(createEquipmentVariantDto);
   }
 
@@ -18,17 +33,21 @@ export class EquipmentVariantsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.equipmentVariantsService.findOne(+id);
+  findOne(@Param('id', new ParseUUIDPipe()) id: string) {
+    return this.equipmentVariantsService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateEquipmentVariantDto: UpdateEquipmentVariantDto) {
-    return this.equipmentVariantsService.update(+id, updateEquipmentVariantDto);
+  update(
+    @Param('id', new ParseUUIDPipe()) id: string,
+    @Body(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))
+    updateEquipmentVariantDto: UpdateEquipmentVariantDto,
+  ) {
+    return this.equipmentVariantsService.update(id, updateEquipmentVariantDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.equipmentVariantsService.remove(+id);
+  remove(@Param('id', new ParseUUIDPipe()) id: string) {
+    return this.equipmentVariantsService.remove(id);
   }
 }

@@ -29,13 +29,13 @@ let EquipmentController = class EquipmentController {
         return this.equipmentService.findAll();
     }
     findOne(id) {
-        return this.equipmentService.findOne(+id);
+        return this.equipmentService.findOne(id);
     }
     update(id, updateEquipmentDto) {
-        return this.equipmentService.update(+id, updateEquipmentDto);
+        return this.equipmentService.update(id, updateEquipmentDto);
     }
     remove(id) {
-        return this.equipmentService.remove(+id);
+        return this.equipmentService.remove(id);
     }
 };
 exports.EquipmentController = EquipmentController;
@@ -54,28 +54,28 @@ __decorate([
 ], EquipmentController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    __param(0, (0, common_1.Param)('id', new common_1.ParseUUIDPipe())),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], EquipmentController.prototype, "findOne", null);
 __decorate([
     (0, common_1.Patch)(':id'),
-    __param(0, (0, common_1.Param)('id')),
-    __param(1, (0, common_1.Body)()),
+    __param(0, (0, common_1.Param)('id', new common_1.ParseUUIDPipe())),
+    __param(1, (0, common_1.Body)(new common_1.ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, update_equipment_dto_1.UpdateEquipmentDto]),
     __metadata("design:returntype", void 0)
 ], EquipmentController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    __param(0, (0, common_1.Param)('id', new common_1.ParseUUIDPipe())),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], EquipmentController.prototype, "remove", null);
 exports.EquipmentController = EquipmentController = __decorate([
-    (0, common_1.Controller)('equipment'),
+    (0, common_1.Controller)('eq'),
     __metadata("design:paramtypes", [equipment_service_1.EquipmentService])
 ], EquipmentController);
 //# sourceMappingURL=equipment.controller.js.map

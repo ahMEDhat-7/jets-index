@@ -1,14 +1,27 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  ValidationPipe,
+  ParseUUIDPipe,
+} from '@nestjs/common';
 import { ManufacturersService } from './manufacturers.service';
 import { CreateManufacturerDto } from './dto/create-manufacturer.dto';
 import { UpdateManufacturerDto } from './dto/update-manufacturer.dto';
 
-@Controller('manufacturers')
+@Controller('manu')
 export class ManufacturersController {
   constructor(private readonly manufacturersService: ManufacturersService) {}
 
   @Post()
-  create(@Body() createManufacturerDto: CreateManufacturerDto) {
+  create(
+    @Body()
+    createManufacturerDto: CreateManufacturerDto,
+  ) {
     return this.manufacturersService.create(createManufacturerDto);
   }
 
@@ -18,17 +31,21 @@ export class ManufacturersController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.manufacturersService.findOne(+id);
+  findOne(@Param('id', new ParseUUIDPipe()) id: string) {
+    return this.manufacturersService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateManufacturerDto: UpdateManufacturerDto) {
-    return this.manufacturersService.update(+id, updateManufacturerDto);
+  update(
+    @Param('id', new ParseUUIDPipe()) id: string,
+    @Body(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))
+    updateManufacturerDto: UpdateManufacturerDto,
+  ) {
+    return this.manufacturersService.update(id, updateManufacturerDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.manufacturersService.remove(+id);
+  remove(@Param('id', new ParseUUIDPipe()) id: string) {
+    return this.manufacturersService.remove(id);
   }
 }

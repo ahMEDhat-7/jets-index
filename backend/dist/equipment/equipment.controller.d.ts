@@ -4,9 +4,9 @@ import { UpdateEquipmentDto } from './dto/update-equipment.dto';
 export declare class EquipmentController {
     private readonly equipmentService;
     constructor(equipmentService: EquipmentService);
-    create(createEquipmentDto: CreateEquipmentDto): string;
-    findAll(): string;
-    findOne(id: string): string;
-    update(id: string, updateEquipmentDto: UpdateEquipmentDto): string;
-    remove(id: string): string;
+    create(createEquipmentDto: CreateEquipmentDto): Promise<import("./entities/equipment.entity").Equipment>;
+    findAll(): Promise<import("./entities/equipment.entity").Equipment[]>;
+    findOne(id: string): Promise<import("./entities/equipment.entity").Equipment>;
+    update(id: string, updateEquipmentDto: UpdateEquipmentDto): Promise<import("./entities/equipment.entity").Equipment>;
+    remove(id: string): Promise<import("./entities/equipment.entity").Equipment>;
 }

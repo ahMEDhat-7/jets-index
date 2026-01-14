@@ -26,6 +26,8 @@ let Equipment = class Equipment {
     category;
     generation;
     primaryRole;
+    primaryImage;
+    imageUrls;
     description;
     specs;
     advantages;
@@ -55,6 +57,14 @@ __decorate([
     (0, typeorm_1.Column)({ nullable: true }),
     __metadata("design:type", String)
 ], Equipment.prototype, "primaryRole", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", String)
+], Equipment.prototype, "primaryImage", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true, array: true, type: 'text' }),
+    __metadata("design:type", Array)
+], Equipment.prototype, "imageUrls", void 0);
 __decorate([
     (0, typeorm_1.Column)({ type: 'text', nullable: true }),
     __metadata("design:type", String)

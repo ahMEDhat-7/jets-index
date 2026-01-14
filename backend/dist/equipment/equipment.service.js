@@ -5,28 +5,68 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.EquipmentService = void 0;
 const common_1 = require("@nestjs/common");
+const typeorm_1 = require("@nestjs/typeorm");
+const typeorm_2 = require("typeorm");
+const equipment_entity_1 = require("./entities/equipment.entity");
+const manufacturers_service_1 = require("../manufacturers/manufacturers.service");
 let EquipmentService = class EquipmentService {
-    create(createEquipmentDto) {
-        return 'This action adds a new equipment';
+    equipmentRepository;
+    manufacturersService;
+    constructor(equipmentRepository, manufacturersService) {
+        this.equipmentRepository = equipmentRepository;
+        this.manufacturersService = manufacturersService;
     }
-    findAll() {
-        return `This action returns all equipment`;
+    async create(createEquipmentDto) {
+        const manufacturer = await this.manufacturersService.findOne(createEquipmentDto.manufacturerId);
+        const equipment = this.equipmentRepository.create({
+            ...createEquipmentDto,
+            manufacturer,
+        });
+        return this.equipmentRepository.save(equipment);
     }
-    findOne(id) {
-        return `This action returns a #${id} equipment`;
+    async findAll() {
+        return this.equipmentRepository.find({
+            relations: ['manufacturer', 'variants'],
+        });
     }
-    update(id, updateEquipmentDto) {
-        return `This action updates a #${id} equipment`;
+    async findOne(id) {
+        const equipment = await this.equipmentRepository.findOne({
+            where: { id },
+            relations: ['manufacturer', 'variants'],
+        });
+        if (!equipment) {
+            throw new common_1.NotFoundException(`Equipment with ID ${id} not found`);
+        }
+        return equipment;
     }
-    remove(id) {
-        return `This action removes a #${id} equipment`;
+    async update(id, updateEquipmentDto) {
+        const equipment = await this.findOne(id);
+        if (updateEquipmentDto.manufacturerId) {
+            const manufacturer = await this.manufacturersService.findOne(updateEquipmentDto.manufacturerId);
+            updateEquipmentDto['manufacturer'] = manufacturer;
+        }
+        Object.assign(equipment, updateEquipmentDto);
+        return this.equipmentRepository.save(equipment);
+    }
+    async remove(id) {
+        const equipment = await this.findOne(id);
+        return this.equipmentRepository.remove(equipment);
     }
 };
 exports.EquipmentService = EquipmentService;
 exports.EquipmentService = EquipmentService = __decorate([
-    (0, common_1.Injectable)()
+    (0, common_1.Injectable)(),
+    __param(0, (0, typeorm_1.InjectRepository)(equipment_entity_1.Equipment)),
+    __metadata("design:paramtypes", [typeorm_2.Repository,
+        manufacturers_service_1.ManufacturersService])
 ], EquipmentService);
 //# sourceMappingURL=equipment.service.js.map

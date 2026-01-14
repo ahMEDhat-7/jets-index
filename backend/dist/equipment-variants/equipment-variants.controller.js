@@ -29,13 +29,13 @@ let EquipmentVariantsController = class EquipmentVariantsController {
         return this.equipmentVariantsService.findAll();
     }
     findOne(id) {
-        return this.equipmentVariantsService.findOne(+id);
+        return this.equipmentVariantsService.findOne(id);
     }
     update(id, updateEquipmentVariantDto) {
-        return this.equipmentVariantsService.update(+id, updateEquipmentVariantDto);
+        return this.equipmentVariantsService.update(id, updateEquipmentVariantDto);
     }
     remove(id) {
-        return this.equipmentVariantsService.remove(+id);
+        return this.equipmentVariantsService.remove(id);
     }
 };
 exports.EquipmentVariantsController = EquipmentVariantsController;
@@ -54,28 +54,28 @@ __decorate([
 ], EquipmentVariantsController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    __param(0, (0, common_1.Param)('id', new common_1.ParseUUIDPipe())),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], EquipmentVariantsController.prototype, "findOne", null);
 __decorate([
     (0, common_1.Patch)(':id'),
-    __param(0, (0, common_1.Param)('id')),
-    __param(1, (0, common_1.Body)()),
+    __param(0, (0, common_1.Param)('id', new common_1.ParseUUIDPipe())),
+    __param(1, (0, common_1.Body)(new common_1.ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, update_equipment_variant_dto_1.UpdateEquipmentVariantDto]),
     __metadata("design:returntype", void 0)
 ], EquipmentVariantsController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    __param(0, (0, common_1.Param)('id', new common_1.ParseUUIDPipe())),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], EquipmentVariantsController.prototype, "remove", null);
 exports.EquipmentVariantsController = EquipmentVariantsController = __decorate([
-    (0, common_1.Controller)('equipment-variants'),
+    (0, common_1.Controller)('eq-var'),
     __metadata("design:paramtypes", [equipment_variants_service_1.EquipmentVariantsService])
 ], EquipmentVariantsController);
 //# sourceMappingURL=equipment-variants.controller.js.map

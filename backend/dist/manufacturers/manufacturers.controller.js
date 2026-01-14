@@ -29,13 +29,13 @@ let ManufacturersController = class ManufacturersController {
         return this.manufacturersService.findAll();
     }
     findOne(id) {
-        return this.manufacturersService.findOne(+id);
+        return this.manufacturersService.findOne(id);
     }
     update(id, updateManufacturerDto) {
-        return this.manufacturersService.update(+id, updateManufacturerDto);
+        return this.manufacturersService.update(id, updateManufacturerDto);
     }
     remove(id) {
-        return this.manufacturersService.remove(+id);
+        return this.manufacturersService.remove(id);
     }
 };
 exports.ManufacturersController = ManufacturersController;
@@ -54,28 +54,28 @@ __decorate([
 ], ManufacturersController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    __param(0, (0, common_1.Param)('id', new common_1.ParseUUIDPipe())),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], ManufacturersController.prototype, "findOne", null);
 __decorate([
     (0, common_1.Patch)(':id'),
-    __param(0, (0, common_1.Param)('id')),
-    __param(1, (0, common_1.Body)()),
+    __param(0, (0, common_1.Param)('id', new common_1.ParseUUIDPipe())),
+    __param(1, (0, common_1.Body)(new common_1.ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, update_manufacturer_dto_1.UpdateManufacturerDto]),
     __metadata("design:returntype", void 0)
 ], ManufacturersController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    __param(0, (0, common_1.Param)('id', new common_1.ParseUUIDPipe())),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], ManufacturersController.prototype, "remove", null);
 exports.ManufacturersController = ManufacturersController = __decorate([
-    (0, common_1.Controller)('manufacturers'),
+    (0, common_1.Controller)('manu'),
     __metadata("design:paramtypes", [manufacturers_service_1.ManufacturersService])
 ], ManufacturersController);
 //# sourceMappingURL=manufacturers.controller.js.map

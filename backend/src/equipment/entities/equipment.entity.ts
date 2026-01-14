@@ -35,6 +35,12 @@ export class Equipment {
   @Column({ nullable: true })
   primaryRole?: string;
 
+  @Column({ nullable: true })
+  primaryImage?: string;
+
+  @Column({ nullable: true, array: true, type: 'text' })
+  imageUrls?: string[];
+
   @Column({ type: 'text', nullable: true })
   description?: string;
 
