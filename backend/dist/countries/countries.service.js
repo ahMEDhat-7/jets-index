@@ -14,28 +14,54 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CountriesService = void 0;
 const common_1 = require("@nestjs/common");
-const country_entity_1 = require("./entities/country.entity");
 const typeorm_1 = require("typeorm");
 const typeorm_2 = require("@nestjs/typeorm");
+const country_entity_1 = require("./entities/country.entity");
 let CountriesService = class CountriesService {
-    countryRepositry;
-    constructor(countryRepositry) {
-        this.countryRepositry = countryRepositry;
+    countryRepository;
+    constructor(countryRepository) {
+        this.countryRepository = countryRepository;
     }
     create(createCountryDto) {
-        return 'This action adds a new country';
+        const country = this.countryRepository.create(createCountryDto);
+        return this.countryRepository.save(country);
     }
-    findAll() {
-        return this.countryRepositry.find();
+    findAll(query) {
+        const { limit = 20, offset = 0, search } = query;
+        const qb = this.countryRepository.createQueryBuilder('country');
+        if (search) {
+            qb.where('country.name ILIKE :search', { search: `%${search}%` });
+        }
+        return qb
+            .leftJoinAndSelect('country.manufacturers', 'manufacturer')
+            .leftJoinAndSelect('country.platforms', 'platform')
+            .take(limit)
+            .skip(offset)
+            .getMany();
     }
-    findOne(id) {
-        return `This action returns a #${id} country`;
+    async findOne(id) {
+        const found = await this.countryRepository.findOne({
+            where: { id },
+            relations: ['manufacturers', 'platforms'],
+        });
+        if (!found) {
+            throw new common_1.NotFoundException(`Country #${id} not found`);
+        }
+        return found;
     }
-    update(id, updateCountryDto) {
-        return `This action updates a #${id} country`;
+    async update(id, updateCountryDto) {
+        const country = await this.countryRepository.preload({
+            id,
+            ...updateCountryDto,
+        });
+        if (!country) {
+            throw new common_1.NotFoundException(`Country #${id} not found`);
+        }
+        return this.countryRepository.save(country);
     }
-    remove(id) {
-        return `This action removes a #${id} country`;
+    async remove(id) {
+        const country = await this.findOne(id);
+        return this.countryRepository.remove(country);
     }
 };
 exports.CountriesService = CountriesService;

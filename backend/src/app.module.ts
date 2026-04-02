@@ -2,6 +2,10 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { CountriesModule } from './countries/countries.module';
+import { ManufacturersModule } from './manufacturers/manufacturers.module';
+import { CategoriesModule } from './categories/categories.module';
+import { PlatformsModule } from './platforms/platforms.module';
+import { WeaponryDetailsModule } from './weaponry-details/weaponry-details.module';
 import { AppController } from './app.controller';
 
 @Module({
@@ -26,6 +30,10 @@ import { AppController } from './app.controller';
       }),
     }),
     CountriesModule,
+    ManufacturersModule,
+    CategoriesModule,
+    PlatformsModule,
+    WeaponryDetailsModule,
   ],
   controllers: [AppController],
   providers: [],

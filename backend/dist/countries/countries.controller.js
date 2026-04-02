@@ -17,6 +17,7 @@ const common_1 = require("@nestjs/common");
 const countries_service_1 = require("./countries.service");
 const create_country_dto_1 = require("./dto/create-country.dto");
 const update_country_dto_1 = require("./dto/update-country.dto");
+const pagination_query_dto_1 = require("../common/dto/pagination-query.dto");
 let CountriesController = class CountriesController {
     countriesService;
     constructor(countriesService) {
@@ -25,8 +26,8 @@ let CountriesController = class CountriesController {
     create(createCountryDto) {
         return this.countriesService.create(createCountryDto);
     }
-    findAll() {
-        return this.countriesService.findAll();
+    findAll(paginationQuery) {
+        return this.countriesService.findAll(paginationQuery);
     }
     findOne(id) {
         return this.countriesService.findOne(+id);
@@ -48,8 +49,9 @@ __decorate([
 ], CountriesController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
+    __param(0, (0, common_1.Query)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [pagination_query_dto_1.PaginationQueryDto]),
     __metadata("design:returntype", void 0)
 ], CountriesController.prototype, "findAll", null);
 __decorate([

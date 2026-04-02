@@ -11,6 +11,10 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const config_1 = require("@nestjs/config");
 const countries_module_1 = require("./countries/countries.module");
+const manufacturers_module_1 = require("./manufacturers/manufacturers.module");
+const categories_module_1 = require("./categories/categories.module");
+const platforms_module_1 = require("./platforms/platforms.module");
+const weaponry_details_module_1 = require("./weaponry-details/weaponry-details.module");
 const app_controller_1 = require("./app.controller");
 let AppModule = class AppModule {
 };
@@ -38,6 +42,10 @@ exports.AppModule = AppModule = __decorate([
                 }),
             }),
             countries_module_1.CountriesModule,
+            manufacturers_module_1.ManufacturersModule,
+            categories_module_1.CategoriesModule,
+            platforms_module_1.PlatformsModule,
+            weaponry_details_module_1.WeaponryDetailsModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [],
