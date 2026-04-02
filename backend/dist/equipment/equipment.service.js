@@ -33,10 +33,24 @@ let EquipmentService = class EquipmentService {
         });
         return this.equipmentRepository.save(equipment);
     }
-    async findAll() {
-        return this.equipmentRepository.find({
+    async findAll(paginationDto) {
+        const { page = 1, limit = 10 } = paginationDto;
+        const skip = (page - 1) * limit;
+        const [data, total] = await this.equipmentRepository.findAndCount({
             relations: ['manufacturer', 'variants'],
+            skip,
+            take: limit,
+            order: { name: 'ASC' },
         });
+        return {
+            data,
+            meta: {
+                total,
+                page,
+                limit,
+                totalPages: Math.ceil(total / limit),
+            },
+        };
     }
     async findOne(id) {
         const equipment = await this.equipmentRepository.findOne({
@@ -60,6 +74,30 @@ let EquipmentService = class EquipmentService {
     async remove(id) {
         const equipment = await this.findOne(id);
         return this.equipmentRepository.remove(equipment);
+    }
+    async countByCategory() {
+        const results = await this.equipmentRepository
+            .createQueryBuilder('equipment')
+            .select('equipment.category', 'category')
+            .addSelect('COUNT(*)', 'count')
+            .groupBy('equipment.category')
+            .getRawMany();
+        return results;
+    }
+    async countByCountry() {
+        const results = await this.equipmentRepository
+            .createQueryBuilder('equipment')
+            .innerJoin('equipment.manufacturer', 'manufacturer')
+            .innerJoin('manufacturer.country', 'country')
+            .select('country.name', 'country')
+            .addSelect('COUNT(*)', 'count')
+            .groupBy('country.name')
+            .orderBy('count', 'DESC')
+            .getRawMany();
+        return results;
+    }
+    async getTotalCount() {
+        return this.equipmentRepository.count();
     }
 };
 exports.EquipmentService = EquipmentService;

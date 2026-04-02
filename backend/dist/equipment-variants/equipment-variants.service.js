@@ -34,10 +34,24 @@ let EquipmentVariantsService = class EquipmentVariantsService {
         });
         return this.equipmentVariantRepository.save(variant);
     }
-    async findAll() {
-        return this.equipmentVariantRepository.find({
+    async findAll(paginationDto) {
+        const { page = 1, limit = 10 } = paginationDto;
+        const skip = (page - 1) * limit;
+        const [data, total] = await this.equipmentVariantRepository.findAndCount({
             relations: ['equipment'],
+            skip,
+            take: limit,
+            order: { name: 'ASC' },
         });
+        return {
+            data,
+            meta: {
+                total,
+                page,
+                limit,
+                totalPages: Math.ceil(total / limit),
+            },
+        };
     }
     async findOne(id) {
         const variant = await this.equipmentVariantRepository.findOne({

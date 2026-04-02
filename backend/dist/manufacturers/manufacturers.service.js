@@ -33,10 +33,27 @@ let ManufacturersService = class ManufacturersService {
         });
         return this.manufacturerRepository.save(manufacturer);
     }
-    async findAll() {
-        return this.manufacturerRepository.find({
+    async findAll(paginationDto) {
+        const { page = 1, limit = 10 } = paginationDto;
+        const skip = (page - 1) * limit;
+        const [data, total] = await this.manufacturerRepository.findAndCount({
             relations: ['country', 'equipment'],
+            skip,
+            take: limit,
+            order: { name: 'ASC' },
         });
+        return {
+            data,
+            meta: {
+                total,
+                page,
+                limit,
+                totalPages: Math.ceil(total / limit),
+            },
+        };
+    }
+    async getTotalCount() {
+        return this.manufacturerRepository.count();
     }
     async findOne(id) {
         const manufacturer = await this.manufacturerRepository.findOne({

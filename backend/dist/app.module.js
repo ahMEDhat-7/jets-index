@@ -14,6 +14,11 @@ const countries_module_1 = require("./countries/countries.module");
 const manufacturers_module_1 = require("./manufacturers/manufacturers.module");
 const equipment_module_1 = require("./equipment/equipment.module");
 const equipment_variants_module_1 = require("./equipment-variants/equipment-variants.module");
+const auth_module_1 = require("./auth/auth.module");
+const users_module_1 = require("./users/users.module");
+const health_module_1 = require("./health/health.module");
+const seeder_module_1 = require("./database/seeder/seeder.module");
+const stats_module_1 = require("./stats/stats.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -43,6 +48,11 @@ exports.AppModule = AppModule = __decorate([
             manufacturers_module_1.ManufacturersModule,
             equipment_module_1.EquipmentModule,
             equipment_variants_module_1.EquipmentVariantsModule,
+            auth_module_1.AuthModule,
+            users_module_1.UsersModule,
+            health_module_1.HealthModule,
+            seeder_module_1.SeederModule,
+            stats_module_1.StatsModule,
         ],
         controllers: [],
         providers: [],

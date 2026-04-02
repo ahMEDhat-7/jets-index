@@ -26,8 +26,27 @@ let CountriesService = class CountriesService {
         const country = this.countryRepository.create(createCountryDto);
         return this.countryRepository.save(country);
     }
-    async findAll() {
-        return this.countryRepository.find();
+    async findAll(paginationDto) {
+        const { page = 1, limit = 10 } = paginationDto;
+        const skip = (page - 1) * limit;
+        const [data, total] = await this.countryRepository.findAndCount({
+            relations: ['manufacturers'],
+            skip,
+            take: limit,
+            order: { name: 'ASC' },
+        });
+        return {
+            data,
+            meta: {
+                total,
+                page,
+                limit,
+                totalPages: Math.ceil(total / limit),
+            },
+        };
+    }
+    async getTotalCount() {
+        return this.countryRepository.count();
     }
     async findOne(id) {
         const country = await this.countryRepository.findOne({

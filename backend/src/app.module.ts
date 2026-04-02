@@ -5,6 +5,11 @@ import { CountriesModule } from './countries/countries.module';
 import { ManufacturersModule } from './manufacturers/manufacturers.module';
 import { EquipmentModule } from './equipment/equipment.module';
 import { EquipmentVariantsModule } from './equipment-variants/equipment-variants.module';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
+import { HealthModule } from './health/health.module';
+import { SeederModule } from './database/seeder/seeder.module';
+import { StatsModule } from './stats/stats.module';
 
 @Module({
   imports: [
@@ -31,6 +36,11 @@ import { EquipmentVariantsModule } from './equipment-variants/equipment-variants
     ManufacturersModule,
     EquipmentModule,
     EquipmentVariantsModule,
+    AuthModule,
+    UsersModule,
+    HealthModule,
+    SeederModule,
+    StatsModule,
   ],
   controllers: [],
   providers: [],
