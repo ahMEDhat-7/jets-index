@@ -14,63 +14,34 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CountriesService = void 0;
 const common_1 = require("@nestjs/common");
-const typeorm_1 = require("@nestjs/typeorm");
-const typeorm_2 = require("typeorm");
 const country_entity_1 = require("./entities/country.entity");
+const typeorm_1 = require("typeorm");
+const typeorm_2 = require("@nestjs/typeorm");
 let CountriesService = class CountriesService {
-    countryRepository;
-    constructor(countryRepository) {
-        this.countryRepository = countryRepository;
+    countryRepositry;
+    constructor(countryRepositry) {
+        this.countryRepositry = countryRepositry;
     }
-    async create(createCountryDto) {
-        const country = this.countryRepository.create(createCountryDto);
-        return this.countryRepository.save(country);
+    create(createCountryDto) {
+        return 'This action adds a new country';
     }
-    async findAll(paginationDto) {
-        const { page = 1, limit = 10 } = paginationDto;
-        const skip = (page - 1) * limit;
-        const [data, total] = await this.countryRepository.findAndCount({
-            relations: ['manufacturers'],
-            skip,
-            take: limit,
-            order: { name: 'ASC' },
-        });
-        return {
-            data,
-            meta: {
-                total,
-                page,
-                limit,
-                totalPages: Math.ceil(total / limit),
-            },
-        };
+    findAll() {
+        return this.countryRepositry.find();
     }
-    async getTotalCount() {
-        return this.countryRepository.count();
+    findOne(id) {
+        return `This action returns a #${id} country`;
     }
-    async findOne(id) {
-        const country = await this.countryRepository.findOne({
-            where: { id },
-        });
-        if (!country) {
-            throw new common_1.NotFoundException(`Country with ID ${id} not found`);
-        }
-        return country;
+    update(id, updateCountryDto) {
+        return `This action updates a #${id} country`;
     }
-    async update(id, updateCountryDto) {
-        const country = await this.findOne(id);
-        Object.assign(country, updateCountryDto);
-        return this.countryRepository.save(country);
-    }
-    async remove(id) {
-        const country = await this.findOne(id);
-        return this.countryRepository.remove(country);
+    remove(id) {
+        return `This action removes a #${id} country`;
     }
 };
 exports.CountriesService = CountriesService;
 exports.CountriesService = CountriesService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, typeorm_1.InjectRepository)(country_entity_1.Country)),
-    __metadata("design:paramtypes", [typeorm_2.Repository])
+    __param(0, (0, typeorm_2.InjectRepository)(country_entity_1.Country)),
+    __metadata("design:paramtypes", [typeorm_1.Repository])
 ], CountriesService);
 //# sourceMappingURL=countries.service.js.map

@@ -11,26 +11,24 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Country = void 0;
 const typeorm_1 = require("typeorm");
-const manufacturer_entity_1 = require("../../manufacturers/entities/manufacturer.entity");
 let Country = class Country {
     id;
     name;
-    manufacturers;
+    isoCode;
 };
 exports.Country = Country;
 __decorate([
-    (0, typeorm_1.PrimaryGeneratedColumn)('uuid'),
-    __metadata("design:type", String)
+    (0, typeorm_1.PrimaryGeneratedColumn)(),
+    __metadata("design:type", Number)
 ], Country.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.Index)(),
-    (0, typeorm_1.Column)({ unique: true }),
+    (0, typeorm_1.Column)({ length: 100, unique: true }),
     __metadata("design:type", String)
 ], Country.prototype, "name", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => manufacturer_entity_1.Manufacturer, (m) => m.country),
-    __metadata("design:type", Array)
-], Country.prototype, "manufacturers", void 0);
+    (0, typeorm_1.Column)({ length: 3, unique: true }),
+    __metadata("design:type", String)
+], Country.prototype, "isoCode", void 0);
 exports.Country = Country = __decorate([
     (0, typeorm_1.Entity)('countries')
 ], Country);
