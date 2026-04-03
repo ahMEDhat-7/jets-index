@@ -1,13 +1,8 @@
-import { IsNotEmpty, IsString, MaxLength, IsOptional } from 'class-validator';
+import { IsNotEmpty, IsString, MaxLength } from 'class-validator';
 
 export class CreateCountryDto {
   @IsString()
   @IsNotEmpty()
   @MaxLength(100)
   name!: string;
-
-  @IsOptional()
-  @IsString()
-  @MaxLength(3)
-  isoCode?: string;
 }

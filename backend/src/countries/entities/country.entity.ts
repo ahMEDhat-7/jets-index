@@ -1,21 +1,27 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  OneToMany,
+} from 'typeorm';
 import { Manufacturer } from '../../manufacturers/entities/manufacturer.entity';
 import { Platform } from '../../platforms/entities/platform.entity';
 
 @Entity('countries')
 export class Country {
-  @PrimaryGeneratedColumn({ name: 'country_id' })
-  id!: number;
+  @PrimaryGeneratedColumn('uuid', { name: 'country_id' })
+  id!: string;
 
-  @Column({ length: 100 })
+  @Column({ name: 'country_name', length: 100, unique: true })
   name!: string;
 
-  @Column({ name: 'iso_code', length: 3, unique: true, nullable: true })
-  isoCode?: string;
+  @CreateDateColumn({ name: 'created_at' })
+  createdAt!: Date;
 
-  @OneToMany(() => Manufacturer, (manufacturer) => manufacturer.headquartersCountry)
+  @OneToMany(() => Manufacturer, (manufacturer) => manufacturer.country)
   manufacturers?: Manufacturer[];
 
-  @OneToMany(() => Platform, (platform) => platform.originCountry)
+  @OneToMany(() => Platform, (platform) => platform.country)
   platforms?: Platform[];
 }

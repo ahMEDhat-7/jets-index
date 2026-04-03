@@ -1,37 +1,35 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToOne, JoinColumn, CreateDateColumn } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
 import { Category } from '../../categories/entities/category.entity';
 import { Manufacturer } from '../../manufacturers/entities/manufacturer.entity';
 import { Country } from '../../countries/entities/country.entity';
-import { WeaponryDetails } from '../../weaponry-details/entities/weaponry-details.entity';
 
 @Entity('platforms')
 export class Platform {
-  @PrimaryGeneratedColumn({ name: 'platform_id' })
-  id!: number;
+  @PrimaryGeneratedColumn('uuid', { name: 'platform_id' })
+  id!: string;
 
-  @Column({ name: 'id_code', length: 20, unique: true, nullable: true })
-  idCode?: string;
-
-  @Column({ length: 255 })
+  @Column({ name: 'platform_name', length: 255 })
   name!: string;
 
-  @Column({ name: 'type_description', type: 'text', nullable: true })
-  typeDescription?: string;
+  @Column({ name: 'platform_description', type: 'text', nullable: true })
+  description?: string;
 
-  @ManyToOne(() => Category, (category) => category.platforms, { nullable: true, onDelete: 'SET NULL' })
-  @JoinColumn({ name: 'category_id' })
-  category?: Category;
-
-  @ManyToOne(() => Manufacturer, (manufacturer) => manufacturer.platforms, { nullable: true, onDelete: 'SET NULL' })
-  @JoinColumn({ name: 'manufacturer_id' })
-  manufacturer?: Manufacturer;
-
-  @ManyToOne(() => Country, (country) => country.platforms, { nullable: true, onDelete: 'SET NULL' })
-  @JoinColumn({ name: 'origin_country_id' })
-  originCountry?: Country;
-
-  @Column({ name: 'unit_cost_usd', type: 'decimal', precision: 15, scale: 2, nullable: true })
-  unitCostUsd?: string;
+  @Column({
+    name: 'unit_cost_usd',
+    type: 'decimal',
+    precision: 15,
+    scale: 2,
+    nullable: true,
+  })
+  unitCostUsd?: number;
 
   @Column({ name: 'operational_status', length: 50, nullable: true })
   operationalStatus?: string;
@@ -39,9 +37,30 @@ export class Platform {
   @Column({ name: 'technical_specs', type: 'jsonb', nullable: true })
   technicalSpecs?: object;
 
+  @Column({ name: 'image_url', length: 512, nullable: true })
+  imageUrl?: string;
+
+  @ManyToOne(() => Category, (category) => category.platforms, {
+    onDelete: 'RESTRICT',
+  })
+  @JoinColumn({ name: 'category_id' })
+  category?: Category;
+
+  @ManyToOne(() => Manufacturer, (manufacturer) => manufacturer.platforms, {
+    onDelete: 'RESTRICT',
+  })
+  @JoinColumn({ name: 'manu_id' })
+  manufacturer?: Manufacturer;
+
+  @ManyToOne(() => Country, (country) => country.platforms, {
+    onDelete: 'RESTRICT',
+  })
+  @JoinColumn({ name: 'country_id' })
+  country?: Country;
+
   @CreateDateColumn({ name: 'created_at' })
   createdAt!: Date;
 
-  @OneToOne(() => WeaponryDetails, (weaponryDetails) => weaponryDetails.platform)
-  weaponryDetails?: WeaponryDetails;
+  @UpdateDateColumn({ name: 'updated_at' })
+  updatedAt!: Date;
 }

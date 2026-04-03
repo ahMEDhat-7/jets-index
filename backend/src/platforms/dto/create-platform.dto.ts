@@ -3,17 +3,10 @@ import {
   IsString,
   MaxLength,
   IsOptional,
-  IsInt,
-  Min,
   IsNumber,
 } from 'class-validator';
 
 export class CreatePlatformDto {
-  @IsOptional()
-  @IsString()
-  @MaxLength(20)
-  idCode?: string;
-
   @IsString()
   @IsNotEmpty()
   @MaxLength(255)
@@ -21,26 +14,11 @@ export class CreatePlatformDto {
 
   @IsOptional()
   @IsString()
-  typeDescription?: string;
+  description?: string;
 
   @IsOptional()
-  @IsInt()
-  @Min(1)
-  categoryId?: number;
-
-  @IsOptional()
-  @IsInt()
-  @Min(1)
-  manufacturerId?: number;
-
-  @IsOptional()
-  @IsInt()
-  @Min(1)
-  originCountryId?: number;
-
-  @IsOptional()
-  @IsString()
-  unitCostUsd?: string;
+  @IsNumber()
+  unitCostUsd?: number;
 
   @IsOptional()
   @IsString()
@@ -48,5 +26,21 @@ export class CreatePlatformDto {
   operationalStatus?: string;
 
   @IsOptional()
+  technicalSpecs?: object;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(512)
+  imageUrl?: string;
+
+  @IsString()
+  categoryId!: string;
+
+  @IsString()
+  manuId!: string;
+
+  @IsString()
+  countryId!: string;
+}
   technicalSpecs?: object;
 }

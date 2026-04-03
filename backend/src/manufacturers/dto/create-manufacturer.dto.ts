@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, MaxLength, IsOptional, IsInt, Min } from 'class-validator';
+import { IsNotEmpty, IsString, MaxLength, IsOptional } from 'class-validator';
 
 export class CreateManufacturerDto {
   @IsString()
@@ -7,9 +7,8 @@ export class CreateManufacturerDto {
   name!: string;
 
   @IsOptional()
-  @IsInt()
-  @Min(1)
-  headquartersCountryId?: number;
+  @IsString()
+  countryId?: string;
 
   @IsOptional()
   @IsString()
