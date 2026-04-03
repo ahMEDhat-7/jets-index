@@ -7,6 +7,7 @@ import { CategoriesModule } from './categories/categories.module';
 import { PlatformsModule } from './platforms/platforms.module';
 import { WeaponryDetailsModule } from './weaponry-details/weaponry-details.module';
 import { AppController } from './app.controller';
+import { BlogsModule } from './blogs/blogs.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { AppController } from './app.controller';
     CategoriesModule,
     PlatformsModule,
     WeaponryDetailsModule,
+    BlogsModule,
   ],
   controllers: [AppController],
   providers: [],
