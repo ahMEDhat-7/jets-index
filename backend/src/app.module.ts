@@ -5,9 +5,13 @@ import { CountriesModule } from './countries/countries.module';
 import { ManufacturersModule } from './manufacturers/manufacturers.module';
 import { CategoriesModule } from './categories/categories.module';
 import { PlatformsModule } from './platforms/platforms.module';
-import { WeaponryDetailsModule } from './weaponry-details/weaponry-details.module';
 import { AppController } from './app.controller';
 import { BlogsModule } from './blogs/blogs.module';
+import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
+import { HealthModule } from './health/health.module';
+import { StatsModule } from './stats/stats.module';
+import { SeederService } from './database/seeder.service';
 
 @Module({
   imports: [
@@ -34,10 +38,13 @@ import { BlogsModule } from './blogs/blogs.module';
     ManufacturersModule,
     CategoriesModule,
     PlatformsModule,
-    WeaponryDetailsModule,
     BlogsModule,
+    UsersModule,
+    AuthModule,
+    HealthModule,
+    StatsModule,
   ],
   controllers: [AppController],
-  providers: [],
+  providers: [SeederService],
 })
 export class AppModule {}

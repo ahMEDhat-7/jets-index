@@ -14,8 +14,13 @@ const countries_module_1 = require("./countries/countries.module");
 const manufacturers_module_1 = require("./manufacturers/manufacturers.module");
 const categories_module_1 = require("./categories/categories.module");
 const platforms_module_1 = require("./platforms/platforms.module");
-const weaponry_details_module_1 = require("./weaponry-details/weaponry-details.module");
 const app_controller_1 = require("./app.controller");
+const blogs_module_1 = require("./blogs/blogs.module");
+const users_module_1 = require("./users/users.module");
+const auth_module_1 = require("./auth/auth.module");
+const health_module_1 = require("./health/health.module");
+const stats_module_1 = require("./stats/stats.module");
+const seeder_service_1 = require("./database/seeder.service");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -45,10 +50,14 @@ exports.AppModule = AppModule = __decorate([
             manufacturers_module_1.ManufacturersModule,
             categories_module_1.CategoriesModule,
             platforms_module_1.PlatformsModule,
-            weaponry_details_module_1.WeaponryDetailsModule,
+            blogs_module_1.BlogsModule,
+            users_module_1.UsersModule,
+            auth_module_1.AuthModule,
+            health_module_1.HealthModule,
+            stats_module_1.StatsModule,
         ],
         controllers: [app_controller_1.AppController],
-        providers: [],
+        providers: [seeder_service_1.SeederService],
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map

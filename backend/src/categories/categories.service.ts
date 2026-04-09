@@ -24,7 +24,7 @@ export class CategoriesService {
 
     if (search) {
       qb.where(
-        'category.categoryName ILIKE :search OR category.domain ILIKE :search',
+        'category.categoryName ILIKE :search OR category.categoryDomain ILIKE :search',
         { search: `%${search}%` },
       );
     }
@@ -36,29 +36,29 @@ export class CategoriesService {
       .getMany();
   }
 
-  async findOne(id: number) {
+  async findOne(id: string) {
     const result = await this.categoriesRepository.findOne({
       where: { id },
       relations: ['platforms'],
     });
     if (!result) {
-      throw new NotFoundException(`Category #${id} not found`);
+      throw new NotFoundException(`Category with ID ${id} not found`);
     }
     return result;
   }
 
-  async update(id: number, updateCategoryDto: UpdateCategoryDto) {
+  async update(id: string, updateCategoryDto: UpdateCategoryDto) {
     const category = await this.categoriesRepository.preload({
       id,
       ...updateCategoryDto,
     });
     if (!category) {
-      throw new NotFoundException(`Category #${id} not found`);
+      throw new NotFoundException(`Category with ID ${id} not found`);
     }
     return this.categoriesRepository.save(category);
   }
 
-  async remove(id: number) {
+  async remove(id: string) {
     const category = await this.findOne(id);
     return this.categoriesRepository.remove(category);
   }

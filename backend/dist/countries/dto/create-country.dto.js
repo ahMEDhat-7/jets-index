@@ -11,21 +11,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateCountryDto = void 0;
 const class_validator_1 = require("class-validator");
+const swagger_1 = require("@nestjs/swagger");
 class CreateCountryDto {
     name;
-    isoCode;
 }
 exports.CreateCountryDto = CreateCountryDto;
 __decorate([
+    (0, swagger_1.ApiProperty)(),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
     (0, class_validator_1.MaxLength)(100),
     __metadata("design:type", String)
 ], CreateCountryDto.prototype, "name", void 0);
-__decorate([
-    (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.MaxLength)(3),
-    __metadata("design:type", String)
-], CreateCountryDto.prototype, "isoCode", void 0);
 //# sourceMappingURL=create-country.dto.js.map

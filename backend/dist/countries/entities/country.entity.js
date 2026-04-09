@@ -16,29 +16,29 @@ const platform_entity_1 = require("../../platforms/entities/platform.entity");
 let Country = class Country {
     id;
     name;
-    isoCode;
+    createdAt;
     manufacturers;
     platforms;
 };
 exports.Country = Country;
 __decorate([
-    (0, typeorm_1.PrimaryGeneratedColumn)({ name: 'country_id' }),
-    __metadata("design:type", Number)
+    (0, typeorm_1.PrimaryGeneratedColumn)('uuid', { name: 'country_id' }),
+    __metadata("design:type", String)
 ], Country.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ length: 100 }),
+    (0, typeorm_1.Column)({ name: 'country_name', length: 100, unique: true }),
     __metadata("design:type", String)
 ], Country.prototype, "name", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'iso_code', length: 3, unique: true, nullable: true }),
-    __metadata("design:type", String)
-], Country.prototype, "isoCode", void 0);
+    (0, typeorm_1.CreateDateColumn)({ name: 'created_at' }),
+    __metadata("design:type", Date)
+], Country.prototype, "createdAt", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => manufacturer_entity_1.Manufacturer, (manufacturer) => manufacturer.headquartersCountry),
+    (0, typeorm_1.OneToMany)(() => manufacturer_entity_1.Manufacturer, (manufacturer) => manufacturer.country),
     __metadata("design:type", Array)
 ], Country.prototype, "manufacturers", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => platform_entity_1.Platform, (platform) => platform.originCountry),
+    (0, typeorm_1.OneToMany)(() => platform_entity_1.Platform, (platform) => platform.country),
     __metadata("design:type", Array)
 ], Country.prototype, "platforms", void 0);
 exports.Country = Country = __decorate([

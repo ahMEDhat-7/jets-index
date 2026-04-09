@@ -34,29 +34,29 @@ export class CountriesService {
       .getMany();
   }
 
-  async findOne(id: number) {
+  async findOne(id: string) {
     const found = await this.countryRepository.findOne({
       where: { id },
       relations: ['manufacturers', 'platforms'],
     });
     if (!found) {
-      throw new NotFoundException(`Country #${id} not found`);
+      throw new NotFoundException(`Country with ID ${id} not found`);
     }
     return found;
   }
 
-  async update(id: number, updateCountryDto: UpdateCountryDto) {
+  async update(id: string, updateCountryDto: UpdateCountryDto) {
     const country = await this.countryRepository.preload({
       id,
       ...updateCountryDto,
     });
     if (!country) {
-      throw new NotFoundException(`Country #${id} not found`);
+      throw new NotFoundException(`Country with ID ${id} not found`);
     }
     return this.countryRepository.save(country);
   }
 
-  async remove(id: number) {
+  async remove(id: string) {
     const country = await this.findOne(id);
     return this.countryRepository.remove(country);
   }

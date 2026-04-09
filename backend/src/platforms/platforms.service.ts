@@ -17,12 +17,12 @@ export class PlatformsService {
     dto: CreatePlatformDto | UpdatePlatformDto,
   ): Partial<Platform> {
     const mapped: Partial<Platform> = {
-      idCode: dto.idCode,
       name: dto.name,
-      typeDescription: dto.typeDescription,
+      description: dto.description,
       unitCostUsd: dto.unitCostUsd,
       operationalStatus: dto.operationalStatus,
       technicalSpecs: dto.technicalSpecs as object,
+      imageUrl: dto.imageUrl,
     };
 
     if ('categoryId' in dto && dto.categoryId) {
@@ -31,8 +31,8 @@ export class PlatformsService {
     if ('manufacturerId' in dto && dto.manufacturerId) {
       mapped.manufacturer = { id: dto.manufacturerId } as any;
     }
-    if ('originCountryId' in dto && dto.originCountryId) {
-      mapped.originCountry = { id: dto.originCountryId } as any;
+    if ('countryId' in dto && dto.countryId) {
+      mapped.country = { id: dto.countryId } as any;
     }
 
     return mapped;
@@ -59,42 +59,36 @@ export class PlatformsService {
     return qb
       .leftJoinAndSelect('platform.category', 'category')
       .leftJoinAndSelect('platform.manufacturer', 'manufacturer')
-      .leftJoinAndSelect('platform.originCountry', 'country')
-      .leftJoinAndSelect('platform.weaponryDetails', 'weaponryDetails')
+      .leftJoinAndSelect('platform.country', 'country')
       .take(limit)
       .skip(offset)
       .getMany();
   }
 
-  async findOne(id: number) {
+  async findOne(id: string) {
     const result = await this.platformsRepository.findOne({
       where: { id },
-      relations: [
-        'category',
-        'manufacturer',
-        'originCountry',
-        'weaponryDetails',
-      ],
+      relations: ['category', 'manufacturer', 'country'],
     });
     if (!result) {
-      throw new NotFoundException(`Platform #${id} not found`);
+      throw new NotFoundException(`Platform with ID ${id} not found`);
     }
     return result;
   }
 
-  async update(id: number, updatePlatformDto: UpdatePlatformDto) {
+  async update(id: string, updatePlatformDto: UpdatePlatformDto) {
     const platformData = this.mapDtoToPlatform(updatePlatformDto);
     const platform = await this.platformsRepository.preload({
       id,
       ...platformData,
     });
     if (!platform) {
-      throw new NotFoundException(`Platform #${id} not found`);
+      throw new NotFoundException(`Platform with ID ${id} not found`);
     }
     return this.platformsRepository.save(platform);
   }
 
-  async remove(id: number) {
+  async remove(id: string) {
     const platform = await this.findOne(id);
     return this.platformsRepository.remove(platform);
   }

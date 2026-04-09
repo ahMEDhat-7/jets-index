@@ -6,8 +6,6 @@ import { App } from 'supertest/types';
 import { AppModule } from './../src/app.module';
 import { Country } from '../src/countries/entities/country.entity';
 import { Manufacturer } from '../src/manufacturers/entities/manufacturer.entity';
-import { Equipment } from '../src/equipment/entities/equipment.entity';
-import { EquipmentVariant } from '../src/equipment-variants/entities/equipment-variant.entity';
 import { User } from '../src/users/entities/user.entity';
 
 describe('AppController (e2e)', () => {
@@ -19,7 +17,7 @@ describe('AppController (e2e)', () => {
         TypeOrmModule.forRoot({
           type: 'sqlite',
           database: ':memory:',
-          entities: [Country, Manufacturer, Equipment, EquipmentVariant, User],
+          entities: [Country, Manufacturer, User],
           synchronize: true,
         }),
         AppModule,

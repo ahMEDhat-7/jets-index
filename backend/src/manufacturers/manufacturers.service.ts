@@ -32,36 +32,36 @@ export class ManufacturersService {
     }
 
     return qb
-      .leftJoinAndSelect('manufacturer.headquartersCountry', 'country')
+      .leftJoinAndSelect('manufacturer.country', 'country')
       .leftJoinAndSelect('manufacturer.platforms', 'platform')
       .take(limit)
       .skip(offset)
       .getMany();
   }
 
-  async findOne(id: number) {
+  async findOne(id: string) {
     const result = await this.manufacturersRepository.findOne({
       where: { id },
-      relations: ['headquartersCountry', 'platforms'],
+      relations: ['country', 'platforms'],
     });
     if (!result) {
-      throw new NotFoundException(`Manufacturer #${id} not found`);
+      throw new NotFoundException(`Manufacturer with ID ${id} not found`);
     }
     return result;
   }
 
-  async update(id: number, updateManufacturerDto: UpdateManufacturerDto) {
+  async update(id: string, updateManufacturerDto: UpdateManufacturerDto) {
     const manufacturer = await this.manufacturersRepository.preload({
       id,
       ...updateManufacturerDto,
     });
     if (!manufacturer) {
-      throw new NotFoundException(`Manufacturer #${id} not found`);
+      throw new NotFoundException(`Manufacturer with ID ${id} not found`);
     }
     return this.manufacturersRepository.save(manufacturer);
   }
 
-  async remove(id: number) {
+  async remove(id: string) {
     const manufacturer = await this.findOne(id);
     return this.manufacturersRepository.remove(manufacturer);
   }

@@ -45,7 +45,7 @@ let CountriesService = class CountriesService {
             relations: ['manufacturers', 'platforms'],
         });
         if (!found) {
-            throw new common_1.NotFoundException(`Country #${id} not found`);
+            throw new common_1.NotFoundException(`Country with ID ${id} not found`);
         }
         return found;
     }
@@ -55,7 +55,7 @@ let CountriesService = class CountriesService {
             ...updateCountryDto,
         });
         if (!country) {
-            throw new common_1.NotFoundException(`Country #${id} not found`);
+            throw new common_1.NotFoundException(`Country with ID ${id} not found`);
         }
         return this.countryRepository.save(country);
     }
