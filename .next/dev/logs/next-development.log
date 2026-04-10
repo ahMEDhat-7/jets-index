@@ -1,0 +1,10 @@
+{"timestamp":"00:00:33.203","source":"Server","level":"LOG","message":""}
+{"timestamp":"00:01:19.638","source":"Server","level":"ERROR","message":"Error: ENOENT: no such file or directory, scandir '/home/ahmedhat/.github/jets-index/app'"}
+{"timestamp":"00:01:19.641","source":"Server","level":"ERROR","message":"⨯ \"unhandledRejection:\" Error: ENOENT: no such file or directory, scandir '/home/ahmedhat/.github/jets-index/app'"}
+{"timestamp":"00:01:19.644","source":"Server","level":"ERROR","message":"⨯ \"unhandledRejection: \" Error: ENOENT: no such file or directory, scandir '/home/ahmedhat/.github/jets-index/app'"}
+{"timestamp":"00:07:01.573","source":"Server","level":"ERROR","message":"Error: ENOENT: no such file or directory, scandir '/home/ahmedhat/.github/jets-index/app'"}
+{"timestamp":"00:07:01.580","source":"Server","level":"ERROR","message":"⨯ \"unhandledRejection:\" Error: ENOENT: no such file or directory, scandir '/home/ahmedhat/.github/jets-index/app'"}
+{"timestamp":"00:07:01.585","source":"Server","level":"ERROR","message":"⨯ \"unhandledRejection: \" Error: ENOENT: no such file or directory, scandir '/home/ahmedhat/.github/jets-index/app'"}
+{"timestamp":"00:07:01.604","source":"Server","level":"ERROR","message":"Error: ENOENT: no such file or directory, scandir '/home/ahmedhat/.github/jets-index/app'"}
+{"timestamp":"00:07:01.609","source":"Server","level":"ERROR","message":"⨯ \"unhandledRejection:\" Error: ENOENT: no such file or directory, scandir '/home/ahmedhat/.github/jets-index/app'"}
+{"timestamp":"00:07:01.623","source":"Server","level":"ERROR","message":"⨯ \"unhandledRejection: \" Error: ENOENT: no such file or directory, scandir '/home/ahmedhat/.github/jets-index/app'"}
