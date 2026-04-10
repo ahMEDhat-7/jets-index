@@ -29,6 +29,10 @@ import { SeederService } from './database/seeder.service';
         username: config.getOrThrow<string>('DB_USERNAME'),
         password: config.getOrThrow<string>('DB_PASSWORD'),
         database: config.getOrThrow<string>('DB_NAME'),
+        ssl: {
+          rejectUnauthorized: true,
+          ca: config.getOrThrow<string>('DB_CA'),
+        },
         autoLoadEntities: true,
         synchronize: config.getOrThrow<boolean>('DB_SYNC'),
         logging: config.getOrThrow<boolean>('DB_LOGGING'),
