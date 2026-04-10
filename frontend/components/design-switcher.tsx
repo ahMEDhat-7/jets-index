@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 
 const designs = [
-  { id: 2, name: "Browse", desc: "Gallery", path: "/browse" },
+  { id: 1, name: "Tactical", desc: "Command", path: "/" },
 ];
 
 export function DesignSwitcher() {

@@ -4,6 +4,7 @@ import {
   Manufacturer,
   Country,
   Stats,
+  Blog,
 } from "@/stores/useDesignStore";
 
 const API_BASE =
@@ -74,6 +75,28 @@ export async function fetchStats(): Promise<Stats> {
   try {
     const res = await fetch(`${API_BASE}/stats`);
     if (!res.ok) throw new Error("Failed to fetch stats");
+    return res.json();
+  } catch (e) {
+    throw e;
+  }
+}
+
+export async function fetchBlogs(): Promise<Blog[]> {
+  try {
+    const res = await fetch(`${API_BASE}/blogs`, {
+      next: { revalidate: 60 },
+    });
+    if (!res.ok) throw new Error("Failed to fetch blogs");
+    return res.json();
+  } catch (e) {
+    throw e;
+  }
+}
+
+export async function fetchBlog(id: string): Promise<Blog | null> {
+  try {
+    const res = await fetch(`${API_BASE}/blogs/${id}`);
+    if (!res.ok) throw new Error("Failed to fetch blog");
     return res.json();
   } catch (e) {
     throw e;

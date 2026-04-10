@@ -33,6 +33,15 @@ export interface Country {
   name: string;
 }
 
+export interface Blog {
+  id: string;
+  title: string;
+  summary?: string;
+  content: string;
+  publishedAt: string;
+  updatedAt: string;
+}
+
 export interface Stats {
   totalCountries: number;
   totalManufacturers: number;
