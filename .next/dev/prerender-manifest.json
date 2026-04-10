@@ -1,11 +1,1 @@
-{
-  "version": 4,
-  "routes": {},
-  "dynamicRoutes": {},
-  "notFoundRoutes": [],
-  "preview": {
-    "previewModeId": "610fcb823ded805ea197b6a6afae46f3",
-    "previewModeSigningKey": "2a912fbf0f32e4b7da7c77d576389e142d32bac794206c897774915eef910d38",
-    "previewModeEncryptionKey": "fae2622ac2b47bdc9e9c63651d28c2e0bff39843425ed3854af556ab2d544668"
-  }
-}
+{"version":4,"routes":{"/en":{},"/ar":{},"/en/blog":{},"/ar/blog":{}},"dynamicRoutes":{"/[lang]":{"dataRoute":null,"dataRouteRegex":null,"fallback":null,"fallbackRevalidate":false,"fallbackSourceRoute":"/[lang]","routeRegex":"^\\/([^/]+?)(?:\\/)?$","allowHeader":[]},"/[lang]/blog":{"dataRoute":null,"dataRouteRegex":null,"fallback":null,"fallbackRevalidate":false,"fallbackSourceRoute":"/[lang]/blog","routeRegex":"^\\/([^/]+?)\\/blog(?:\\/)?$","allowHeader":[]}},"notFoundRoutes":[],"preview":{"previewModeId":"9812abc8351355a3582c5c24c7829cbc","previewModeSigningKey":"b842e2e429d93944bfacc07148da115e288b2a119c09f74bb9b879f97002cdd1","previewModeEncryptionKey":"3c462fcef8bd005127bb2663c2eae67b231972d7f1b52ae54e188ab9e0644854"}}

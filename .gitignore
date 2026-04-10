@@ -28,3 +28,4 @@ next-env.d.ts
 # OS specific files
 .DS_Store
 *.pem
+.env.*
