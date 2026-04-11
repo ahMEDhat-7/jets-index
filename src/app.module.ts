@@ -16,7 +16,7 @@ import { SeederService } from './database/seeder.service';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: `.env.${process.env.NODE_ENV === 'dev' ? 'dev' : 'prod'}`,
+      envFilePath: process.env.NODE_ENV === 'dev' ? '.env.dev' : '.env',
       isGlobal: true,
     }),
     TypeOrmModule.forRootAsync({
