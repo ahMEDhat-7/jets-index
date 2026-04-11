@@ -1,0 +1,25 @@
+"use strict";
+/*
+ * ATTENTION: An "eval-source-map" devtool has been used.
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file with attached SourceMaps in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
+exports.id = "_rsc_messages_ar_json";
+exports.ids = ["_rsc_messages_ar_json"];
+exports.modules = {
+
+/***/ "(rsc)/./messages/ar.json":
+/*!**************************!*\
+  !*** ./messages/ar.json ***!
+  \**************************/
+/***/ ((module) => {
+
+module.exports = /*#__PURE__*/JSON.parse('{"Navigation":{"home":"الرئيسية","browse":"تصفح","news":"الأخبار"},"Home":{"hero":{"tagline":"قاعدة بيانات عسكرية","title":"مؤشر الطائرات","subtitle":"موسوعتك الشاملة لمنصات الطيران العسكري","description":"مورد أساسي لاستكشاف Aircraft السفن الحربية وأنظمة military من حول العالم. مصمم للهواة والباحثين والمحترفين في مجال الدفاع.","cta":"استكشف قاعدة البيانات"},"mission":{"title":"حول المشروع","sections":{"comprehensiveData":{"title":"بيانات شاملة","description":"مواصفات مفصلة وتاريخ وتفاصيل تشغيلية لمئات المنصات العسكرية حول العالم."},"globalCoverage":{"title":"تغطية عالمية","description":"من كلاسيكيات الحرب العالمية الثانية إلى المقاتلات الحديثة من الجيل الخامس، استكشف منصات من كل عصر ودولة."},"openAccess":{"title":"وصول مفتوح","description":"منصة مجانية ومفتوحة للجميع المهتمين بطيران الدفاع والتقنية العسكرية."}},"about":{"vision":{"title":"رؤيتنا","description":"يهدف مؤشر Jets إلى أن يكون المورد المفتوح المصدر الأول لمعلومات المنصات العسكرية. نؤمن أن المعرفة حول تقنية الدفاع يجب أن تكون متاحة للجميع - من هواة الطيران إلى محللي الدفاع والطلاب والباحثين."},"purpose":{"title":"الغرض","description":"يخدم هذا المشروع كقاعدة بيانات مركزية توثق الطائرات العسكرية والسفن الحربية والأنظمة البرية. سواء كنت تبحث عن Aircraft تاريخية، أو تقارن المقاتلات الحديثة، أو تتعلم عن القدرات البحرية، يوفر مؤشر Jets البيانات التي تحتاجها."},"creator":{"title":"المنشئ","description":"مؤشر Jets هو مشروع شغور مبني بتقنيات الويب الحديثة. يجمع بين واجهة Next.js الخلفية مع NestJS، مصمم ليكون سريعًا واستجابيًا وغنيًا بالبيانات. يتطور المشروع باستمرار مع منصات جديدة ومواصفات محدثة وتجربة مستخدم محسنة."}},"cta":{"title":"جاهز للاستكشاف؟","description":"ابدأ بتصفح قاعدة البيانات الشاملة لدينا من المنصات العسكرية من حول العالم.","button":"تصفح جميع المنصات"}}},"Browse":{"hero":{"featured":"مميز"},"filters":{"title":"معرض المنصات","search":"بحث","searchPlaceholder":"أدخل استعلام...","filters":"تصفية","category":"الفئة","country":"البلد","allCategories":"جميع الفئات","allCountries":"جميع البلدان"},"details":{"category":"الفئة","status":"الحالة","manufacturer":"الشركة المصنعة","country":"البلد","unitCost":"تكلفة الوحدة","na":"غ/م"},"empty":{"title":"لم يتم العثور على منصات."},"loading":{"text":"جاري التحميل..."}},"Blog":{"title":"أحدث الأخبار","description":"ابق على اطلاع بأحدث الأخبار والرؤى حول منصات الطيران العسكري","empty":{"title":"لا توجد منشورات مدونة متاحة بعد."}},"Common":{"loading":"جاري التحميل...","error":"حدث خطأ"}}');
+
+/***/ })
+
+};
+;
