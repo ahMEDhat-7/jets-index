@@ -7,6 +7,7 @@
 /out/
 dist
 docs
+.next
 
 # Production build artifacts
 /build
@@ -19,6 +20,7 @@ yarn-error.log*
 
 # Local environment variables
 .env*.local
+.env
 
 # Vercel-specific (if using Vercel)
 .vercel
