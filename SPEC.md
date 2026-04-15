@@ -4,7 +4,7 @@
 
 **Project Name**: Jets-Index Frontend  
 **Type**: Encyclopedia/Reference Web Application  
-**Core Functionality**: A database of military/aviation platforms with 10 distinct UI design concepts for user review  
+**Core Functionality**: A database of military/aviation platforms
 **Target Users**: Defense enthusiasts, researchers, military professionals
 
 ---
