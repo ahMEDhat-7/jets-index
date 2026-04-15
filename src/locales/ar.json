@@ -17,6 +17,25 @@
       "categories": "فئات",
       "manufacturers": "مصنعين",
       "countries": "دول"
+    },
+    "about": {
+      "goal": {
+        "title": "هدفنا",
+        "content": "[نصPlaceholder: حدد الهدف الأساسي لمشروع مؤشر Jets. ما المشكلة التي نحلها؟]"
+      },
+      "vision": {
+        "title": "رؤيتنا",
+        "content": "[نصPlaceholder: صِف الرؤية طويلة المدى لمؤشر Jets.]"
+      },
+      "purpose": {
+        "title": "غايتنا",
+        "content": "[نصPlaceholder: اشرح الغرض الأساسي ومهمة مؤشر Jets.]"
+      },
+      "whatsNext": {
+        "title": "ماذا بعد",
+        "content": "[نصPlaceholder: حدد الميزات القادمة والتوسع المخطط.]",
+        "comingSoon": "قريباً"
+      }
     }
   },
   "Browse": {

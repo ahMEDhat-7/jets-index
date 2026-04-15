@@ -17,6 +17,25 @@
       "categories": "Categories",
       "manufacturers": "Manufacturers",
       "countries": "Countries"
+    },
+    "about": {
+      "goal": {
+        "title": "Our Goal",
+        "content": "[Goal placeholder: Define the primary objective of the Jets Index project. What problem are we solving? What impact do we want to make in the defense/military information space?]"
+      },
+      "vision": {
+        "title": "Our Vision",
+        "content": "[Vision placeholder: Describe the long-term vision for Jets Index. What do we aspire to become? How do we see the project shaping the future of military platform documentation?]"
+      },
+      "purpose": {
+        "title": "Our Purpose",
+        "content": "[Purpose placeholder: Explain the core purpose and mission of Jets Index. Why does this project exist? Who benefits from it and how does it serve the community?]"
+      },
+      "whatsNext": {
+        "title": "What's Next",
+        "content": "[Roadmap placeholder: Outline upcoming features, planned expansions, and the future direction of Jets Index.]",
+        "comingSoon": "Coming Soon"
+      }
     }
   },
   "Browse": {

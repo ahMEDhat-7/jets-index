@@ -4,8 +4,8 @@ import { Plane, Menu, X, Globe, Sun, Moon, ChevronDown } from 'lucide-react';
 import { useTheme } from './ThemeProvider';
 
 const translations = {
-  en: { browse: 'Browse', news: 'News' },
-  ar: { browse: 'تصفح', news: 'الأخبار' }
+  en: { home: 'Home', browse: 'Browse', news: 'News' },
+  ar: { home: 'الرئيسية', browse: 'تصفح', news: 'الأخبار' }
 };
 
 export default function Header() {
@@ -28,6 +28,7 @@ export default function Header() {
   }, []);
 
   const navItems = [
+    { href: `/${currentLang}/home`, label: translations[currentLang as keyof typeof translations].home },
     { href: `/${currentLang}/browse`, label: translations[currentLang as keyof typeof translations].browse },
     { href: `/${currentLang}/blog`, label: translations[currentLang as keyof typeof translations].news },
   ];
