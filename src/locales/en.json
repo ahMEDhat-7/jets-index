@@ -21,19 +21,19 @@
     "about": {
       "goal": {
         "title": "Our Goal",
-        "content": "[Goal placeholder: Define the primary objective of the Jets Index project. What problem are we solving? What impact do we want to make in the defense/military information space?]"
+        "content": "Our goal is to create the most comprehensive and accessible database of military aviation platforms, providing defense enthusiasts, researchers, and military professionals with accurate, well-organized information about aircraft, naval vessels, and military systems from around the world."
       },
       "vision": {
         "title": "Our Vision",
-        "content": "[Vision placeholder: Describe the long-term vision for Jets Index. What do we aspire to become? How do we see the project shaping the future of military platform documentation?]"
+        "content": "We envision Jets Index becoming the definitive reference for military platform documentation, offering 10 unique UI design concepts that showcase the diversity and complexity of global defense systems while making this information accessible to everyone."
       },
       "purpose": {
         "title": "Our Purpose",
-        "content": "[Purpose placeholder: Explain the core purpose and mission of Jets Index. Why does this project exist? Who benefits from it and how does it serve the community?]"
+        "content": "Jets Index exists to bridge the gap between complex military technology and public understanding. We are dedicated to documenting, categorizing, and presenting military platforms in a way that educates and inspires the next generation of defense professionals and aviation enthusiasts."
       },
       "whatsNext": {
         "title": "What's Next",
-        "content": "[Roadmap placeholder: Outline upcoming features, planned expansions, and the future direction of Jets Index.]",
+        "content": "We are continuously expanding our database and developing new ways to explore military platforms. Upcoming features include advanced comparison tools, detailed technical specifications, and interactive visualizations.",
         "comingSoon": "Coming Soon"
       }
     }
