@@ -1,0 +1,54 @@
+{
+  "Navigation": {
+    "home": "الرئيسية",
+    "browse": "تصفح",
+    "news": "الأخبار"
+  },
+  "Home": {
+    "hero": {
+      "tagline": "قاعدة البيانات العسكرية",
+      "title": "مؤشر الطائرات",
+      "subtitle": "موسوعتك الشاملة",
+      "description": "دليل نهائي لاستكشاف الطائرات والسفن الحربية والأنظمة العسكرية من جميع أنحاء العالم.",
+      "cta": "استكشف"
+    },
+    "stats": {
+      "platforms": "منصات",
+      "categories": "فئات",
+      "manufacturers": "مصنعين",
+      "countries": "دول"
+    }
+  },
+  "Browse": {
+    "filters": {
+      "title": "معرض المنصات",
+      "searchPlaceholder": "ابحث عن المنصات...",
+      "allCategories": "جميع الفئات",
+      "allCountries": "جميع الدول",
+      "allManufacturers": "جميع المصنعين"
+    },
+    "details": {
+      "category": "الفئة",
+      "status": "الحالة",
+      "manufacturer": "الشركة المصنعة",
+      "country": "البلد",
+      "unitCost": "التكلفة",
+      "na": "غ/م"
+    },
+    "empty": {
+      "title": "لم يتم العثور على منصات"
+    }
+  },
+  "Blog": {
+    "title": "أحدث الأخبار",
+    "description": "تابع آخر أخبار الطيران العسكري",
+    "readMore": "اقرأ المزيد",
+    "empty": {
+      "title": "لا توجد منشورات بعد"
+    }
+  },
+  "Common": {
+    "loading": "جاري التحميل...",
+    "error": "حدث خطأ"
+  }
+}

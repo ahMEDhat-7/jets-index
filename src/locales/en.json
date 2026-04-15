@@ -1,0 +1,54 @@
+{
+  "Navigation": {
+    "home": "Home",
+    "browse": "Browse",
+    "news": "News"
+  },
+  "Home": {
+    "hero": {
+      "tagline": "MILITARY DATABASE",
+      "title": "JETS INDEX",
+      "subtitle": "Your comprehensive encyclopedia",
+      "description": "A definitive resource for exploring aircraft, naval vessels, and military systems from around the world.",
+      "cta": "Explore"
+    },
+    "stats": {
+      "platforms": "Platforms",
+      "categories": "Categories",
+      "manufacturers": "Manufacturers",
+      "countries": "Countries"
+    }
+  },
+  "Browse": {
+    "filters": {
+      "title": "Platform Gallery",
+      "searchPlaceholder": "Search platforms...",
+      "allCategories": "All Categories",
+      "allCountries": "All Countries",
+      "allManufacturers": "All Manufacturers"
+    },
+    "details": {
+      "category": "Category",
+      "status": "Status",
+      "manufacturer": "Manufacturer",
+      "country": "Country",
+      "unitCost": "Unit Cost",
+      "na": "N/A"
+    },
+    "empty": {
+      "title": "No platforms found"
+    }
+  },
+  "Blog": {
+    "title": "Latest News",
+    "description": "Stay updated with military aviation",
+    "readMore": "Read more",
+    "empty": {
+      "title": "No blog posts available yet"
+    }
+  },
+  "Common": {
+    "loading": "Loading...",
+    "error": "An error occurred"
+  }
+}
