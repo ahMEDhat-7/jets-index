@@ -1,13 +1,28 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDesignStore } from '../store/useDesignStore';
 import type { Blog } from '../types';
 import { FileText, Calendar, X, Loader2 } from 'lucide-react';
 
 export default function BlogPage() {
-  const { blogs, isLoading: storeLoading } = useDesignStore();
+  const { blogs, isLoading, setIsLoading, fetchBlogsIfNeeded } = useDesignStore();
   const [selectedBlog, setSelectedBlog] = useState<Blog | null>(null);
 
-  if (storeLoading && blogs.length === 0) {
+  useEffect(() => {
+    let cancelled = false;
+    async function loadBlogs() {
+      if (blogs.length > 0) return;
+      setIsLoading(true);
+      try {
+        await fetchBlogsIfNeeded();
+      } finally {
+        if (!cancelled) setIsLoading(false);
+      }
+    }
+    loadBlogs();
+    return () => { cancelled = true; };
+  }, [blogs.length, setIsLoading, fetchBlogsIfNeeded]);
+
+  if (isLoading && blogs.length === 0) {
     return (
       <div className="min-h-screen bg-[hsl(var(--background))] flex items-center justify-center">
         <Loader2 className="w-8 h-8 animate-spin text-[hsl(var(--muted-foreground))]" />

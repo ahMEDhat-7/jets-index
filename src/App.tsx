@@ -5,13 +5,11 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import { ThemeProvider } from "./components/ThemeProvider";
 import { useTheme } from "./components/ThemeProvider";
-import { useDesignStore } from "./store/useDesignStore";
 
 function AppContent() {
   const { lang } = useParams();
   const { i18n } = useTranslation();
   const { theme } = useTheme();
-  const { fetchAllData } = useDesignStore();
 
   useEffect(() => {
     if (lang && (lang === "en" || lang === "ar")) {
@@ -20,10 +18,6 @@ function AppContent() {
       document.documentElement.lang = lang;
     }
   }, [lang, i18n]);
-
-  useEffect(() => {
-    fetchAllData();
-  }, [fetchAllData]);
 
   useEffect(() => {
     if (theme === 'dark') {

@@ -4,7 +4,7 @@ export interface Platform {
   description?: string;
   unitCostUsd?: number;
   operationalStatus?: string;
-  technicalSpecs?: Record<string, unknown>;
+  technicalSpecs?: Record<string, string>;
   imageUrl?: string;
   category?: Category;
   manufacturer?: Manufacturer;

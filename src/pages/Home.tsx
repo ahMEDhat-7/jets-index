@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import { useEffect } from "react";
 import { useDesignStore } from "../store/useDesignStore";
 import { Plane, Target, Eye, Heart, Rocket, Factory, MapPin, Layers } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -7,7 +8,22 @@ import { ScrollReveal } from "../components/ScrollReveal";
 
 export default function HomePage() {
   const { t } = useTranslation();
-  const { stats, isLoading } = useDesignStore();
+  const { stats, isLoading, setIsLoading, fetchAllData } = useDesignStore();
+
+  useEffect(() => {
+    let cancelled = false;
+    async function loadStats() {
+      if (stats) return;
+      setIsLoading(true);
+      try {
+        await fetchAllData();
+      } finally {
+        if (!cancelled) setIsLoading(false);
+      }
+    }
+    loadStats();
+    return () => { cancelled = true; };
+  }, [stats, setIsLoading, fetchAllData]);
 
   const statItems = [
     { icon: Plane, key: "platforms", value: stats?.totalPlatforms || 0 },

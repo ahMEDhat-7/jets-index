@@ -27,6 +27,7 @@ export default function PlatformsPage() {
     categoryId: '',
     manufacturerId: '',
     countryId: '',
+    technicalSpecs: {},
   });
   const [saving, setSaving] = useState(false);
 
@@ -60,12 +61,18 @@ export default function PlatformsPage() {
       categoryId: categories[0]?.id || '',
       manufacturerId: manufacturers[0]?.id || '',
       countryId: countries[0]?.id || '',
+      technicalSpecs: {},
     });
     setDialogOpen(true);
   };
 
   const handleOpenEdit = (platform: Platform) => {
     setEditingPlatform(platform);
+    const specs = platform.technicalSpecs 
+      ? Object.fromEntries(
+          Object.entries(platform.technicalSpecs).map(([k, v]) => [k, String(v ?? '')])
+        )
+      : {};
     setFormData({
       name: platform.name,
       description: platform.description || '',
@@ -75,6 +82,7 @@ export default function PlatformsPage() {
       categoryId: platform.category?.id || '',
       manufacturerId: platform.manufacturer?.id || '',
       countryId: platform.country?.id || '',
+      technicalSpecs: specs,
     });
     setDialogOpen(true);
   };
@@ -278,6 +286,65 @@ export default function PlatformsPage() {
                   onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
                   className="w-full px-3 py-2 rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--background))] text-[hsl(var(--card-foreground))]"
                 />
+              </div>
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <label className="block text-sm font-medium text-[hsl(var(--card-foreground))]">Technical Specifications</label>
+                  <button
+                    type="button"
+                    onClick={() => setFormData({ 
+                      ...formData, 
+                      technicalSpecs: { ...formData.technicalSpecs, '': '' } 
+                    })}
+                    className="text-xs text-[hsl(var(--primary))] hover:underline flex items-center gap-1"
+                  >
+                    <Plus className="w-3 h-3" /> Add Spec
+                  </button>
+                </div>
+                {formData.technicalSpecs && Object.keys(formData.technicalSpecs).length > 0 ? (
+                  <div className="space-y-2 max-h-40 overflow-y-auto pr-1">
+                    {Object.entries(formData.technicalSpecs).map(([key, value], index) => (
+                      <div key={index} className="flex items-center gap-2">
+                        <input
+                          type="text"
+                          placeholder="Spec name (e.g., Max Speed)"
+                          value={key}
+                          onChange={(e) => {
+                            const newSpecs = { ...formData.technicalSpecs };
+                            const oldValue = newSpecs[key];
+                            delete newSpecs[key];
+                            newSpecs[e.target.value] = oldValue;
+                            setFormData({ ...formData, technicalSpecs: newSpecs });
+                          }}
+                          className="flex-1 px-3 py-2 text-sm rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--background))] text-[hsl(var(--card-foreground))]"
+                        />
+                        <input
+                          type="text"
+                          placeholder="Value (e.g., Mach 2.0)"
+                          value={value}
+                          onChange={(e) => setFormData({
+                            ...formData,
+                            technicalSpecs: { ...formData.technicalSpecs, [key]: e.target.value }
+                          })}
+                          className="flex-1 px-3 py-2 text-sm rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--background))] text-[hsl(var(--card-foreground))]"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const newSpecs = { ...formData.technicalSpecs };
+                            delete newSpecs[key];
+                            setFormData({ ...formData, technicalSpecs: newSpecs });
+                          }}
+                          className="p-2 text-[hsl(var(--muted-foreground))] hover:text-red-500 rounded"
+                        >
+                          <X className="w-4 h-4" />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-xs text-[hsl(var(--muted-foreground))]">No specifications added</p>
+                )}
               </div>
             </div>
             <div className="flex justify-end gap-3 mt-6">

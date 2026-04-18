@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { persist, createJSONStorage } from 'zustand/middleware';
 import type { Platform, Category, Manufacturer, Country, Stats, Blog } from '../types';
 import { fetchPlatforms, fetchCategories, fetchCountries, fetchManufacturers, fetchBlogs, fetchStats } from '../lib/api';
 
@@ -10,7 +10,7 @@ interface CacheEntry<T> {
   timestamp: number;
 }
 
-interface DesignStore {
+interface PersistedState {
   platforms: Platform[];
   categories: Category[];
   manufacturers: Manufacturer[];
@@ -24,6 +24,9 @@ interface DesignStore {
   countriesCache: CacheEntry<Country[]> | null;
   blogsCache: CacheEntry<Blog[]> | null;
   statsCache: CacheEntry<Stats | null> | null;
+}
+
+interface DesignStore extends PersistedState {
 
   selectedCategory: string | null;
   setSelectedCategory: (id: string | null) => void;
@@ -208,7 +211,14 @@ export const useDesignStore = create<DesignStore>()(
     }),
     {
       name: 'jets-index-storage',
+      storage: createJSONStorage(() => sessionStorage),
       partialize: (state) => ({
+        platforms: state.platforms,
+        categories: state.categories,
+        manufacturers: state.manufacturers,
+        countries: state.countries,
+        blogs: state.blogs,
+        stats: state.stats,
         platformCache: state.platformCache,
         categoriesCache: state.categoriesCache,
         manufacturersCache: state.manufacturersCache,

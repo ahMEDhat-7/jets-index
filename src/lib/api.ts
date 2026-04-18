@@ -220,7 +220,7 @@ export interface CreatePlatformData {
   description?: string;
   unitCostUsd?: number;
   operationalStatus?: string;
-  technicalSpecs?: Record<string, unknown>;
+  technicalSpecs?: Record<string, string>;
   imageUrl?: string;
   categoryId?: string;
   manufacturerId?: string;
