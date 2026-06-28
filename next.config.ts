@@ -7,7 +7,12 @@ const nextConfig: NextConfig = {
   },
   poweredByHeader: false,
   compress: true,
+  turbopack: {
+    resolveAlias: {
+      "next-intl/config": "./src/i18n/request.ts",
+    },
+  },
 };
 
-const withNextIntl = createNextIntlPlugin();
+const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 export default withNextIntl(nextConfig);
