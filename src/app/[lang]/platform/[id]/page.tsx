@@ -1,0 +1,204 @@
+import { notFound } from "next/navigation";
+import { getTranslations } from "next-intl/server";
+import { prisma } from "@/lib/prisma";
+import { formatCurrency, formatDate, getTranslation } from "@/lib/utils";
+import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
+
+export const revalidate = 60;
+
+export default async function PlatformDetailPage({
+  params,
+}: {
+  params: Promise<{ lang: string; id: string }>;
+}): Promise<React.ReactNode> {
+  const { lang, id } = await params;
+  const t = await getTranslations({ locale: lang, namespace: "Browse" });
+
+  const platform = await prisma.platform.findUnique({
+    where: { id },
+    include: {
+      translations: { select: { locale: true, name: true, description: true } },
+      category: {
+        select: {
+          id: true,
+          translations: { select: { locale: true, name: true } },
+        },
+      },
+      manufacturer: {
+        select: {
+          id: true,
+          translations: { select: { locale: true, name: true, specialization: true } },
+        },
+      },
+      country: {
+        select: {
+          id: true,
+          translations: { select: { locale: true, name: true } },
+        },
+      },
+    },
+  });
+
+  if (!platform) {
+    notFound();
+  }
+
+  const name = getTranslation(platform.translations, lang);
+  const description = getTranslation(
+    platform.translations.map((tr) => ({
+      locale: tr.locale,
+      name: tr.description ?? "",
+    })),
+    lang,
+    ""
+  );
+
+  return (
+    <div className="min-h-screen">
+      <Header lang={lang} activePage="browse" />
+
+      {/* Hero with Image */}
+      <section className="border-b border-tactical-border bg-tactical-bg-secondary/30 px-4 py-12">
+        <div className="mx-auto max-w-4xl">
+          {platform.imageUrl ? (
+            <div className="mb-8 overflow-hidden rounded border border-tactical-border">
+              <img
+                src={platform.imageUrl}
+                alt={name}
+                className="h-64 w-full object-cover md:h-96"
+              />
+            </div>
+          ) : (
+            <div className="mb-8 flex h-64 items-center justify-center rounded border border-tactical-border bg-tactical-bg-secondary/50 md:h-96">
+              <span className="font-tactical-display text-lg text-tactical-text-secondary">
+                NO IMAGE AVAILABLE
+              </span>
+            </div>
+          )}
+
+          {/* Status Badge */}
+          <div className="mb-4 flex items-center gap-3">
+            <div className="flex items-center gap-2">
+              <span
+                className={`h-2.5 w-2.5 rounded-full ${
+                  platform.operationalStatus === "Active"
+                    ? "bg-tactical-success"
+                    : platform.operationalStatus === "Development"
+                      ? "bg-tactical-accent"
+                      : platform.operationalStatus === "Retired"
+                        ? "bg-tactical-alert"
+                        : "bg-tactical-text-secondary"
+                }`}
+              />
+              <span className="text-sm text-tactical-text-secondary">
+                {platform.operationalStatus ?? "Unknown"}
+              </span>
+            </div>
+            <span className="text-tactical-border">|</span>
+            <span className="text-sm text-tactical-text-secondary">
+              {getTranslation(platform.category.translations, lang, "Category")}
+            </span>
+          </div>
+
+          <h1 className="mb-4 font-tactical-display text-4xl font-bold text-tactical-accent md:text-5xl">
+            {name}
+          </h1>
+
+          {description && (
+            <p className="max-w-3xl text-lg leading-relaxed text-tactical-text-secondary">
+              {description}
+            </p>
+          )}
+        </div>
+      </section>
+
+      {/* Details Grid */}
+      <section className="px-4 py-8">
+        <div className="mx-auto max-w-4xl">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+            {/* Specifications */}
+            <div className="rounded border border-tactical-border bg-tactical-card p-6">
+              <h2 className="mb-4 font-tactical-display text-xl font-bold text-tactical-text">
+                {"Unit Cost & Details"}
+              </h2>
+              <div className="space-y-3">
+                <div className="flex justify-between border-b border-tactical-border pb-2">
+                  <span className="text-tactical-text-secondary">
+                    {t("details.unitCost")}
+                  </span>
+                  <span className="font-bold text-tactical-accent">
+                    {formatCurrency(
+                      platform.unitCostUsd
+                        ? Number(platform.unitCostUsd)
+                        : null
+                    )}
+                  </span>
+                </div>
+                <div className="flex justify-between border-b border-tactical-border pb-2">
+                  <span className="text-tactical-text-secondary">
+                    {t("details.manufacturer")}
+                  </span>
+                  <span className="text-tactical-text">
+                    {getTranslation(
+                      platform.manufacturer.translations,
+                      lang,
+                      "—"
+                    )}
+                  </span>
+                </div>
+                <div className="flex justify-between border-b border-tactical-border pb-2">
+                  <span className="text-tactical-text-secondary">
+                    {t("details.country")}
+                  </span>
+                  <span className="text-tactical-text">
+                    {getTranslation(
+                      platform.country.translations,
+                      lang,
+                      "—"
+                    )}
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-tactical-text-secondary">Status</span>
+                  <span className="text-tactical-text">
+                    {platform.operationalStatus ?? "Unknown"}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Technical Specs */}
+            {platform.technicalSpecs &&
+              typeof platform.technicalSpecs === "object" &&
+              Object.keys(platform.technicalSpecs as Record<string, unknown>)
+                .length > 0 && (
+                <div className="rounded border border-tactical-border bg-tactical-card p-6">
+                  <h2 className="mb-4 font-tactical-display text-xl font-bold text-tactical-text">
+                    Technical Specifications
+                  </h2>
+                  <div className="space-y-3">
+                    {Object.entries(
+                      platform.technicalSpecs as Record<string, string>
+                    ).map(([key, value]) => (
+                      <div
+                        key={key}
+                        className="flex justify-between border-b border-tactical-border pb-2 last:border-b-0"
+                      >
+                        <span className="text-tactical-text-secondary">
+                          {key}
+                        </span>
+                        <span className="text-tactical-text">{String(value)}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+          </div>
+        </div>
+      </section>
+
+      <Footer lang={lang} />
+    </div>
+  );
+}

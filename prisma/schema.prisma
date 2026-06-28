@@ -15,7 +15,7 @@ enum Role {
 // ─── Base Tables ──────────────────────────────────────────────────────────────
 
 model User {
-  id        String   @id @default(uuid()) @db.Uuid
+  id        String   @id @default(uuid()) @db.Uuid @map("user_id")
   email     String   @unique @db.VarChar(255)
   password  String   @db.VarChar(255)
   role      Role     @default(USER)
@@ -32,7 +32,7 @@ model Platform {
   technicalSpecs   Json?    @map("technical_specs")
   imageUrl         String?  @map("image_url") @db.VarChar(512)
   categoryId       String   @map("category_id") @db.Uuid
-  manufacturerId   String   @map("manufacturer_id") @db.Uuid
+  manufacturerId   String   @map("manu_id") @db.Uuid
   countryId        String   @map("country_id") @db.Uuid
   createdAt        DateTime @default(now()) @map("created_at")
   updatedAt        DateTime @default(now()) @map("updated_at") @updatedAt
@@ -114,7 +114,7 @@ model CountryTranslation {
 }
 
 model Manufacturer {
-  id        String   @id @default(uuid()) @db.Uuid
+  id        String   @id @default(uuid()) @db.Uuid @map("manu_id")
   countryId String   @map("country_id") @db.Uuid
   createdAt DateTime @default(now()) @map("created_at")
 
@@ -147,6 +147,8 @@ model Blog {
   updatedAt   DateTime @default(now()) @map("updated_at") @updatedAt
 
   translations BlogTranslation[]
+
+  @@map("blogs")
 }
 
 model BlogTranslation {

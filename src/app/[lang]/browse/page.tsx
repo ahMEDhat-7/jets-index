@@ -2,6 +2,8 @@ import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { prisma } from "@/lib/prisma";
 import { formatCurrency, getTranslation } from "@/lib/utils";
+import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
 
 export const revalidate = 60;
 
@@ -53,37 +55,7 @@ export default async function BrowsePage({
 
   return (
     <div className="min-h-screen">
-      {/* Navigation */}
-      <nav className="border-b border-tactical-border bg-tactical-bg/80 backdrop-blur-sm">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4">
-          <Link
-            href={`/${lang}`}
-            className="font-tactical-display text-xl font-bold text-tactical-accent"
-          >
-            JETDEX
-          </Link>
-          <div className="flex items-center gap-6">
-            <Link
-              href={`/${lang}/browse`}
-              className="text-tactical-accent transition-colors hover:text-tactical-accent/80"
-            >
-              {t("filters.title")}
-            </Link>
-            <Link
-              href={`/${lang}/blog`}
-              className="text-tactical-text-secondary transition-colors hover:text-tactical-text"
-            >
-              Blog
-            </Link>
-            <Link
-              href="/admin"
-              className="rounded bg-tactical-accent/20 px-3 py-1 text-tactical-accent transition-colors hover:bg-tactical-accent/30"
-            >
-              Admin
-            </Link>
-          </div>
-        </div>
-      </nav>
+      <Header lang={lang} activePage="browse" />
 
       {/* Hero */}
       <section className="border-b border-tactical-border bg-tactical-bg-secondary/30 px-4 py-12">
@@ -140,10 +112,28 @@ export default async function BrowsePage({
           ) : (
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
               {platforms.map((platform) => (
-                <div
+                <Link
                   key={platform.id}
-                  className="group rounded border border-tactical-border bg-tactical-card p-6 transition-all tactical-glow hover:border-tactical-accent/50"
+                  href={`/${lang}/platform/${platform.id}`}
+                  className="group block rounded border border-tactical-border bg-tactical-card p-6 transition-all tactical-glow hover:border-tactical-accent/50"
                 >
+                  {/* Image */}
+                  {platform.imageUrl ? (
+                    <div className="mb-4 overflow-hidden rounded border border-tactical-border">
+                      <img
+                        src={platform.imageUrl}
+                        alt={getTranslation(platform.translations, lang)}
+                        className="h-40 w-full object-cover transition-transform group-hover:scale-105"
+                      />
+                    </div>
+                  ) : (
+                    <div className="mb-4 flex h-40 items-center justify-center rounded border border-tactical-border bg-tactical-bg-secondary/50">
+                      <span className="font-tactical-display text-sm text-tactical-text-secondary">
+                        NO IMAGE
+                      </span>
+                    </div>
+                  )}
+
                   {/* Status Badge */}
                   <div className="mb-4 flex items-center justify-between">
                     <div className="flex items-center gap-2">
@@ -179,9 +169,9 @@ export default async function BrowsePage({
                   {/* Description */}
                   <p className="mb-4 line-clamp-2 text-sm text-tactical-text-secondary">
                     {getTranslation(
-                      platform.translations.map((t) => ({
-                        locale: t.locale,
-                        name: t.description ?? "",
+                      platform.translations.map((tr) => ({
+                        locale: tr.locale,
+                        name: tr.description ?? "",
                       })),
                       lang,
                       ""
@@ -227,21 +217,14 @@ export default async function BrowsePage({
                       </span>
                     </div>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           )}
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="border-t border-tactical-border bg-tactical-bg-secondary/30 px-4 py-8">
-        <div className="mx-auto flex max-w-6xl items-center justify-between">
-          <div className="font-tactical-display text-sm text-tactical-text-secondary">
-            &copy; 2026 Jetdex
-          </div>
-        </div>
-      </footer>
+      <Footer lang={lang} />
     </div>
   );
 }
