@@ -1,0 +1,203 @@
+{
+  "Navigation": {
+    "home": "الرئيسية",
+    "browse": "تصفح",
+    "blog": "المدونة",
+    "admin": "الإدارة",
+    "login": "تسجيل الدخول",
+    "logout": "تسجيل الخروج"
+  },
+  "Home": {
+    "hero": {
+      "title": "جيتديكس",
+      "subtitle": "قاعدة بيانات الطيران العسكري",
+      "description": "فهرس شامل لmanufacturers طائرات المقاتلة وبرامج الطائرات وأنظمة الطيران العسكري في العالم.",
+      "cta": "تصفح الطائرات",
+      "ctaSecondary": "اقرأ المدونة"
+    },
+    "mission": {
+      "title": "مهمتنا",
+      "description": "بيانات الطيران العسكري مبعثرة عبر المقالات والمجلات PDF والمصادر غير المنظمة. توفر جيتديكس مجموعة بيانات منظومة وقابلة للبحث عن المنصات العسكرية العالمية."
+    },
+    "features": {
+      "title": "الميزات",
+      "platforms": {
+        "title": "50+ منصة",
+        "description": "ملفات تعريف مفصلة للطائرات العسكرية حول العالم"
+      },
+      "categories": {
+        "title": "8 فئات",
+        "description": "منظمة حسب نوع الطائرة ودورها"
+      },
+      "countries": {
+        "title": "15+ دولة",
+        "description": "تغطية شاملة للطيران العسكري العالمي"
+      },
+      "bilingual": {
+        "title": "ثنائية اللغة",
+        "description": "دعم كامل للعربية والإنجليزية"
+      }
+    },
+    "about": {
+      "title": "عن جيتديكس",
+      "description": "تم بناؤه لعشاق الدفاع والباحثين والمهنيين العسكريين الباحثين عن بيانات مرجعية منظومة."
+    }
+  },
+  "Browse": {
+    "filters": {
+      "title": "الفلاتر",
+      "search": "بحث عن طائرة...",
+      "category": "الفئة",
+      "country": "الدولة",
+      "status": "الحالة",
+      "clear": "مسح الفلاتر",
+      "allCategories": "جميع الفئات",
+      "allCountries": "جميع الدول",
+      "allStatuses": "جميع الحالات"
+    },
+    "details": {
+      "unitCost": "التكلفة الوحدة",
+      "status": "الحالة",
+      "category": "الفئة",
+      "manufacturer": "ال manufacturer",
+      "country": "الدولة",
+      "specs": "المواصفات الفنية",
+      "description": "الوصف",
+      "back": "العودة للتصفح"
+    },
+    "empty": {
+      "title": "لم يتم العثور على طائرات",
+      "description": "حاول تعديل الفلاتر أو استعلام البحث."
+    },
+    "loading": "جاري تحميل الطائرات..."
+  },
+  "Blog": {
+    "title": "المدونة",
+    "title": "المدونة",
+    "description": "تحليلات وأخبار عن الطيران العسكري",
+    "empty": {
+      "title": "لا توجد منشورات بعد",
+      "description": "تحقق لاحقاً من المحتوى الجديد."
+    },
+    "readMore": "اقرأ المزيد",
+    "published": "تاريخ النشر",
+    "back": "العودة للمدونة"
+  },
+  "Common": {
+    "loading": "جاري التحميل...",
+    "error": "حدث خطأ",
+    "retry": "إعادة المحاولة",
+    "cancel": "إلغاء",
+    "save": "حفظ",
+    "delete": "حذف",
+    "edit": "تعديل",
+    "create": "إنشاء",
+    "confirm": "تأكيد",
+    "yes": "نعم",
+    "no": "لا"
+  },
+  "Admin": {
+    "sidebar": {
+      "dashboard": "لوحة التحكم",
+      "platforms": "المنصات",
+      "blogs": "المدونات",
+      "categories": "الفئات",
+      "countries": "الدول",
+      "manufacturers": "ال manufacturers"
+    },
+    "header": {
+      "title": "إدارة جيتديكس",
+      "logout": "تسجيل الخروج"
+    },
+    "dashboard": {
+      "title": "لوحة التحكم",
+      "totalPlatforms": "إجمالي المنصات",
+      "totalCategories": "إجمالي الفئات",
+      "totalCountries": "إجمالي الدول",
+      "totalManufacturers": "إجمالي manufacturers",
+      "totalBlogs": "إجمالي المدونات",
+      "platformsByCategory": "المنصات حسب الفئة",
+      "platformsByCountry": "المنصات حسب الدولة",
+      "platformsByStatus": "المنصات حسب الحالة",
+      "recentBlogs": "منشورات المدونة الأخيرة"
+    },
+    "platforms": {
+      "title": "المنصات",
+      "create": "إنشاء منصة",
+      "edit": "تعديل المنصة",
+      "delete": "حذف المنصة",
+      "deleteConfirm": "هل أنت متأكد من حذف هذه المنصة؟",
+      "name": "الاسم",
+      "description": "الوصف",
+      "unitCost": "تكلفة الوحدة (بالدولار)",
+      "status": "الحالة التشغيلية",
+      "imageUrl": "رابط الصورة",
+      "category": "الفئة",
+      "manufacturer": "ال manufacturer",
+      "country": "الدولة",
+      "technicalSpecs": "المواصفات الفنية",
+      "saved": "تم حفظ المنصة بنجاح",
+      "deleted": "تم حذف المنصة بنجاح"
+    },
+    "blogs": {
+      "title": "المدونات",
+      "create": "إنشاء مدونة",
+      "edit": "تعديل المدونة",
+      "delete": "حذف المدونة",
+      "deleteConfirm": "هل أنت متأكد من حذف هذا المنشور؟",
+      "title_label": "العنوان",
+      "summary": "الملخص",
+      "content": "المحتوى",
+      "preview": "المعاينة",
+      "saved": "تم حفظ المدونة بنجاح",
+      "deleted": "تم حذف المدونة بنجاح"
+    },
+    "categories": {
+      "title": "الفئات",
+      "create": "إنشاء فئة",
+      "edit": "تعديل الفئة",
+      "delete": "حذف الفئة",
+      "deleteConfirm": "هل أنت متأكد من حذف هذه الفئة؟",
+      "name": "الاسم",
+      "domain": "المجال",
+      "saved": "تم حفظ الفئة بنجاح",
+      "deleted": "تم حذف الفئة بنجاح"
+    },
+    "countries": {
+      "title": "الدول",
+      "create": "إنشاء دولة",
+      "edit": "تعديل الدولة",
+      "delete": "حذف الدولة",
+      "deleteConfirm": "هل أنت متأكد من حذف هذه الدولة؟",
+      "name": "الاسم",
+      "saved": "تم حفظ الدولة بنجاح",
+      "deleted": "تم حذف الدولة بنجاح"
+    },
+    "manufacturers": {
+      "title": "ال manufacturers",
+      "create": "إنشاء manufacturer",
+      "edit": "تعديل manufacturer",
+      "delete": "حذف manufacturer",
+      "deleteConfirm": "هل أنت متأكد من حذف هذا manufacturer؟",
+      "name": "الاسم",
+      "specialization": "التخصص",
+      "country": "الدولة",
+      "saved": "تم حفظ manufacturer بنجاح",
+      "deleted": "تم حذف manufacturer بنجاح"
+    },
+    "common": {
+      "sharedFields": "الحقول المشتركة",
+      "languageFields": "حقول اللغة",
+      "english": "English",
+      "arabic": "العربية",
+      "noData": "لا توجد بيانات",
+      "actions": "الإجراءات"
+    }
+  },
+  "Statuses": {
+    "Active": "نشط",
+    "Retired": "متقاعد",
+    "Development": "قيد التطوير",
+    "Maintenance": "قيد الصيانة"
+  }
+}

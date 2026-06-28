@@ -1,0 +1,136 @@
+@import "tailwindcss";
+
+@theme {
+  --color-tactical-bg: #0a0f0a;
+  --color-tactical-bg-secondary: #1a1f1a;
+  --color-tactical-card: #0d140d;
+  --color-tactical-text: #c4d9c4;
+  --color-tactical-text-secondary: #7a8f7a;
+  --color-tactical-accent: #d4a574;
+  --color-tactical-alert: #cc4433;
+  --color-tactical-success: #44aa44;
+  --color-tactical-border: #2a3a2a;
+
+  --font-tactical-display: "Share Tech Mono", monospace;
+  --font-tactical-body: "IBM Plex Mono", monospace;
+  --font-arabic: "Noto Sans Arabic", sans-serif;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-tactical-border);
+  }
+
+  body {
+    background-color: var(--color-tactical-bg);
+    color: var(--color-tactical-text);
+    font-family: var(--font-tactical-body);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-tactical-display);
+  }
+}
+
+@layer utilities {
+  .glow-pulse {
+    animation: glow-pulse 2s ease-in-out infinite;
+  }
+
+  .radar-sweep {
+    animation: radar-sweep 4s linear infinite;
+  }
+
+  .status-blink {
+    animation: status-blink 1.5s ease-in-out infinite;
+  }
+
+  .fade-in {
+    animation: fade-in 0.3s ease-out;
+  }
+
+  .slide-in {
+    animation: slide-in 0.3s ease-out;
+  }
+
+  .tactical-glow {
+    box-shadow: 0 0 10px rgba(68, 170, 68, 0.1);
+  }
+
+  .tactical-glow:hover {
+    box-shadow: 0 0 20px rgba(68, 170, 68, 0.2);
+  }
+
+  .scrollbar-tactical::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .scrollbar-tactical::-webkit-scrollbar-track {
+    background: var(--color-tactical-bg-secondary);
+  }
+
+  .scrollbar-tactical::-webkit-scrollbar-thumb {
+    background: var(--color-tactical-border);
+    border-radius: 3px;
+  }
+
+  .scrollbar-tactical::-webkit-scrollbar-thumb:hover {
+    background: var(--color-tactical-text-secondary);
+  }
+}
+
+@keyframes glow-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 5px rgba(68, 170, 68, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(68, 170, 68, 0.3);
+  }
+}
+
+@keyframes radar-sweep {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes status-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}

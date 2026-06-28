@@ -1,0 +1,167 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+
+// ─── Base Tables ──────────────────────────────────────────────────────────────
+
+model User {
+  id        String   @id @default(uuid()) @db.Uuid
+  email     String   @unique @db.VarChar(255)
+  password  String   @db.VarChar(255)
+  role      Role     @default(USER)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at") @updatedAt
+
+  @@map("users")
+}
+
+model Platform {
+  id               String   @id @default(uuid()) @db.Uuid
+  unitCostUsd      Decimal? @map("unit_cost_usd") @db.Decimal(15, 2)
+  operationalStatus String? @map("operational_status") @db.VarChar(50)
+  technicalSpecs   Json?    @map("technical_specs")
+  imageUrl         String?  @map("image_url") @db.VarChar(512)
+  categoryId       String   @map("category_id") @db.Uuid
+  manufacturerId   String   @map("manufacturer_id") @db.Uuid
+  countryId        String   @map("country_id") @db.Uuid
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @default(now()) @map("updated_at") @updatedAt
+
+  category     Category              @relation(fields: [categoryId], references: [id])
+  manufacturer Manufacturer          @relation(fields: [manufacturerId], references: [id])
+  country      Country               @relation(fields: [countryId], references: [id])
+  translations PlatformTranslation[]
+
+  @@index([categoryId])
+  @@index([manufacturerId])
+  @@index([countryId])
+  @@map("platforms")
+}
+
+model PlatformTranslation {
+  id         String   @id @default(uuid()) @db.Uuid
+  platformId String   @map("platform_id") @db.Uuid
+  locale     String   @db.VarChar(5)
+  name       String   @db.VarChar(255)
+  description String? @db.Text
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  platform Platform @relation(fields: [platformId], references: [id], onDelete: Cascade)
+
+  @@unique([platformId, locale])
+  @@index([platformId])
+  @@map("platform_translations")
+}
+
+model Category {
+  id        String   @id @default(uuid()) @db.Uuid
+  createdAt DateTime @default(now()) @map("created_at")
+
+  translations CategoryTranslation[]
+  platforms    Platform[]
+
+  @@map("categories")
+}
+
+model CategoryTranslation {
+  id         String   @id @default(uuid()) @db.Uuid
+  categoryId String   @map("category_id") @db.Uuid
+  locale     String   @db.VarChar(5)
+  name       String   @db.VarChar(50)
+  domain     String?  @db.VarChar(50)
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  category Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@unique([categoryId, locale])
+  @@index([categoryId])
+  @@map("category_translations")
+}
+
+model Country {
+  id        String   @id @default(uuid()) @db.Uuid
+  createdAt DateTime @default(now()) @map("created_at")
+
+  translations  CountryTranslation[]
+  platforms     Platform[]
+  manufacturers Manufacturer[]
+
+  @@map("countries")
+}
+
+model CountryTranslation {
+  id        String   @id @default(uuid()) @db.Uuid
+  countryId String   @map("country_id") @db.Uuid
+  locale    String   @db.VarChar(5)
+  name      String   @db.VarChar(100)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  country Country @relation(fields: [countryId], references: [id], onDelete: Cascade)
+
+  @@unique([countryId, locale])
+  @@index([countryId])
+  @@map("country_translations")
+}
+
+model Manufacturer {
+  id        String   @id @default(uuid()) @db.Uuid
+  countryId String   @map("country_id") @db.Uuid
+  createdAt DateTime @default(now()) @map("created_at")
+
+  country      Country                  @relation(fields: [countryId], references: [id])
+  translations ManufacturerTranslation[]
+  platforms    Platform[]
+
+  @@index([countryId])
+  @@map("manufacturers")
+}
+
+model ManufacturerTranslation {
+  id              String   @id @default(uuid()) @db.Uuid
+  manufacturerId  String   @map("manufacturer_id") @db.Uuid
+  locale          String   @db.VarChar(5)
+  name            String   @db.VarChar(150)
+  specialization  String?  @db.VarChar(100)
+  createdAt       DateTime @default(now()) @map("created_at")
+
+  manufacturer Manufacturer @relation(fields: [manufacturerId], references: [id], onDelete: Cascade)
+
+  @@unique([manufacturerId, locale])
+  @@index([manufacturerId])
+  @@map("manufacturer_translations")
+}
+
+model Blog {
+  id          DateTime @id @default(uuid()) @db.Uuid
+  publishedAt DateTime @default(now()) @map("published_at")
+  updatedAt   DateTime @default(now()) @map("updated_at") @updatedAt
+
+  translations BlogTranslation[]
+}
+
+model BlogTranslation {
+  id        DateTime @id @default(uuid()) @db.Uuid
+  blogId    String   @map("blog_id") @db.Uuid
+  locale    String   @db.VarChar(5)
+  title     String   @db.VarChar(255)
+  summary   String?  @db.Text
+  content   String   @db.Text
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at") @updatedAt
+
+  blog Blog @relation(fields: [blogId], references: [id], onDelete: Cascade)
+
+  @@unique([blogId, locale])
+  @@index([blogId])
+  @@map("blog_translations")
+}

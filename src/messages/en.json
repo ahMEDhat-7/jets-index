@@ -1,0 +1,202 @@
+{
+  "Navigation": {
+    "home": "Home",
+    "browse": "Browse",
+    "blog": "Blog",
+    "admin": "Admin",
+    "login": "Login",
+    "logout": "Logout"
+  },
+  "Home": {
+    "hero": {
+      "title": "JETDEX",
+      "subtitle": "Military Aviation Database",
+      "description": "A comprehensive index of the world's fighter jet manufacturers, aircraft programs, and military aviation systems.",
+      "cta": "Browse Aircraft",
+      "ctaSecondary": "Read Blog"
+    },
+    "mission": {
+      "title": "Our Mission",
+      "description": "Military aviation data is scattered across articles, PDFs, and unstructured sources. Jetdex provides a normalized, queryable dataset of global military platforms."
+    },
+    "features": {
+      "title": "Features",
+      "platforms": {
+        "title": "50+ Platforms",
+        "description": "Detailed profiles of military aircraft worldwide"
+      },
+      "categories": {
+        "title": "8 Categories",
+        "description": "Organized by aircraft type and role"
+      },
+      "countries": {
+        "title": "15+ Countries",
+        "description": "Global coverage of military aviation"
+      },
+      "bilingual": {
+        "title": "Bilingual",
+        "description": "Full English and Arabic support"
+      }
+    },
+    "about": {
+      "title": "About Jetdex",
+      "description": "Built for defense enthusiasts, researchers, and military professionals seeking structured reference data."
+    }
+  },
+  "Browse": {
+    "filters": {
+      "title": "Filters",
+      "search": "Search aircraft...",
+      "category": "Category",
+      "country": "Country",
+      "status": "Status",
+      "clear": "Clear Filters",
+      "allCategories": "All Categories",
+      "allCountries": "All Countries",
+      "allStatuses": "All Statuses"
+    },
+    "details": {
+      "unitCost": "Unit Cost",
+      "status": "Status",
+      "category": "Category",
+      "manufacturer": "Manufacturer",
+      "country": "Country",
+      "specs": "Technical Specifications",
+      "description": "Description",
+      "back": "Back to Browse"
+    },
+    "empty": {
+      "title": "No aircraft found",
+      "description": "Try adjusting your filters or search query."
+    },
+    "loading": "Loading aircraft..."
+  },
+  "Blog": {
+    "title": "Blog",
+    "description": "Analysis, insights, and news about military aviation",
+    "empty": {
+      "title": "No blog posts yet",
+      "description": "Check back later for new content."
+    },
+    "readMore": "Read More",
+    "published": "Published",
+    "back": "Back to Blog"
+  },
+  "Common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "retry": "Retry",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "create": "Create",
+    "confirm": "Confirm",
+    "yes": "Yes",
+    "no": "No"
+  },
+  "Admin": {
+    "sidebar": {
+      "dashboard": "Dashboard",
+      "platforms": "Platforms",
+      "blogs": "Blogs",
+      "categories": "Categories",
+      "countries": "Countries",
+      "manufacturers": "Manufacturers"
+    },
+    "header": {
+      "title": "JETDEX Admin",
+      "logout": "Logout"
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "totalPlatforms": "Total Platforms",
+      "totalCategories": "Total Categories",
+      "totalCountries": "Total Countries",
+      "totalManufacturers": "Total Manufacturers",
+      "totalBlogs": "Total Blogs",
+      "platformsByCategory": "Platforms by Category",
+      "platformsByCountry": "Platforms by Country",
+      "platformsByStatus": "Platforms by Status",
+      "recentBlogs": "Recent Blog Posts"
+    },
+    "platforms": {
+      "title": "Platforms",
+      "create": "Create Platform",
+      "edit": "Edit Platform",
+      "delete": "Delete Platform",
+      "deleteConfirm": "Are you sure you want to delete this platform?",
+      "name": "Name",
+      "description": "Description",
+      "unitCost": "Unit Cost (USD)",
+      "status": "Operational Status",
+      "imageUrl": "Image URL",
+      "category": "Category",
+      "manufacturer": "Manufacturer",
+      "country": "Country",
+      "technicalSpecs": "Technical Specs",
+      "saved": "Platform saved successfully",
+      "deleted": "Platform deleted successfully"
+    },
+    "blogs": {
+      "title": "Blogs",
+      "create": "Create Blog",
+      "edit": "Edit Blog",
+      "delete": "Delete Blog",
+      "deleteConfirm": "Are you sure you want to delete this blog post?",
+      "title_label": "Title",
+      "summary": "Summary",
+      "content": "Content",
+      "preview": "Preview",
+      "saved": "Blog saved successfully",
+      "deleted": "Blog deleted successfully"
+    },
+    "categories": {
+      "title": "Categories",
+      "create": "Create Category",
+      "edit": "Edit Category",
+      "delete": "Delete Category",
+      "deleteConfirm": "Are you sure you want to delete this category?",
+      "name": "Name",
+      "domain": "Domain",
+      "saved": "Category saved successfully",
+      "deleted": "Category deleted successfully"
+    },
+    "countries": {
+      "title": "Countries",
+      "create": "Create Country",
+      "edit": "Edit Country",
+      "delete": "Delete Country",
+      "deleteConfirm": "Are you sure you want to delete this country?",
+      "name": "Name",
+      "saved": "Country saved successfully",
+      "deleted": "Country deleted successfully"
+    },
+    "manufacturers": {
+      "title": "Manufacturers",
+      "create": "Create Manufacturer",
+      "edit": "Edit Manufacturer",
+      "delete": "Delete Manufacturer",
+      "deleteConfirm": "Are you sure you want to delete this manufacturer?",
+      "name": "Name",
+      "specialization": "Specialization",
+      "country": "Country",
+      "saved": "Manufacturer saved successfully",
+      "deleted": "Manufacturer deleted successfully"
+    },
+    "common": {
+      "sharedFields": "Shared Fields",
+      "languageFields": "Language Fields",
+      "english": "English",
+      "arabic": "العربية",
+      "noData": "No data available",
+      "actions": "Actions"
+    }
+  },
+  "Statuses": {
+    "Active": "Active",
+    "Retired": "Retired",
+    "Development": "In Development",
+    "Maintenance": "Under Maintenance"
+  }
+}
