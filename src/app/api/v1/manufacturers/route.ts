@@ -56,7 +56,7 @@ export async function GET(
     return NextResponse.json(
       { data: [], pagination: { page: 1, limit: 50, total: 0, totalPages: 0 } },
       { status: 500 }
-    );
+    ) as NextResponse<PaginatedResponse<ManufacturerListItem>>;
   }
 }
 
@@ -65,7 +65,7 @@ export async function POST(
 ): Promise<NextResponse<ApiResponse<{ id: string }>>> {
   try {
     const admin = await requireAdmin(request);
-    if (admin instanceof NextResponse) return admin;
+    if (admin instanceof NextResponse) return admin as NextResponse<ApiResponse<{ id: string }>>;
 
     const body = await request.json();
     const parsed = CreateManufacturerSchema.safeParse(body);
@@ -100,6 +100,6 @@ export async function POST(
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }
-    );
+    ) as NextResponse<ApiResponse<{ id: string }>>;
   }
 }

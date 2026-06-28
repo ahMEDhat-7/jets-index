@@ -26,7 +26,7 @@ export async function GET(
 
     return NextResponse.json({ data: manufacturer });
   } catch {
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 }) as NextResponse<ApiResponse<{ id: string }>>;
   }
 }
 
@@ -36,7 +36,7 @@ export async function PATCH(
 ): Promise<NextResponse<ApiResponse<{ id: string }>>> {
   try {
     const admin = await requireAdmin(request);
-    if (admin instanceof NextResponse) return admin;
+    if (admin instanceof NextResponse) return admin as NextResponse<ApiResponse<{ id: string }>>;
 
     const { id } = await params;
     const body = await request.json();
@@ -83,7 +83,7 @@ export async function PATCH(
 
     return NextResponse.json({ data: { id } });
   } catch {
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 }) as NextResponse<ApiResponse<{ id: string }>>;
   }
 }
 
@@ -93,7 +93,7 @@ export async function DELETE(
 ): Promise<NextResponse<ApiResponse<null>>> {
   try {
     const admin = await requireAdmin(request);
-    if (admin instanceof NextResponse) return admin;
+    if (admin instanceof NextResponse) return admin as NextResponse<ApiResponse<null>>;
 
     const { id } = await params;
 
@@ -105,6 +105,6 @@ export async function DELETE(
     await prisma.manufacturer.delete({ where: { id } });
     return NextResponse.json({ data: null, message: "Manufacturer deleted" });
   } catch {
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 }) as NextResponse<ApiResponse<null>>;
   }
 }

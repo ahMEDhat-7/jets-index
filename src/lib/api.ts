@@ -13,12 +13,14 @@ import type {
   BlogListItem,
   BlogDetail,
   DashboardStats,
+} from "./types";
+import type {
   CreatePlatformInput,
   CreateCategoryInput,
   CreateCountryInput,
   CreateManufacturerInput,
   CreateBlogInput,
-} from "./types";
+} from "./validators";
 
 const BASE_URL = "/api/v1";
 

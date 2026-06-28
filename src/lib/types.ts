@@ -49,6 +49,9 @@ export interface PlatformListItem {
 }
 
 export interface PlatformDetail extends PlatformListItem {
+  categoryId: string;
+  manufacturerId: string;
+  countryId: string;
   updatedAt: Date;
 }
 

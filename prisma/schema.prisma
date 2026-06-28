@@ -142,7 +142,7 @@ model ManufacturerTranslation {
 }
 
 model Blog {
-  id          DateTime @id @default(uuid()) @db.Uuid
+  id          String   @id @default(uuid()) @db.Uuid
   publishedAt DateTime @default(now()) @map("published_at")
   updatedAt   DateTime @default(now()) @map("updated_at") @updatedAt
 
@@ -150,7 +150,7 @@ model Blog {
 }
 
 model BlogTranslation {
-  id        DateTime @id @default(uuid()) @db.Uuid
+  id        String   @id @default(uuid()) @db.Uuid
   blogId    String   @map("blog_id") @db.Uuid
   locale    String   @db.VarChar(5)
   title     String   @db.VarChar(255)

@@ -87,7 +87,7 @@ export async function POST(
 ): Promise<NextResponse<ApiResponse<{ id: string }>>> {
   try {
     const admin = await requireAdmin(request);
-    if (admin instanceof NextResponse) return admin;
+    if (admin instanceof NextResponse) return admin as NextResponse<ApiResponse<{ id: string }>>;
 
     const body = await request.json();
     const parsed = CreatePlatformSchema.safeParse(body);
@@ -104,7 +104,7 @@ export async function POST(
     const platform = await prisma.platform.create({
       data: {
         ...platformData,
-        technicalSpecs: platformData.technicalSpecs as Record<string, unknown> | undefined,
+        technicalSpecs: platformData.technicalSpecs as unknown as Record<string, string> | undefined,
         translations: {
           createMany: {
             data: translations.map((t) => ({
@@ -118,11 +118,11 @@ export async function POST(
       select: { id: true },
     });
 
-    return NextResponse.json({ data: platform });
+    return NextResponse.json({ data: platform }) as NextResponse<ApiResponse<{ id: string }>>;
   } catch {
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }
-    );
+    ) as NextResponse<ApiResponse<{ id: string }>>;
   }
 }

@@ -29,7 +29,7 @@ export async function GET(
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }
-    );
+    ) as NextResponse<ApiResponse<BlogDetail>>;
   }
 }
 
@@ -39,7 +39,7 @@ export async function PATCH(
 ): Promise<NextResponse<ApiResponse<{ id: string }>>> {
   try {
     const admin = await requireAdmin(request);
-    if (admin instanceof NextResponse) return admin;
+    if (admin instanceof NextResponse) return admin as NextResponse<ApiResponse<{ id: string }>>;
 
     const { id } = await params;
     const body = await request.json();
@@ -82,7 +82,7 @@ export async function PATCH(
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }
-    );
+    ) as NextResponse<ApiResponse<{ id: string }>>;
   }
 }
 
@@ -92,7 +92,7 @@ export async function DELETE(
 ): Promise<NextResponse<ApiResponse<null>>> {
   try {
     const admin = await requireAdmin(request);
-    if (admin instanceof NextResponse) return admin;
+    if (admin instanceof NextResponse) return admin as NextResponse<ApiResponse<null>>;
 
     const { id } = await params;
 
@@ -107,6 +107,6 @@ export async function DELETE(
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }
-    );
+    ) as NextResponse<ApiResponse<null>>;
   }
 }

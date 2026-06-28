@@ -10,8 +10,6 @@ export async function GET(
 ): Promise<NextResponse<ApiResponse<PlatformDetail>>> {
   try {
     const { id } = await params;
-    const { searchParams } = new URL(request.url);
-    const locale = searchParams.get("locale") ?? "en";
 
     const platform = await prisma.platform.findUnique({
       where: { id },
@@ -62,7 +60,7 @@ export async function PATCH(
 ): Promise<NextResponse<ApiResponse<{ id: string }>>> {
   try {
     const admin = await requireAdmin(request);
-    if (admin instanceof NextResponse) return admin;
+    if (admin instanceof NextResponse) return admin as NextResponse<ApiResponse<{ id: string }>>;
 
     const { id } = await params;
     const body = await request.json();
@@ -85,18 +83,21 @@ export async function PATCH(
       );
     }
 
-    await prisma.platform.update({
-      where: { id },
-      data: {
-        ...(platformData.unitCostUsd !== undefined && { unitCostUsd: platformData.unitCostUsd }),
-        ...(platformData.operationalStatus !== undefined && { operationalStatus: platformData.operationalStatus }),
-        ...(platformData.technicalSpecs !== undefined && { technicalSpecs: platformData.technicalSpecs as Record<string, unknown> | undefined }),
-        ...(platformData.imageUrl !== undefined && { imageUrl: platformData.imageUrl }),
-        ...(platformData.categoryId !== undefined && { categoryId: platformData.categoryId }),
-        ...(platformData.manufacturerId !== undefined && { manufacturerId: platformData.manufacturerId }),
-        ...(platformData.countryId !== undefined && { countryId: platformData.countryId }),
-      },
-    });
+    const updateData: Record<string, unknown> = {};
+    if (platformData.unitCostUsd !== undefined) updateData.unitCostUsd = platformData.unitCostUsd;
+    if (platformData.operationalStatus !== undefined) updateData.operationalStatus = platformData.operationalStatus;
+    if (platformData.technicalSpecs !== undefined) updateData.technicalSpecs = platformData.technicalSpecs;
+    if (platformData.imageUrl !== undefined) updateData.imageUrl = platformData.imageUrl;
+    if (platformData.categoryId !== undefined) updateData.categoryId = platformData.categoryId;
+    if (platformData.manufacturerId !== undefined) updateData.manufacturerId = platformData.manufacturerId;
+    if (platformData.countryId !== undefined) updateData.countryId = platformData.countryId;
+
+    if (Object.keys(updateData).length > 0) {
+      await prisma.platform.update({
+        where: { id },
+        data: updateData,
+      });
+    }
 
     if (translations) {
       for (const t of translations) {
@@ -133,7 +134,7 @@ export async function DELETE(
 ): Promise<NextResponse<ApiResponse<null>>> {
   try {
     const admin = await requireAdmin(request);
-    if (admin instanceof NextResponse) return admin;
+    if (admin instanceof NextResponse) return admin as NextResponse<ApiResponse<null>>;
 
     const { id } = await params;
 
