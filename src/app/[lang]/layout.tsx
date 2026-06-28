@@ -2,7 +2,29 @@ import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
+import { IBM_Plex_Mono, Share_Tech_Mono, Noto_Sans_Arabic } from "next/font/google";
 import { locales, type Locale } from "@/i18n/routing";
+
+const ibmPlexMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-ibm-plex-mono",
+  display: "swap",
+});
+
+const shareTechMono = Share_Tech_Mono({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-share-tech-mono",
+  display: "swap",
+});
+
+const notoSansArabic = Noto_Sans_Arabic({
+  subsets: ["arabic"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-noto-sans-arabic",
+  display: "swap",
+});
 
 export async function generateMetadata({
   params,
@@ -35,20 +57,12 @@ export default async function LocaleLayout({
   const dir = lang === "ar" ? "rtl" : "ltr";
 
   return (
-    <html lang={lang} dir={dir} className="dark">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Share+Tech+Mono&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap"
-          rel="stylesheet"
-        />
-      </head>
-      <body className="min-h-screen bg-tactical-bg font-tactical-body text-tactical-text antialiased">
+    <html
+      lang={lang}
+      dir={dir}
+      className={`dark ${ibmPlexMono.variable} ${shareTechMono.variable} ${notoSansArabic.variable}`}
+    >
+      <body className="min-h-screen bg-tactical-bg text-tactical-text antialiased" style={{ fontFamily: lang === "ar" ? "var(--font-noto-sans-arabic), sans-serif" : "var(--font-ibm-plex-mono), monospace" }}>
         <NextIntlClientProvider messages={messages}>
           {children}
         </NextIntlClientProvider>

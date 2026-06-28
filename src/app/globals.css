@@ -11,9 +11,9 @@
   --color-tactical-success: #44aa44;
   --color-tactical-border: #2a3a2a;
 
-  --font-tactical-display: "Share Tech Mono", monospace;
-  --font-tactical-body: "IBM Plex Mono", monospace;
-  --font-arabic: "Noto Sans Arabic", sans-serif;
+  --font-tactical-display: var(--font-share-tech-mono), monospace;
+  --font-tactical-body: var(--font-ibm-plex-mono), monospace;
+  --font-arabic: var(--font-noto-sans-arabic), sans-serif;
 }
 
 @layer base {
@@ -34,6 +34,10 @@
   h5,
   h6 {
     font-family: var(--font-tactical-display);
+  }
+
+  [dir="rtl"] {
+    text-align: right;
   }
 }
 

@@ -3,6 +3,8 @@ import { getTranslations } from "next-intl/server";
 import { prisma } from "@/lib/prisma";
 import { formatDate, getTranslation } from "@/lib/utils";
 
+export const revalidate = 60;
+
 export default async function BlogPage({
   params,
 }: {

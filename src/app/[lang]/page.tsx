@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 
+export const revalidate = 300;
+
 export default async function HomePage({
   params,
 }: {
