@@ -72,7 +72,7 @@ export default async function PlatformDetailPage({
           ) : (
             <div className="mb-8 flex h-64 items-center justify-center rounded border border-tactical-border bg-tactical-bg-secondary/50 md:h-96">
               <span className="font-tactical-display text-lg text-tactical-text-secondary">
-                NO IMAGE AVAILABLE
+                {t("Common.noImageAvailable")}
               </span>
             </div>
           )}
@@ -92,7 +92,7 @@ export default async function PlatformDetailPage({
                 }`}
               />
               <span className="text-sm text-tactical-text-secondary">
-                {platform.operationalStatus ?? "Unknown"}
+                {platform.operationalStatus ?? t("Common.unknown")}
               </span>
             </div>
             <span className="text-tactical-border">|</span>
@@ -120,7 +120,7 @@ export default async function PlatformDetailPage({
             {/* Specifications */}
             <div className="rounded border border-tactical-border bg-tactical-card p-6">
               <h2 className="mb-4 font-tactical-display text-xl font-bold text-tactical-text">
-                {"Unit Cost & Details"}
+                {t("platform.unitCostDetails")}
               </h2>
               <div className="space-y-3">
                 <div className="flex justify-between border-b border-tactical-border pb-2">
@@ -160,9 +160,9 @@ export default async function PlatformDetailPage({
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-tactical-text-secondary">Status</span>
+                  <span className="text-tactical-text-secondary">{t("platform.status")}</span>
                   <span className="text-tactical-text">
-                    {platform.operationalStatus ?? "Unknown"}
+                    {platform.operationalStatus ?? t("Common.unknown")}
                   </span>
                 </div>
               </div>
@@ -175,7 +175,7 @@ export default async function PlatformDetailPage({
                 .length > 0 && (
                 <div className="rounded border border-tactical-border bg-tactical-card p-6">
                   <h2 className="mb-4 font-tactical-display text-xl font-bold text-tactical-text">
-                    Technical Specifications
+                    {t("platform.technicalSpecs")}
                   </h2>
                   <div className="space-y-3">
                     {Object.entries(

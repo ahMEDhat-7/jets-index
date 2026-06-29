@@ -82,7 +82,7 @@ export function Header({ lang, activePage }: HeaderProps) {
             <button
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
               className="rounded border border-tactical-border bg-tactical-card p-1.5 text-tactical-text-secondary transition-colors hover:text-tactical-accent"
-              aria-label="Toggle theme"
+              aria-label={t("Common.toggleTheme")}
             >
               {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
             </button>

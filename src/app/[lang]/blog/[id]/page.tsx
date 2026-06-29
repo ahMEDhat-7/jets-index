@@ -31,7 +31,7 @@ export default async function BlogDetailPage({
 
   const translation = blog.translations.find((tr) => tr.locale === lang);
   const fallback = blog.translations.find((tr) => tr.locale === "en");
-  const title = translation?.title ?? fallback?.title ?? "Untitled";
+  const title = translation?.title ?? fallback?.title ?? t("Common.untitled");
   const summary = translation?.summary ?? fallback?.summary ?? "";
   const content = translation?.content ?? fallback?.content ?? "";
 
@@ -70,7 +70,7 @@ export default async function BlogDetailPage({
             <MarkdownContent content={content} />
           ) : (
             <p className="text-tactical-text-secondary">
-              No content available for this article.
+              {t("Common.noContentAvailable")}
             </p>
           )}
         </div>

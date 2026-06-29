@@ -62,7 +62,7 @@ export default async function BlogPage({
                   (tr) => tr.locale === "en"
                 );
                 const title =
-                  translation?.title ?? fallback?.title ?? "Untitled";
+                  translation?.title ?? fallback?.title ?? t("Common.untitled");
                 const summary =
                   translation?.summary ?? fallback?.summary ?? "";
 

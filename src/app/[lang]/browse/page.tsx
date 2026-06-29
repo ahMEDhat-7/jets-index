@@ -64,7 +64,7 @@ export default async function BrowsePage({
             {t("filters.title")}
           </h1>
           <p className="text-tactical-text-secondary">
-            Browse military aviation platforms from around the world
+            {t("hero.description")}
           </p>
         </div>
       </section>
@@ -90,9 +90,9 @@ export default async function BrowsePage({
           </select>
           <select className="rounded border border-tactical-border bg-tactical-card px-3 py-2 text-tactical-text focus:border-tactical-accent focus:outline-none">
             <option>{t("filters.allStatuses")}</option>
-            <option value="Active">Active</option>
-            <option value="Retired">Retired</option>
-            <option value="Development">In Development</option>
+            <option value="Active">{t("Statuses.Active")}</option>
+            <option value="Retired">{t("Statuses.Retired")}</option>
+            <option value="Development">{t("Statuses.Development")}</option>
           </select>
         </div>
       </section>
@@ -129,7 +129,7 @@ export default async function BrowsePage({
                   ) : (
                     <div className="mb-4 flex h-40 items-center justify-center rounded border border-tactical-border bg-tactical-bg-secondary/50">
                       <span className="font-tactical-display text-sm text-tactical-text-secondary">
-                        NO IMAGE
+                        {t("Common.noImage")}
                       </span>
                     </div>
                   )}
@@ -149,7 +149,7 @@ export default async function BrowsePage({
                         }`}
                       />
                       <span className="text-xs text-tactical-text-secondary">
-                        {platform.operationalStatus ?? "Unknown"}
+                        {platform.operationalStatus ?? t("Common.unknown")}
                       </span>
                     </div>
                     <span className="text-xs text-tactical-text-secondary">

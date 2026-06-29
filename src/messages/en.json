@@ -15,6 +15,10 @@
       "cta": "Browse Aircraft",
       "ctaSecondary": "Read Blog"
     },
+    "footer": {
+      "copyright": "© 2026 Jetdex. All rights reserved.",
+      "tagline": "Built for military aviation enthusiasts"
+    },
     "mission": {
       "title": "Our Mission",
       "description": "Military aviation data is scattered across articles, PDFs, and unstructured sources. Jetdex provides a normalized, queryable dataset of global military platforms."
@@ -44,6 +48,9 @@
     }
   },
   "Browse": {
+    "hero": {
+      "description": "Browse military aviation platforms from around the world"
+    },
     "filters": {
       "title": "Filters",
       "search": "Search aircraft...",
@@ -54,6 +61,11 @@
       "allCategories": "All Categories",
       "allCountries": "All Countries",
       "allStatuses": "All Statuses"
+    },
+    "platform": {
+      "unitCostDetails": "Unit Cost & Details",
+      "technicalSpecs": "Technical Specifications",
+      "status": "Status"
     },
     "details": {
       "unitCost": "Unit Cost",
@@ -93,7 +105,13 @@
     "create": "Create",
     "confirm": "Confirm",
     "yes": "Yes",
-    "no": "No"
+    "no": "No",
+    "toggleTheme": "Toggle theme",
+    "noImage": "NO IMAGE",
+    "noImageAvailable": "NO IMAGE AVAILABLE",
+    "unknown": "Unknown",
+    "untitled": "Untitled",
+    "noContentAvailable": "No content available for this article."
   },
   "Admin": {
     "sidebar": {

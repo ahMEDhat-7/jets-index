@@ -53,6 +53,10 @@ html.light {
   [dir="rtl"] {
     text-align: right;
   }
+
+  [dir="rtl"] .rtl-flip {
+    transform: scaleX(-1);
+  }
 }
 
 @layer utilities {

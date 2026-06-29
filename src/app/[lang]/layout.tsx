@@ -4,7 +4,7 @@ import { getMessages, getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { locales, type Locale } from "@/i18n/routing";
 import { ThemeProvider } from "@/components/ThemeProvider";
-import { LocaleScript } from "@/components/LocaleScript";
+import { DirectionSetter } from "@/components/DirectionSetter";
 
 export async function generateMetadata({
   params,
@@ -37,7 +37,7 @@ export default async function LocaleLayout({
 
   return (
     <>
-      <LocaleScript lang={lang} />
+      <DirectionSetter lang={lang} />
       <ThemeProvider>
         <NextIntlClientProvider messages={messages}>
           {children}
