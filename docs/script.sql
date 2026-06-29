@@ -89,6 +89,16 @@ CREATE TABLE platform_translations (
     UNIQUE(platform_id, locale)
 );
 
+-- Platform images
+CREATE TABLE platform_images (
+    id UUID PRIMARY KEY,
+    platform_id UUID NOT NULL REFERENCES platforms(platform_id) ON DELETE CASCADE,
+    url VARCHAR(512) NOT NULL,
+    alt VARCHAR(255),
+    sort_order INTEGER DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 -- Blogs table (base only — no translatable fields)
 CREATE TABLE blogs (
     blog_id UUID PRIMARY KEY,
@@ -118,4 +128,5 @@ CREATE INDEX idx_platforms_category ON platforms(category_id);
 CREATE INDEX idx_platforms_manufacturer ON platforms(manu_id);
 CREATE INDEX idx_platforms_country ON platforms(country_id);
 CREATE INDEX idx_platform_translations_platform ON platform_translations(platform_id);
+CREATE INDEX idx_platform_images_platform ON platform_images(platform_id);
 CREATE INDEX idx_blog_translations_blog ON blog_translations(blog_id);

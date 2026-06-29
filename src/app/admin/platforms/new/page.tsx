@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/stores/useAuthStore";
 import { createPlatform } from "@/lib/api";
+import { ImageManager } from "@/components/admin/ImageManager";
 
 export default function NewPlatformPage(): React.ReactNode {
   const router = useRouter();
@@ -23,6 +24,8 @@ export default function NewPlatformPage(): React.ReactNode {
     nameAr: "",
     descriptionAr: "",
   });
+
+  const [images, setImages] = useState<{ url: string; alt: string; sortOrder: number }[]>([]);
 
   function updateField(field: string, value: string): void {
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -47,6 +50,7 @@ export default function NewPlatformPage(): React.ReactNode {
             { locale: "en", name: form.nameEn, description: form.descriptionEn || undefined },
             { locale: "ar", name: form.nameAr, description: form.descriptionAr || undefined },
           ],
+          images: images.length > 0 ? images : undefined,
         },
         token
       );
@@ -105,7 +109,7 @@ export default function NewPlatformPage(): React.ReactNode {
             </div>
             <div className="md:col-span-2">
               <label className="mb-2 block text-sm text-tactical-text-secondary">
-                Image URL
+                Image URL (Legacy)
               </label>
               <input
                 type="url"
@@ -113,6 +117,12 @@ export default function NewPlatformPage(): React.ReactNode {
                 onChange={(e) => updateField("imageUrl", e.target.value)}
                 className="w-full rounded border border-tactical-border bg-tactical-bg px-3 py-2 text-tactical-text focus:border-tactical-accent focus:outline-none"
               />
+            </div>
+            <div className="md:col-span-2">
+              <label className="mb-2 block text-sm text-tactical-text-secondary">
+                Gallery Images
+              </label>
+              <ImageManager images={images} onChange={setImages} />
             </div>
             <div>
               <label className="mb-2 block text-sm text-tactical-text-secondary">

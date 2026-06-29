@@ -47,6 +47,12 @@ export const BlogTranslationSchema = z.object({
 
 // ─── Entity Schemas ──────────────────────────────────────────────────────────
 
+export const PlatformImageSchema = z.object({
+  url: z.string().url().max(512),
+  alt: z.string().max(255).optional(),
+  sortOrder: z.number().int().min(0).optional().default(0),
+});
+
 export const CreatePlatformSchema = z.object({
   unitCostUsd: z.number().positive().optional().nullable(),
   operationalStatus: z.string().max(50).optional().nullable(),
@@ -56,6 +62,7 @@ export const CreatePlatformSchema = z.object({
   manufacturerId: z.string().uuid(),
   countryId: z.string().uuid(),
   translations: z.array(PlatformTranslationSchema).min(1).max(2),
+  images: z.array(PlatformImageSchema).optional(),
 });
 
 export const UpdatePlatformSchema = CreatePlatformSchema.partial();

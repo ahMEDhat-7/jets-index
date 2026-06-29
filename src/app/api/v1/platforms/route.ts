@@ -42,6 +42,10 @@ export async function GET(
           translations: {
             select: { locale: true, name: true, description: true },
           },
+          images: {
+            select: { id: true, url: true, alt: true, sortOrder: true },
+            orderBy: { sortOrder: "asc" },
+          },
           category: {
             select: {
               id: true,
@@ -99,7 +103,7 @@ export async function POST(
       );
     }
 
-    const { translations, ...platformData } = parsed.data;
+    const { translations, images, ...platformData } = parsed.data;
 
     const platform = await prisma.platform.create({
       data: {
@@ -114,6 +118,15 @@ export async function POST(
             })),
           },
         },
+        images: images ? {
+          createMany: {
+            data: images.map((img, index) => ({
+              url: img.url,
+              alt: img.alt,
+              sortOrder: img.sortOrder ?? index,
+            })),
+          },
+        } : undefined,
       },
       select: { id: true },
     });

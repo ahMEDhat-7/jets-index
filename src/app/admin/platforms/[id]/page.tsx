@@ -5,6 +5,7 @@ import { useRouter, useParams } from "next/navigation";
 import { useAuthStore } from "@/stores/useAuthStore";
 import { fetchPlatform, updatePlatform } from "@/lib/api";
 import type { PlatformDetail } from "@/lib/types";
+import { ImageManager } from "@/components/admin/ImageManager";
 
 export default function EditPlatformPage(): React.ReactNode {
   const router = useRouter();
@@ -29,6 +30,8 @@ export default function EditPlatformPage(): React.ReactNode {
     descriptionAr: "",
   });
 
+  const [images, setImages] = useState<{ url: string; alt: string; sortOrder: number }[]>([]);
+
   useEffect(() => {
     async function load(): Promise<void> {
       try {
@@ -50,6 +53,14 @@ export default function EditPlatformPage(): React.ReactNode {
           nameAr: arTranslation?.name ?? "",
           descriptionAr: arTranslation?.description ?? "",
         });
+
+        if (data.images && data.images.length > 0) {
+          setImages(data.images.map((img) => ({
+            url: img.url,
+            alt: img.alt ?? "",
+            sortOrder: img.sortOrder,
+          })));
+        }
       } catch (err) {
         setError("Failed to load platform");
         console.error(err);
@@ -84,6 +95,7 @@ export default function EditPlatformPage(): React.ReactNode {
             { locale: "en", name: form.nameEn, description: form.descriptionEn || undefined },
             { locale: "ar", name: form.nameAr, description: form.descriptionAr || undefined },
           ],
+          images: images,
         },
         token
       );
@@ -160,7 +172,7 @@ export default function EditPlatformPage(): React.ReactNode {
             </div>
             <div className="md:col-span-2">
               <label className="mb-2 block text-sm text-tactical-text-secondary">
-                Image URL
+                Image URL (Legacy)
               </label>
               <input
                 type="url"
@@ -168,6 +180,12 @@ export default function EditPlatformPage(): React.ReactNode {
                 onChange={(e) => updateField("imageUrl", e.target.value)}
                 className="w-full rounded border border-tactical-border bg-tactical-bg px-3 py-2 text-tactical-text focus:border-tactical-accent focus:outline-none"
               />
+            </div>
+            <div className="md:col-span-2">
+              <label className="mb-2 block text-sm text-tactical-text-secondary">
+                Gallery Images
+              </label>
+              <ImageManager images={images} onChange={setImages} />
             </div>
             <div>
               <label className="mb-2 block text-sm text-tactical-text-secondary">

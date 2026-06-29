@@ -26,6 +26,13 @@ export interface PlatformTranslation {
   description: string | null;
 }
 
+export interface PlatformImage {
+  id: string;
+  url: string;
+  alt: string | null;
+  sortOrder: number;
+}
+
 export interface PlatformListItem {
   id: string;
   unitCostUsd: Decimal | null;
@@ -34,6 +41,7 @@ export interface PlatformListItem {
   imageUrl: string | null;
   createdAt: Date;
   translations: PlatformTranslation[];
+  images: PlatformImage[];
   category: {
     id: string;
     translations: { locale: string; name: string }[];

@@ -41,6 +41,7 @@ model Platform {
   manufacturer Manufacturer          @relation(fields: [manufacturerId], references: [id])
   country      Country               @relation(fields: [countryId], references: [id])
   translations PlatformTranslation[]
+  images       PlatformImage[]
 
   @@index([categoryId])
   @@index([manufacturerId])
@@ -61,6 +62,20 @@ model PlatformTranslation {
   @@unique([platformId, locale])
   @@index([platformId])
   @@map("platform_translations")
+}
+
+model PlatformImage {
+  id         String   @id @default(uuid()) @db.Uuid
+  platformId String   @map("platform_id") @db.Uuid
+  url        String   @db.VarChar(512)
+  alt        String?  @db.VarChar(255)
+  sortOrder  Int      @default(0) @map("sort_order")
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  platform Platform @relation(fields: [platformId], references: [id], onDelete: Cascade)
+
+  @@index([platformId])
+  @@map("platform_images")
 }
 
 model Category {

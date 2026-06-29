@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { formatCurrency, formatDate, getTranslation } from "@/lib/utils";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { ImageGallery } from "@/components/ImageGallery";
 
 export const revalidate = 60;
 
@@ -19,6 +20,10 @@ export default async function PlatformDetailPage({
     where: { id },
     include: {
       translations: { select: { locale: true, name: true, description: true } },
+      images: {
+        select: { id: true, url: true, alt: true, sortOrder: true },
+        orderBy: { sortOrder: "asc" },
+      },
       category: {
         select: {
           id: true,
@@ -61,7 +66,11 @@ export default async function PlatformDetailPage({
       {/* Hero with Image */}
       <section className="border-b border-tactical-border bg-tactical-bg-secondary/30 px-4 py-12">
         <div className="mx-auto max-w-4xl">
-          {platform.imageUrl ? (
+          {platform.images.length > 0 ? (
+            <div className="mb-8">
+              <ImageGallery images={platform.images} name={name} />
+            </div>
+          ) : platform.imageUrl ? (
             <div className="mb-8 overflow-hidden rounded border border-tactical-border">
               <img
                 src={platform.imageUrl}

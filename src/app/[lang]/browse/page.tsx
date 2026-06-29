@@ -20,6 +20,11 @@ export default async function BrowsePage({
     orderBy: { createdAt: "desc" },
     include: {
       translations: { select: { locale: true, name: true, description: true } },
+      images: {
+        select: { id: true, url: true, alt: true, sortOrder: true },
+        orderBy: { sortOrder: "asc" },
+        take: 1,
+      },
       category: {
         select: {
           id: true,
@@ -118,7 +123,15 @@ export default async function BrowsePage({
                   className="group block rounded border border-tactical-border bg-tactical-card p-6 transition-all tactical-glow hover:border-tactical-accent/50"
                 >
                   {/* Image */}
-                  {platform.imageUrl ? (
+                  {platform.images.length > 0 ? (
+                    <div className="mb-4 overflow-hidden rounded border border-tactical-border">
+                      <img
+                        src={platform.images[0].url}
+                        alt={platform.images[0].alt ?? getTranslation(platform.translations, lang)}
+                        className="h-40 w-full object-cover transition-transform group-hover:scale-105"
+                      />
+                    </div>
+                  ) : platform.imageUrl ? (
                     <div className="mb-4 overflow-hidden rounded border border-tactical-border">
                       <img
                         src={platform.imageUrl}

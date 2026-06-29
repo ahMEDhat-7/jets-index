@@ -17,6 +17,10 @@ export async function GET(
         translations: {
           select: { locale: true, name: true, description: true },
         },
+        images: {
+          select: { id: true, url: true, alt: true, sortOrder: true },
+          orderBy: { sortOrder: "asc" },
+        },
         category: {
           select: {
             id: true,
@@ -73,7 +77,7 @@ export async function PATCH(
       );
     }
 
-    const { translations, ...platformData } = parsed.data;
+    const { translations, images, ...platformData } = parsed.data;
 
     const existing = await prisma.platform.findUnique({ where: { id } });
     if (!existing) {
@@ -115,6 +119,20 @@ export async function PATCH(
             name: t.name,
             description: t.description,
           },
+        });
+      }
+    }
+
+    if (images !== undefined) {
+      await prisma.platformImage.deleteMany({ where: { platformId: id } });
+      if (images.length > 0) {
+        await prisma.platformImage.createMany({
+          data: images.map((img, index) => ({
+            platformId: id,
+            url: img.url,
+            alt: img.alt,
+            sortOrder: img.sortOrder ?? index,
+          })),
         });
       }
     }
