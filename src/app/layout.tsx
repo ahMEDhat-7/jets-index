@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { IBM_Plex_Mono, Share_Tech_Mono, Noto_Sans_Arabic } from "next/font/google";
+import { ThemeProvider } from "@/components/ThemeProvider";
 
 const ibmPlexMono = IBM_Plex_Mono({
   subsets: ["latin"],
@@ -40,7 +41,9 @@ export default function RootLayout({
       className={`${ibmPlexMono.variable} ${shareTechMono.variable} ${notoSansArabic.variable}`}
     >
       <body className="min-h-screen bg-tactical-bg text-tactical-text antialiased" style={{ fontFamily: "var(--font-ibm-plex-mono), monospace" }}>
-        {children}
+        <ThemeProvider>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );
