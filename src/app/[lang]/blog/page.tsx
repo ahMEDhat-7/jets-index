@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { prisma } from "@/lib/prisma";
 import { formatDate, getTranslation } from "@/lib/utils";
 import { Header } from "@/components/Header";
@@ -13,6 +13,7 @@ export default async function BlogPage({
   params: Promise<{ lang: string }>;
 }): Promise<React.ReactNode> {
   const { lang } = await params;
+  setRequestLocale(lang);
   const t = await getTranslations({ locale: lang, namespace: "Blog" });
 
   const blogs = await prisma.blog.findMany({

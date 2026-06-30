@@ -1,10 +1,14 @@
 import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
-import { getMessages, getTranslations } from "next-intl/server";
+import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { locales, type Locale } from "@/i18n/routing";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { DirectionSetter } from "@/components/DirectionSetter";
+
+export function generateStaticParams() {
+  return locales.map((lang) => ({ lang }));
+}
 
 export async function generateMetadata({
   params,
@@ -33,13 +37,14 @@ export default async function LocaleLayout({
     notFound();
   }
 
-  const messages = await getMessages();
+  setRequestLocale(lang);
+  const messages = await getMessages({ locale: lang });
 
   return (
     <>
       <DirectionSetter lang={lang} />
       <ThemeProvider>
-        <NextIntlClientProvider messages={messages}>
+        <NextIntlClientProvider messages={messages} locale={lang}>
           {children}
         </NextIntlClientProvider>
       </ThemeProvider>

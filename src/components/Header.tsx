@@ -1,29 +1,16 @@
-"use client";
-
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useTranslations } from "next-intl";
-import { Sun, Moon } from "lucide-react";
-import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
+import { getTranslations } from "next-intl/server";
+import { ThemeToggle } from "@/components/ThemeToggle";
+import { LocaleSwitcher } from "@/components/LocaleSwitcher";
 
 interface HeaderProps {
   lang: string;
   activePage?: "home" | "browse" | "blog";
 }
 
-export function Header({ lang, activePage }: HeaderProps) {
-  const pathname = usePathname();
-  const t = useTranslations();
-  const { theme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  const otherLang = lang === "en" ? "ar" : "en";
-  const otherLangPath = pathname.replace(`/${lang}/`, `/${otherLang}/`).replace(`/${lang}`, `/${otherLang}`);
+export async function Header({ lang, activePage }: HeaderProps) {
+  const t = await getTranslations({ locale: lang, namespace: "Home" });
+  const tc = await getTranslations({ locale: lang, namespace: "Common" });
 
   const linkClass = (page: string) =>
     activePage === page
@@ -44,51 +31,17 @@ export function Header({ lang, activePage }: HeaderProps) {
             href={`/${lang}/browse`}
             className={linkClass("browse")}
           >
-            {t("Home.hero.cta")}
+            {t("hero.cta")}
           </Link>
           <Link
             href={`/${lang}/blog`}
             className={linkClass("blog")}
           >
-            {t("Home.hero.ctaSecondary")}
+            {t("hero.ctaSecondary")}
           </Link>
 
-          {/* Locale Switcher */}
-          <div className="flex items-center gap-1 rounded border border-tactical-border bg-tactical-card px-1 py-0.5">
-            <Link
-              href={lang === "en" ? pathname : otherLangPath}
-              className={`rounded px-2 py-0.5 text-xs font-bold transition-colors ${
-                lang === "en"
-                  ? "bg-tactical-accent text-tactical-bg"
-                  : "text-tactical-text-secondary hover:text-tactical-text"
-              }`}
-            >
-              EN
-            </Link>
-            <Link
-              href={lang === "ar" ? pathname : otherLangPath}
-              className={`rounded px-2 py-0.5 text-xs font-bold transition-colors ${
-                lang === "ar"
-                  ? "bg-tactical-accent text-tactical-bg"
-                  : "text-tactical-text-secondary hover:text-tactical-text"
-              }`}
-            >
-              AR
-            </Link>
-          </div>
-
-          {/* Theme Toggle */}
-          {mounted ? (
-            <button
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className="rounded border border-tactical-border bg-tactical-card p-1.5 text-tactical-text-secondary transition-colors hover:text-tactical-accent"
-              aria-label={t("Common.toggleTheme")}
-            >
-              {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
-            </button>
-          ) : (
-            <div className="h-[30px] w-[30px]" />
-          )}
+          <LocaleSwitcher lang={lang} pathname={`/${lang}`} />
+          <ThemeToggle label={tc("toggleTheme")} />
         </div>
       </div>
     </nav>

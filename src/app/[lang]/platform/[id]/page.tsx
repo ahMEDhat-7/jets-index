@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { prisma } from "@/lib/prisma";
 import { formatCurrency, formatDate, getTranslation } from "@/lib/utils";
 import { Header } from "@/components/Header";
@@ -14,6 +14,7 @@ export default async function PlatformDetailPage({
   params: Promise<{ lang: string; id: string }>;
 }): Promise<React.ReactNode> {
   const { lang, id } = await params;
+  setRequestLocale(lang);
   const t = await getTranslations({ locale: lang, namespace: "Browse" });
 
   const platform = await prisma.platform.findUnique({

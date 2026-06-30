@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { prisma } from "@/lib/prisma";
 import { formatCurrency, getTranslation } from "@/lib/utils";
 import { Header } from "@/components/Header";
@@ -13,7 +13,9 @@ export default async function BrowsePage({
   params: Promise<{ lang: string }>;
 }): Promise<React.ReactNode> {
   const { lang } = await params;
+  setRequestLocale(lang);
   const t = await getTranslations({ locale: lang, namespace: "Browse" });
+  const ts = await getTranslations({ locale: lang, namespace: "Statuses" });
 
   const platforms = await prisma.platform.findMany({
     take: 12,
@@ -95,9 +97,9 @@ export default async function BrowsePage({
           </select>
           <select className="rounded border border-tactical-border bg-tactical-card px-3 py-2 text-tactical-text focus:border-tactical-accent focus:outline-none">
             <option>{t("filters.allStatuses")}</option>
-            <option value="Active">{t("Statuses.Active")}</option>
-            <option value="Retired">{t("Statuses.Retired")}</option>
-            <option value="Development">{t("Statuses.Development")}</option>
+            <option value="Active">{ts("Active")}</option>
+            <option value="Retired">{ts("Retired")}</option>
+            <option value="Development">{ts("Development")}</option>
           </select>
         </div>
       </section>

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 
@@ -11,6 +11,7 @@ export default async function HomePage({
   params: Promise<{ lang: string }>;
 }): Promise<React.ReactNode> {
   const { lang } = await params;
+  setRequestLocale(lang);
   const t = await getTranslations({ locale: lang, namespace: "Home" });
 
   return (

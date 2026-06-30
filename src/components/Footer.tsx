@@ -1,18 +1,20 @@
-"use client";
+import { getTranslations } from "next-intl/server";
 
-import { useTranslations } from "next-intl";
+interface FooterProps {
+  lang: string;
+}
 
-export function Footer({ lang }: { lang: string }) {
-  const t = useTranslations();
+export async function Footer({ lang }: FooterProps) {
+  const t = await getTranslations({ locale: lang, namespace: "Home" });
 
   return (
     <footer className="border-t border-tactical-border bg-tactical-bg-secondary/30 px-4 py-8">
       <div className="mx-auto flex max-w-6xl items-center justify-between">
         <div className="font-tactical-display text-sm text-tactical-text-secondary">
-          {t("Home.footer.copyright")}
+          {t("footer.copyright")}
         </div>
         <div className="font-tactical-display text-sm text-tactical-text-secondary">
-          {t("Home.footer.tagline")}
+          {t("footer.tagline")}
         </div>
       </div>
     </footer>

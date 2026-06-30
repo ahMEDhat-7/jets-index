@@ -1,8 +1,22 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
+const locales = ["en", "ar"];
+const defaultLocale = "en";
+
+function getLocaleFromPathname(pathname: string): string {
+  const segments = pathname.split("/");
+  const first = segments[1];
+  if (locales.includes(first)) return first;
+  return defaultLocale;
+}
+
 export function middleware(request: NextRequest): NextResponse {
   const response = NextResponse.next();
+
+  // next-intl locale header — required for server components to resolve locale
+  const locale = getLocaleFromPathname(request.nextUrl.pathname);
+  response.headers.set("X-NEXT-INTL-LOCALE", locale);
 
   // Security headers
   response.headers.set("X-Frame-Options", "DENY");
