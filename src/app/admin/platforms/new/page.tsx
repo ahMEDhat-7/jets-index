@@ -5,7 +5,13 @@ import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/stores/useAuthStore";
 import { createPlatform, fetchCategories, fetchManufacturers, fetchCountries } from "@/lib/api";
 import { ImageManager } from "@/components/admin/ImageManager";
+import { Plus, Trash2 } from "lucide-react";
 import type { CategoryListItem, ManufacturerListItem, CountryListItem } from "@/lib/types";
+
+interface SpecRow {
+  key: string;
+  value: string;
+}
 
 export default function NewPlatformPage(): React.ReactNode {
   const router = useRouter();
@@ -26,6 +32,7 @@ export default function NewPlatformPage(): React.ReactNode {
     descriptionAr: "",
   });
 
+  const [specs, setSpecs] = useState<SpecRow[]>([]);
   const [images, setImages] = useState<{ url: string; alt: string; sortOrder: number }[]>([]);
   const [categories, setCategories] = useState<CategoryListItem[]>([]);
   const [manufacturers, setManufacturers] = useState<ManufacturerListItem[]>([]);
@@ -50,11 +57,27 @@ export default function NewPlatformPage(): React.ReactNode {
     setForm((prev) => ({ ...prev, [field]: value }));
   }
 
+  function addSpec(): void {
+    setSpecs((prev) => [...prev, { key: "", value: "" }]);
+  }
+
+  function removeSpec(index: number): void {
+    setSpecs((prev) => prev.filter((_, i) => i !== index));
+  }
+
+  function updateSpec(index: number, field: "key" | "value", value: string): void {
+    setSpecs((prev) => prev.map((s, i) => (i === index ? { ...s, [field]: value } : s)));
+  }
+
   async function handleSubmit(e: React.FormEvent): Promise<void> {
     e.preventDefault();
     if (!token) return;
     setSaving(true);
     setError("");
+
+    const technicalSpecs = specs.length > 0
+      ? Object.fromEntries(specs.filter((s) => s.key.trim()).map((s) => [s.key.trim(), s.value]))
+      : undefined;
 
     try {
       await createPlatform(
@@ -65,6 +88,7 @@ export default function NewPlatformPage(): React.ReactNode {
           categoryId: form.categoryId,
           manufacturerId: form.manufacturerId,
           countryId: form.countryId,
+          technicalSpecs,
           translations: [
             { locale: "en", name: form.nameEn, description: form.descriptionEn || undefined },
             { locale: "ar", name: form.nameAr, description: form.descriptionAr || undefined },
@@ -194,6 +218,47 @@ export default function NewPlatformPage(): React.ReactNode {
                 })}
               </select>
             </div>
+          </div>
+        </div>
+
+        {/* Language Fields */}
+        <div className="rounded border border-tactical-border bg-tactical-card p-6">
+          <h3 className="mb-4 font-tactical-display font-bold text-tactical-accent">
+            Technical Specs
+          </h3>
+          <div className="space-y-3">
+            {specs.map((spec, index) => (
+              <div key={index} className="flex items-center gap-2">
+                <input
+                  type="text"
+                  placeholder="Key (e.g. maxSpeed)"
+                  value={spec.key}
+                  onChange={(e) => updateSpec(index, "key", e.target.value)}
+                  className="w-1/2 rounded border border-tactical-border bg-tactical-bg px-3 py-2 text-tactical-text focus:border-tactical-accent focus:outline-none"
+                />
+                <input
+                  type="text"
+                  placeholder="Value (e.g. Mach 2.0)"
+                  value={spec.value}
+                  onChange={(e) => updateSpec(index, "value", e.target.value)}
+                  className="w-1/2 rounded border border-tactical-border bg-tactical-bg px-3 py-2 text-tactical-text focus:border-tactical-accent focus:outline-none"
+                />
+                <button
+                  type="button"
+                  onClick={() => removeSpec(index)}
+                  className="rounded p-2 text-tactical-text-secondary transition-colors hover:text-tactical-alert"
+                >
+                  <Trash2 size={16} />
+                </button>
+              </div>
+            ))}
+            <button
+              type="button"
+              onClick={addSpec}
+              className="flex items-center gap-2 text-sm text-tactical-accent transition-colors hover:text-tactical-accent/80"
+            >
+              <Plus size={16} /> Add Spec
+            </button>
           </div>
         </div>
 

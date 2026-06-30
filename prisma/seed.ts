@@ -142,12 +142,12 @@ const platformsData = [
     id: uuid(),
     unitCostUsd: 82500000,
     operationalStatus: "Active",
-    technicalSpecs: JSON.stringify({
+    technicalSpecs: {
       maxSpeed: "Mach 1.6",
       range: "2800km",
       ceiling: "15240m",
       firstFlight: "2006",
-    }),
+    },
     imageUrl: "/images/f35.jpg",
     categoryId: categoriesData[0].id,
     manufacturerId: manufacturersData[0].id,
@@ -167,12 +167,12 @@ const platformsData = [
     id: uuid(),
     unitCostUsd: 77000000,
     operationalStatus: "Active",
-    technicalSpecs: JSON.stringify({
+    technicalSpecs: {
       maxSpeed: "Mach 2.0",
       range: "2000km",
       ceiling: "20000m",
       firstFlight: "1997",
-    }),
+    },
     imageUrl: "/images/f22.jpg",
     categoryId: categoriesData[0].id,
     manufacturerId: manufacturersData[0].id,
@@ -192,12 +192,12 @@ const platformsData = [
     id: uuid(),
     unitCostUsd: 35000000,
     operationalStatus: "Active",
-    technicalSpecs: JSON.stringify({
+    technicalSpecs: {
       maxSpeed: "Mach 2.0",
       range: "3000km",
       ceiling: "18000m",
       firstFlight: "1981",
-    }),
+    },
     imageUrl: "/images/f15.jpg",
     categoryId: categoriesData[0].id,
     manufacturerId: manufacturersData[1].id,
@@ -217,12 +217,12 @@ const platformsData = [
     id: uuid(),
     unitCostUsd: 85000000,
     operationalStatus: "Active",
-    technicalSpecs: JSON.stringify({
+    technicalSpecs: {
       maxSpeed: "Mach 2.0",
       range: "3500km",
       ceiling: "20000m",
       firstFlight: "1977",
-    }),
+    },
     imageUrl: "/images/su57.jpg",
     categoryId: categoriesData[0].id,
     manufacturerId: manufacturersData[3].id,
@@ -242,12 +242,12 @@ const platformsData = [
     id: uuid(),
     unitCostUsd: 110000000,
     operationalStatus: "Development",
-    technicalSpecs: JSON.stringify({
+    technicalSpecs: {
       maxSpeed: "Mach 2.5",
       range: "3000km",
       ceiling: "22000m",
       firstFlight: "2010",
-    }),
+    },
     imageUrl: "/images/su57e.jpg",
     categoryId: categoriesData[0].id,
     manufacturerId: manufacturersData[3].id,
@@ -267,12 +267,12 @@ const platformsData = [
     id: uuid(),
     unitCostUsd: 30000000,
     operationalStatus: "Active",
-    technicalSpecs: JSON.stringify({
+    technicalSpecs: {
       maxSpeed: "Mach 1.8",
       range: "2600km",
       ceiling: "17000m",
       firstFlight: "2010",
-    }),
+    },
     imageUrl: "/images/j20.jpg",
     categoryId: categoriesData[0].id,
     manufacturerId: manufacturersData[5].id,
@@ -292,12 +292,12 @@ const platformsData = [
     id: uuid(),
     unitCostUsd: 100000000,
     operationalStatus: "Active",
-    technicalSpecs: JSON.stringify({
+    technicalSpecs: {
       maxSpeed: "Mach 1.8",
       range: "3700km",
       ceiling: "15000m",
       firstFlight: "1986",
-    }),
+    },
     imageUrl: "/images/b2.jpg",
     categoryId: categoriesData[1].id,
     manufacturerId: manufacturersData[2].id,
@@ -317,12 +317,12 @@ const platformsData = [
     id: uuid(),
     unitCostUsd: 92000000,
     operationalStatus: "Active",
-    technicalSpecs: JSON.stringify({
+    technicalSpecs: {
       maxSpeed: "Mach 2.2",
       range: "2000km",
       ceiling: "19000m",
       firstFlight: "1986",
-    }),
+    },
     imageUrl: "/images/rafale.jpg",
     categoryId: categoriesData[0].id,
     manufacturerId: manufacturersData[6].id,
@@ -342,12 +342,12 @@ const platformsData = [
     id: uuid(),
     unitCostUsd: 100000000,
     operationalStatus: "Development",
-    technicalSpecs: JSON.stringify({
+    technicalSpecs: {
       maxSpeed: "Mach 2.0",
       range: "3000km",
       ceiling: "20000m",
       firstFlight: "2030",
-    }),
+    },
     imageUrl: "/images/tempest.jpg",
     categoryId: categoriesData[0].id,
     manufacturerId: manufacturersData[7].id,
@@ -367,12 +367,12 @@ const platformsData = [
     id: uuid(),
     unitCostUsd: 35000000,
     operationalStatus: "Active",
-    technicalSpecs: JSON.stringify({
+    technicalSpecs: {
       maxSpeed: "Mach 2.0",
       range: "3000km",
       ceiling: "18000m",
       firstFlight: "1999",
-    }),
+    },
     imageUrl: "/images/j10.jpg",
     categoryId: categoriesData[0].id,
     manufacturerId: manufacturersData[5].id,

@@ -91,6 +91,19 @@ export default async function PlatformDetailPage({
     ""
   );
 
+  let specs: Record<string, string> | null = null;
+  if (platform.technicalSpecs) {
+    if (typeof platform.technicalSpecs === "string") {
+      try {
+        specs = JSON.parse(platform.technicalSpecs) as Record<string, string>;
+      } catch {
+        specs = null;
+      }
+    } else if (typeof platform.technicalSpecs === "object") {
+      specs = platform.technicalSpecs as Record<string, string>;
+    }
+  }
+
   return (
     <div className="min-h-screen">
       <Header lang={lang} activePage="browse" />
@@ -210,18 +223,13 @@ export default async function PlatformDetailPage({
             </div>
 
             {/* Technical Specs */}
-            {platform.technicalSpecs &&
-              typeof platform.technicalSpecs === "object" &&
-              Object.keys(platform.technicalSpecs as Record<string, unknown>)
-                .length > 0 && (
+            {specs && Object.keys(specs).length > 0 && (
                 <div className="rounded border border-tactical-border bg-tactical-card p-6">
                   <h2 className="mb-4 font-tactical-display text-xl font-bold text-tactical-text">
                     {t("platform.technicalSpecs")}
                   </h2>
                   <div className="space-y-3">
-                    {Object.entries(
-                      platform.technicalSpecs as Record<string, string>
-                    ).map(([key, value]) => (
+                    {Object.entries(specs).map(([key, value]) => (
                       <div
                         key={key}
                         className="flex justify-between border-b border-tactical-border pb-2 last:border-b-0"
