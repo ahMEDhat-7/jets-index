@@ -81,6 +81,7 @@ yarn-error.log*
 
 # TypeScript
 next-env.d.ts
+tsconfig.tsbuildinfo
 
 # OS specific files
 .DS_Store
