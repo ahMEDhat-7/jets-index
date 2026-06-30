@@ -6,7 +6,7 @@ import { formatDate } from "@/lib/utils";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({
   params,
