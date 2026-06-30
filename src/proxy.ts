@@ -1,37 +1,28 @@
+import createMiddleware from "next-intl/middleware";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { routing } from "@/i18n/routing";
 
-const locales = ["en", "ar"];
-const defaultLocale = "en";
-
-function getLocaleFromPathname(pathname: string): string {
-  const segments = pathname.split("/");
-  const first = segments[1];
-  if (locales.includes(first)) return first;
-  return defaultLocale;
-}
+const handleI18nRouting = createMiddleware(routing);
 
 export function proxy(request: NextRequest): NextResponse {
-  const response = NextResponse.next();
+  const i18nResponse = handleI18nRouting(request);
 
-  // next-intl locale header — required for server components to resolve locale
-  const locale = getLocaleFromPathname(request.nextUrl.pathname);
-  response.headers.set("X-NEXT-INTL-LOCALE", locale);
-
-  // Security headers
-  response.headers.set("X-Frame-Options", "DENY");
-  response.headers.set("X-Content-Type-Options", "nosniff");
-  response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
-  response.headers.set(
+  i18nResponse.headers.set("X-Frame-Options", "DENY");
+  i18nResponse.headers.set("X-Content-Type-Options", "nosniff");
+  i18nResponse.headers.set(
+    "Referrer-Policy",
+    "strict-origin-when-cross-origin"
+  );
+  i18nResponse.headers.set(
     "Strict-Transport-Security",
     "max-age=63072000; includeSubDomains; preload"
   );
-  response.headers.set(
+  i18nResponse.headers.set(
     "Permissions-Policy",
     "camera=(), microphone=(), geolocation=()"
   );
 
-  // Admin API auth guard
   if (request.nextUrl.pathname.startsWith("/api/v1")) {
     const method = request.method;
     const isWriteMethod =
@@ -49,17 +40,9 @@ export function proxy(request: NextRequest): NextResponse {
     }
   }
 
-  // Rate limiting for auth routes (simple in-memory)
-  if (
-    request.nextUrl.pathname === "/api/v1/auth/login" &&
-    request.method === "POST"
-  ) {
-    // Allow through - rate limiting would need Redis in production
-  }
-
-  return response;
+  return i18nResponse;
 }
 
 export const config = {
-  matcher: ["/api/:path*", "/((?!_next/static|_next/image|favicon.ico).*)"],
+  matcher: ["/((?!api|_next|.*\\..*).*)"],
 };
