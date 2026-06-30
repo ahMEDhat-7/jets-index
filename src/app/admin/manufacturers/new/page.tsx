@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/stores/useAuthStore";
-import { createManufacturer } from "@/lib/api";
+import { createManufacturer, fetchCountries } from "@/lib/api";
+import type { CountryListItem } from "@/lib/types";
 
 export default function NewManufacturerPage(): React.ReactNode {
   const router = useRouter();
@@ -11,6 +12,14 @@ export default function NewManufacturerPage(): React.ReactNode {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
   const [form, setForm] = useState({ countryId: "", nameEn: "", specEn: "", nameAr: "", specAr: "" });
+  const [countries, setCountries] = useState<CountryListItem[]>([]);
+
+  useEffect(() => {
+    void fetchCountries({ limit: "200" }).then((res) => {
+      const items = Array.isArray(res) ? res : res.data;
+      setCountries(items ?? []);
+    });
+  }, []);
 
   function updateField(field: string, value: string): void { setForm((p) => ({ ...p, [field]: value })); }
 
@@ -37,7 +46,15 @@ export default function NewManufacturerPage(): React.ReactNode {
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="rounded border border-tactical-border bg-tactical-card p-6">
           <h3 className="mb-4 font-tactical-display font-bold text-tactical-accent">Shared</h3>
-          <div><label className="mb-1 block text-sm text-tactical-text-secondary">Country ID</label><input type="text" value={form.countryId} onChange={(e) => updateField("countryId", e.target.value)} className="w-full rounded border border-tactical-border bg-tactical-bg px-3 py-2 text-tactical-text focus:border-tactical-accent focus:outline-none" placeholder="UUID" required /></div>
+          <div><label className="mb-1 block text-sm text-tactical-text-secondary">Country</label>
+            <select value={form.countryId} onChange={(e) => updateField("countryId", e.target.value)} className="w-full rounded border border-tactical-border bg-tactical-bg px-3 py-2 text-tactical-text focus:border-tactical-accent focus:outline-none" required>
+              <option value="">Select country...</option>
+              {countries.map((c) => {
+                const name = c.translations.find((t) => t.locale === "en")?.name ?? c.id;
+                return <option key={c.id} value={c.id}>{name}</option>;
+              })}
+            </select>
+          </div>
         </div>
         <div className="rounded border border-tactical-border bg-tactical-card p-6">
           <h3 className="mb-4 font-tactical-display font-bold text-tactical-accent">English</h3>

@@ -18,8 +18,8 @@ export default function AdminBlogsPage(): React.ReactNode {
 
   async function loadBlogs(): Promise<void> {
     try {
-      const data = await fetchBlogs({ locale: "en", limit: "50" });
-      setBlogs(data.data);
+      const result = await fetchBlogs({ locale: "en", limit: "50" });
+      setBlogs(Array.isArray(result) ? result : result.data);
     } catch (err) {
       console.error(err);
     } finally {

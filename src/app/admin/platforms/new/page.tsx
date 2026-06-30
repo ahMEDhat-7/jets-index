@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/stores/useAuthStore";
-import { createPlatform } from "@/lib/api";
+import { createPlatform, fetchCategories, fetchManufacturers, fetchCountries } from "@/lib/api";
 import { ImageManager } from "@/components/admin/ImageManager";
+import type { CategoryListItem, ManufacturerListItem, CountryListItem } from "@/lib/types";
 
 export default function NewPlatformPage(): React.ReactNode {
   const router = useRouter();
@@ -26,6 +27,24 @@ export default function NewPlatformPage(): React.ReactNode {
   });
 
   const [images, setImages] = useState<{ url: string; alt: string; sortOrder: number }[]>([]);
+  const [categories, setCategories] = useState<CategoryListItem[]>([]);
+  const [manufacturers, setManufacturers] = useState<ManufacturerListItem[]>([]);
+  const [countries, setCountries] = useState<CountryListItem[]>([]);
+
+  useEffect(() => {
+    void fetchCategories({ limit: "200" }).then((res) => {
+      const items = Array.isArray(res) ? res : res.data;
+      setCategories(items ?? []);
+    });
+    void fetchManufacturers({ limit: "200" }).then((res) => {
+      const items = Array.isArray(res) ? res : res.data;
+      setManufacturers(items ?? []);
+    });
+    void fetchCountries({ limit: "200" }).then((res) => {
+      const items = Array.isArray(res) ? res : res.data;
+      setCountries(items ?? []);
+    });
+  }, []);
 
   function updateField(field: string, value: string): void {
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -126,39 +145,54 @@ export default function NewPlatformPage(): React.ReactNode {
             </div>
             <div>
               <label className="mb-2 block text-sm text-tactical-text-secondary">
-                Category ID
+                Category
               </label>
-              <input
-                type="text"
+              <select
                 value={form.categoryId}
                 onChange={(e) => updateField("categoryId", e.target.value)}
                 className="w-full rounded border border-tactical-border bg-tactical-bg px-3 py-2 text-tactical-text focus:border-tactical-accent focus:outline-none"
-                placeholder="UUID"
-              />
+                required
+              >
+                <option value="">Select category...</option>
+                {categories.map((cat) => {
+                  const name = cat.translations.find((t) => t.locale === "en")?.name ?? cat.id;
+                  return <option key={cat.id} value={cat.id}>{name}</option>;
+                })}
+              </select>
             </div>
             <div>
               <label className="mb-2 block text-sm text-tactical-text-secondary">
-                Manufacturer ID
+                Manufacturer
               </label>
-              <input
-                type="text"
+              <select
                 value={form.manufacturerId}
                 onChange={(e) => updateField("manufacturerId", e.target.value)}
                 className="w-full rounded border border-tactical-border bg-tactical-bg px-3 py-2 text-tactical-text focus:border-tactical-accent focus:outline-none"
-                placeholder="UUID"
-              />
+                required
+              >
+                <option value="">Select manufacturer...</option>
+                {manufacturers.map((man) => {
+                  const name = man.translations.find((t) => t.locale === "en")?.name ?? man.id;
+                  return <option key={man.id} value={man.id}>{name}</option>;
+                })}
+              </select>
             </div>
             <div>
               <label className="mb-2 block text-sm text-tactical-text-secondary">
-                Country ID
+                Country
               </label>
-              <input
-                type="text"
+              <select
                 value={form.countryId}
                 onChange={(e) => updateField("countryId", e.target.value)}
                 className="w-full rounded border border-tactical-border bg-tactical-bg px-3 py-2 text-tactical-text focus:border-tactical-accent focus:outline-none"
-                placeholder="UUID"
-              />
+                required
+              >
+                <option value="">Select country...</option>
+                {countries.map((country) => {
+                  const name = country.translations.find((t) => t.locale === "en")?.name ?? country.id;
+                  return <option key={country.id} value={country.id}>{name}</option>;
+                })}
+              </select>
             </div>
           </div>
         </div>

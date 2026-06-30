@@ -19,8 +19,8 @@ export default function AdminPlatformsPage(): React.ReactNode {
 
   async function loadPlatforms(): Promise<void> {
     try {
-      const data = await fetchPlatforms({ locale: "en", limit: "50" });
-      setPlatforms(data.data);
+      const result = await fetchPlatforms({ locale: "en", limit: "50" });
+      setPlatforms(Array.isArray(result) ? result : result.data);
     } catch (err) {
       setError("Failed to load platforms");
       console.error(err);

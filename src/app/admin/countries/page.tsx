@@ -15,7 +15,7 @@ export default function AdminCountriesPage(): React.ReactNode {
   useEffect(() => { void load(); }, []);
 
   async function load(): Promise<void> {
-    try { const data = await fetchCountries({ locale: "en" }); setCountries(data.data); } catch (err) { console.error(err); } finally { setLoading(false); }
+    try { const result = await fetchCountries({ locale: "en" }); setCountries(Array.isArray(result) ? result : result.data); } catch (err) { console.error(err); } finally { setLoading(false); }
   }
 
   async function handleDelete(id: string): Promise<void> {

@@ -15,7 +15,7 @@ export default function AdminManufacturersPage(): React.ReactNode {
   useEffect(() => { void load(); }, []);
 
   async function load(): Promise<void> {
-    try { const data = await fetchManufacturers({ locale: "en" }); setManufacturers(data.data); } catch (err) { console.error(err); } finally { setLoading(false); }
+    try { const result = await fetchManufacturers({ locale: "en" }); setManufacturers(Array.isArray(result) ? result : result.data); } catch (err) { console.error(err); } finally { setLoading(false); }
   }
 
   async function handleDelete(id: string): Promise<void> {

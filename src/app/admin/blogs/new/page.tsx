@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/stores/useAuthStore";
 import { createBlog } from "@/lib/api";
+import { MarkdownContent } from "@/components/MarkdownContent";
 
 export default function NewBlogPage(): React.ReactNode {
   const router = useRouter();
@@ -105,13 +106,11 @@ export default function NewBlogPage(): React.ReactNode {
           </div>
           <div className="rounded border border-tactical-border bg-tactical-card p-4">
             <h3 className="mb-3 text-sm font-bold text-tactical-text-secondary">Preview</h3>
-            <div className="prose prose-invert max-w-none text-sm text-tactical-text">
-              {currentContent ? (
-                <pre className="whitespace-pre-wrap">{currentContent}</pre>
-              ) : (
-                <span className="text-tactical-text-secondary">Start typing to see preview...</span>
-              )}
-            </div>
+            {currentContent ? (
+              <MarkdownContent content={currentContent} />
+            ) : (
+              <span className="text-tactical-text-secondary">Start typing to see preview...</span>
+            )}
           </div>
         </div>
 

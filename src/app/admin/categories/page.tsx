@@ -16,8 +16,8 @@ export default function AdminCategoriesPage(): React.ReactNode {
 
   async function load(): Promise<void> {
     try {
-      const data = await fetchCategories({ locale: "en" });
-      setCategories(data.data);
+      const result = await fetchCategories({ locale: "en" });
+      setCategories(Array.isArray(result) ? result : result.data);
     } catch (err) { console.error(err); } finally { setLoading(false); }
   }
 

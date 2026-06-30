@@ -5,14 +5,24 @@ import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import { useAuthStore } from "@/stores/useAuthStore";
 import { cn } from "@/lib/utils";
+import { ThemeToggle } from "@/components/ThemeToggle";
+import {
+  LayoutDashboard,
+  Plane,
+  FileText,
+  FolderOpen,
+  Globe,
+  Factory,
+} from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
-const sidebarLinks = [
-  { href: "/admin", label: "Dashboard", icon: "📊" },
-  { href: "/admin/platforms", label: "Platforms", icon: "✈️" },
-  { href: "/admin/blogs", label: "Blogs", icon: "📝" },
-  { href: "/admin/categories", label: "Categories", icon: "📁" },
-  { href: "/admin/countries", label: "Countries", icon: "🌍" },
-  { href: "/admin/manufacturers", label: "Manufacturers", icon: "🏭" },
+const sidebarLinks: { href: string; label: string; icon: LucideIcon }[] = [
+  { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/admin/platforms", label: "Platforms", icon: Plane },
+  { href: "/admin/blogs", label: "Blogs", icon: FileText },
+  { href: "/admin/categories", label: "Categories", icon: FolderOpen },
+  { href: "/admin/countries", label: "Countries", icon: Globe },
+  { href: "/admin/manufacturers", label: "Manufacturers", icon: Factory },
 ];
 
 export default function AdminLayout({
@@ -80,7 +90,7 @@ export default function AdminLayout({
                     : "text-tactical-text-secondary hover:bg-tactical-card hover:text-tactical-text"
                 )}
               >
-                <span>{link.icon}</span>
+                <link.icon size={16} />
                 <span>{link.label}</span>
               </Link>
             );
@@ -124,6 +134,7 @@ export default function AdminLayout({
               >
                 View Site
               </Link>
+              <ThemeToggle label="Toggle theme" />
             </div>
           </div>
         </header>
