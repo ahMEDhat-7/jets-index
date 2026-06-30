@@ -164,7 +164,7 @@ export default async function BrowsePage({
                         }`}
                       />
                       <span className="text-xs text-tactical-text-secondary">
-                        {platform.operationalStatus ?? t("Common.unknown")}
+                        {platform.operationalStatus ? ts(platform.operationalStatus) : t("Common.unknown")}
                       </span>
                     </div>
                     <span className="text-xs text-tactical-text-secondary">

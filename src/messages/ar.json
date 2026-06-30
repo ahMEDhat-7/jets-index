@@ -11,7 +11,7 @@
     "hero": {
       "title": "جيتديكس",
       "subtitle": "قاعدة بيانات الطيران العسكري",
-      "description": "فهرس شامل لmanufacturers طائرات المقاتلة وبرامج الطائرات وأنظمة الطيران العسكري في العالم.",
+      "description": "فهرس شامل لشركات تصنيع طائرات المقاتلة وبرامج الطائرات وأنظمة الطيران العسكري في العالم.",
       "cta": "تصفح الطائرات",
       "ctaSecondary": "اقرأ المدونة"
     },
@@ -71,7 +71,7 @@
       "unitCost": "التكلفة الوحدة",
       "status": "الحالة",
       "category": "الفئة",
-      "manufacturer": "ال manufacturer",
+      "manufacturer": "الشركة المصنعة",
       "country": "الدولة",
       "specs": "المواصفات الفنية",
       "description": "الوصف",
@@ -121,7 +121,7 @@
       "blogs": "المدونات",
       "categories": "الفئات",
       "countries": "الدول",
-      "manufacturers": "ال manufacturers"
+      "manufacturers": "شركات التصنيع"
     },
     "header": {
       "title": "إدارة جيتديكس",
@@ -132,7 +132,7 @@
       "totalPlatforms": "إجمالي المنصات",
       "totalCategories": "إجمالي الفئات",
       "totalCountries": "إجمالي الدول",
-      "totalManufacturers": "إجمالي manufacturers",
+      "totalManufacturers": "إجمالي شركات التصنيع",
       "totalBlogs": "إجمالي المدونات",
       "platformsByCategory": "المنصات حسب الفئة",
       "platformsByCountry": "المنصات حسب الدولة",
@@ -151,7 +151,7 @@
       "status": "الحالة التشغيلية",
       "imageUrl": "رابط الصورة",
       "category": "الفئة",
-      "manufacturer": "ال manufacturer",
+      "manufacturer": "الشركة المصنعة",
       "country": "الدولة",
       "technicalSpecs": "المواصفات الفنية",
       "saved": "تم حفظ المنصة بنجاح",
@@ -192,16 +192,16 @@
       "deleted": "تم حذف الدولة بنجاح"
     },
     "manufacturers": {
-      "title": "ال manufacturers",
-      "create": "إنشاء manufacturer",
-      "edit": "تعديل manufacturer",
-      "delete": "حذف manufacturer",
-      "deleteConfirm": "هل أنت متأكد من حذف هذا manufacturer؟",
+      "title": "شركات التصنيع",
+      "create": "إنشاء شركة تصنيع",
+      "edit": "تعديل شركة تصنيع",
+      "delete": "حذف شركة تصنيع",
+      "deleteConfirm": "هل أنت متأكد من حذف هذه الشركة المصنعة؟",
       "name": "الاسم",
       "specialization": "التخصص",
       "country": "الدولة",
-      "saved": "تم حفظ manufacturer بنجاح",
-      "deleted": "تم حذف manufacturer بنجاح"
+      "saved": "تم حفظ شركة التصنيع بنجاح",
+      "deleted": "تم حذف شركة التصنيع بنجاح"
     },
     "common": {
       "sharedFields": "الحقول المشتركة",

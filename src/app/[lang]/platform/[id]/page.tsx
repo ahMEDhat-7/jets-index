@@ -16,6 +16,7 @@ export default async function PlatformDetailPage({
   const { lang, id } = await params;
   setRequestLocale(lang);
   const t = await getTranslations({ locale: lang, namespace: "Browse" });
+  const ts = await getTranslations({ locale: lang, namespace: "Statuses" });
 
   const platform = await prisma.platform.findUnique({
     where: { id },
@@ -102,7 +103,7 @@ export default async function PlatformDetailPage({
                 }`}
               />
               <span className="text-sm text-tactical-text-secondary">
-                {platform.operationalStatus ?? t("Common.unknown")}
+                {platform.operationalStatus ? ts(platform.operationalStatus) : t("Common.unknown")}
               </span>
             </div>
             <span className="text-tactical-border">|</span>
@@ -172,7 +173,7 @@ export default async function PlatformDetailPage({
                 <div className="flex justify-between">
                   <span className="text-tactical-text-secondary">{t("platform.status")}</span>
                   <span className="text-tactical-text">
-                    {platform.operationalStatus ?? t("Common.unknown")}
+                    {platform.operationalStatus ? ts(platform.operationalStatus) : t("Common.unknown")}
                   </span>
                 </div>
               </div>
