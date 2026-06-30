@@ -11,7 +11,7 @@ function getLocaleFromPathname(pathname: string): string {
   return defaultLocale;
 }
 
-export function middleware(request: NextRequest): NextResponse {
+export function proxy(request: NextRequest): NextResponse {
   const response = NextResponse.next();
 
   // next-intl locale header — required for server components to resolve locale
