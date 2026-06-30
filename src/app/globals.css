@@ -156,3 +156,175 @@ html.light {
     transform: translateX(0);
   }
 }
+
+/* Markdown prose styles */
+.prose {
+  color: var(--color-tactical-text-secondary);
+  line-height: 1.75;
+  font-size: 1rem;
+}
+
+.prose :where(h1, h2, h3, h4, h5, h6) {
+  color: var(--color-tactical-text);
+  font-family: var(--font-tactical-display);
+  font-weight: 700;
+  line-height: 1.3;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+}
+
+.prose :where(h1) {
+  font-size: 2rem;
+}
+
+.prose :where(h2) {
+  font-size: 1.5rem;
+  border-bottom: 1px solid var(--color-tactical-border);
+  padding-bottom: 0.3em;
+}
+
+.prose :where(h3) {
+  font-size: 1.25rem;
+}
+
+.prose :where(h4) {
+  font-size: 1.125rem;
+}
+
+.prose :where(p) {
+  margin-top: 0;
+  margin-bottom: 1em;
+}
+
+.prose :where(a) {
+  color: var(--color-tactical-accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.prose :where(a):hover {
+  opacity: 0.8;
+}
+
+.prose :where(strong) {
+  color: var(--color-tactical-text);
+  font-weight: 700;
+}
+
+.prose :where(em) {
+  font-style: italic;
+}
+
+.prose :where(code) {
+  background-color: var(--color-tactical-bg-secondary);
+  border: 1px solid var(--color-tactical-border);
+  border-radius: 4px;
+  padding: 0.15em 0.35em;
+  font-size: 0.875em;
+  font-family: var(--font-tactical-body);
+}
+
+.prose :where(pre) {
+  background-color: var(--color-tactical-bg-secondary);
+  border: 1px solid var(--color-tactical-border);
+  border-radius: 6px;
+  padding: 1em;
+  overflow-x: auto;
+  margin-top: 0;
+  margin-bottom: 1.25em;
+}
+
+.prose :where(pre code) {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+}
+
+.prose :where(blockquote) {
+  border-left: 3px solid var(--color-tactical-accent);
+  padding-left: 1em;
+  margin-left: 0;
+  margin-right: 0;
+  margin-top: 0;
+  margin-bottom: 1.25em;
+  color: var(--color-tactical-text-secondary);
+  font-style: italic;
+}
+
+.prose :where(ul, ol) {
+  margin-top: 0;
+  margin-bottom: 1.25em;
+  padding-left: 1.5em;
+}
+
+.prose :where(ul) {
+  list-style-type: disc;
+}
+
+.prose :where(ol) {
+  list-style-type: decimal;
+}
+
+.prose :where(li) {
+  margin-top: 0.35em;
+  margin-bottom: 0.35em;
+}
+
+.prose :where(li > p) {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.prose :where(hr) {
+  border: none;
+  border-top: 1px solid var(--color-tactical-border);
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
+
+.prose :where(table) {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0;
+  margin-bottom: 1.25em;
+  font-size: 0.875em;
+}
+
+.prose :where(th, td) {
+  border: 1px solid var(--color-tactical-border);
+  padding: 0.5em 0.75em;
+  text-align: left;
+}
+
+.prose :where(th) {
+  background-color: var(--color-tactical-bg-secondary);
+  color: var(--color-tactical-text);
+  font-weight: 700;
+}
+
+.prose :where(img) {
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+}
+
+.prose :where(figure) {
+  margin-top: 0;
+  margin-bottom: 1.25em;
+}
+
+.prose :where(figcaption) {
+  font-size: 0.875em;
+  color: var(--color-tactical-text-secondary);
+  margin-top: 0.5em;
+  text-align: center;
+}
+
+.prose > :first-child {
+  margin-top: 0;
+}
+
+.prose > :last-child {
+  margin-bottom: 0;
+}
