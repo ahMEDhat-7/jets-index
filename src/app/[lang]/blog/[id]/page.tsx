@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { prisma } from "@/lib/prisma";
-import { formatDate, getTranslation } from "@/lib/utils";
+import { formatDate, getTranslation, isValidUUID } from "@/lib/utils";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { MarkdownContent } from "@/components/MarkdownContent";
@@ -15,6 +15,11 @@ export default async function BlogDetailPage({
 }): Promise<React.ReactNode> {
   const { lang, id } = await params;
   setRequestLocale(lang);
+
+  if (!isValidUUID(id)) {
+    notFound();
+  }
+
   const t = await getTranslations({ locale: lang, namespace: "Blog" });
 
   const blog = await prisma.blog.findUnique({

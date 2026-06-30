@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/auth-guard";
 import { UpdateCategorySchema } from "@/lib/validators";
+import { isValidUUID } from "@/lib/utils";
 import type { ApiResponse } from "@/lib/types";
 
 export async function GET(
@@ -10,6 +11,11 @@ export async function GET(
 ): Promise<NextResponse<ApiResponse<{ id: string }>>> {
   try {
     const { id } = await params;
+
+    if (!isValidUUID(id)) {
+      return NextResponse.json({ error: "Invalid ID" }, { status: 404 });
+    }
+
     const category = await prisma.category.findUnique({
       where: { id },
       include: {
@@ -36,6 +42,11 @@ export async function PATCH(
     if (admin instanceof NextResponse) return admin as NextResponse<ApiResponse<{ id: string }>>;
 
     const { id } = await params;
+
+    if (!isValidUUID(id)) {
+      return NextResponse.json({ error: "Invalid ID" }, { status: 404 });
+    }
+
     const body = await request.json();
     const parsed = UpdateCategorySchema.safeParse(body);
 
@@ -79,6 +90,10 @@ export async function DELETE(
     if (admin instanceof NextResponse) return admin as NextResponse<ApiResponse<null>>;
 
     const { id } = await params;
+
+    if (!isValidUUID(id)) {
+      return NextResponse.json({ error: "Invalid ID" }, { status: 404 });
+    }
 
     const existing = await prisma.category.findUnique({ where: { id } });
     if (!existing) {

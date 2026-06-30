@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { prisma } from "@/lib/prisma";
-import { formatCurrency, formatDate, getTranslation } from "@/lib/utils";
+import { formatCurrency, formatDate, getTranslation, isValidUUID } from "@/lib/utils";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { ImageGallery } from "@/components/ImageGallery";
@@ -15,6 +15,11 @@ export default async function PlatformDetailPage({
 }): Promise<React.ReactNode> {
   const { lang, id } = await params;
   setRequestLocale(lang);
+
+  if (!isValidUUID(id)) {
+    notFound();
+  }
+
   const t = await getTranslations({ locale: lang, namespace: "Browse" });
   const ts = await getTranslations({ locale: lang, namespace: "Statuses" });
 
