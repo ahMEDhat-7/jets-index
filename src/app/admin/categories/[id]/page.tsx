@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { useAuthStore } from "@/stores/useAuthStore";
 import { updateCategory } from "@/lib/api";
-import { prisma } from "@/lib/prisma";
 
 export default function EditCategoryPage(): React.ReactNode {
   const router = useRouter();

@@ -4,7 +4,6 @@ import { hashSync } from "bcryptjs";
 const prisma = new PrismaClient();
 
 const LOCALES = ["en", "ar"] as const;
-type Locale = (typeof LOCALES)[number];
 
 function uuid(): string {
   return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
@@ -527,7 +526,7 @@ async function main() {
 
   // Create platforms with translations
   for (const platform of platformsData) {
-    const { en, ar, ...platformFields } = platform;
+    const { en: _en, ar: _ar, ...platformFields } = platform;
     await prisma.platform.create({
       data: {
         ...platformFields,
@@ -548,7 +547,7 @@ async function main() {
 
   // Create blogs with translations
   for (const blog of blogsData) {
-    const { en, ar, ...blogFields } = blog;
+    const { en: _en, ar: _ar, ...blogFields } = blog;
     await prisma.blog.create({
       data: {
         ...blogFields,

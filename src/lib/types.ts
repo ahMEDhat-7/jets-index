@@ -128,7 +128,7 @@ export interface BlogListItem {
   translations: BlogTranslation[];
 }
 
-export interface BlogDetail extends BlogListItem {}
+export type BlogDetail = BlogListItem
 
 // ─── Auth Types ──────────────────────────────────────────────────────────────
 

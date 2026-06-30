@@ -51,7 +51,6 @@ export default function NewBlogPage(): React.ReactNode {
   }
 
   const currentContent = activeTab === "en" ? form.contentEn : form.contentAr;
-  const currentTitle = activeTab === "en" ? form.titleEn : form.titleAr;
 
   return (
     <div className="mx-auto max-w-5xl">

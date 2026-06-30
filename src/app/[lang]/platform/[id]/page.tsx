@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { prisma } from "@/lib/prisma";
-import { formatCurrency, formatDate, getTranslation, isValidUUID } from "@/lib/utils";
+import { formatCurrency, getTranslation, isValidUUID } from "@/lib/utils";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { ImageGallery } from "@/components/ImageGallery";
