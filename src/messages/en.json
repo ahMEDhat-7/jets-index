@@ -9,19 +9,19 @@
   },
   "Home": {
     "hero": {
-      "title": "JETDEX",
+      "title": "Jets Index",
       "subtitle": "Military Aviation Database",
       "description": "A comprehensive index of the world's fighter jet manufacturers, aircraft programs, and military aviation systems.",
       "cta": "Browse Aircraft",
       "ctaSecondary": "Read Blog"
     },
     "footer": {
-      "copyright": "© 2026 Jetdex. All rights reserved.",
+      "copyright": "© 2026 Jets Index. All rights reserved.",
       "tagline": "Built for military aviation enthusiasts"
     },
     "mission": {
       "title": "Our Mission",
-      "description": "Military aviation data is scattered across articles, PDFs, and unstructured sources. Jetdex provides a normalized, queryable dataset of global military platforms."
+      "description": "Military aviation data is scattered across articles, PDFs, and unstructured sources. Jets Index provides a normalized, queryable dataset of global military platforms."
     },
     "features": {
       "title": "Features",
@@ -43,7 +43,7 @@
       }
     },
     "about": {
-      "title": "About Jetdex",
+      "title": "About Jets Index",
       "description": "Built for defense enthusiasts, researchers, and military professionals seeking structured reference data."
     }
   },
@@ -123,7 +123,7 @@
       "manufacturers": "Manufacturers"
     },
     "header": {
-      "title": "JETDEX Admin",
+      "title": "Jets Index Admin",
       "logout": "Logout"
     },
     "dashboard": {

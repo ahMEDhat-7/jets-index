@@ -18,8 +18,13 @@ export async function generateMetadata({
   const t = await getTranslations({ locale: lang, namespace: "Home" });
 
   return {
-    title: t("hero.title"),
     description: t("hero.description"),
+    alternates: {
+      languages: {
+        en: "/en",
+        ar: "/ar",
+      },
+    },
   };
 }
 

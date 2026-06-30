@@ -24,7 +24,7 @@ export async function Header({ lang, activePage }: HeaderProps) {
           href={`/${lang}`}
           className="font-tactical-display text-xl font-bold text-tactical-accent"
         >
-          JETDEX
+          Jets Index
         </Link>
         <div className="flex items-center gap-6">
           <Link

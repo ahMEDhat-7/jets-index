@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { prisma } from "@/lib/prisma";
 import { formatDate, getTranslation, isValidUUID } from "@/lib/utils";
@@ -7,6 +8,30 @@ import { Footer } from "@/components/Footer";
 import { MarkdownContent } from "@/components/MarkdownContent";
 
 export const revalidate = 60;
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string; id: string }>;
+}): Promise<Metadata> {
+  const { lang, id } = await params;
+  if (!isValidUUID(id)) return {};
+  const blog = await prisma.blog.findUnique({
+    where: { id },
+    include: {
+      translations: { select: { locale: true, title: true, summary: true } },
+    },
+  });
+  if (!blog) return {};
+  const translation = blog.translations.find((tr) => tr.locale === lang);
+  const fallback = blog.translations.find((tr) => tr.locale === "en");
+  const title = translation?.title ?? fallback?.title ?? "Blog Post";
+  const summary = translation?.summary ?? fallback?.summary ?? "";
+  return {
+    title,
+    description: summary.slice(0, 160),
+  };
+}
 
 export default async function BlogDetailPage({
   params,

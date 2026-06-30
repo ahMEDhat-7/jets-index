@@ -25,9 +25,31 @@ const notoSansArabic = Noto_Sans_Arabic({
 });
 
 export const metadata: Metadata = {
-  title: "Jetdex — Military Aviation Database",
+  title: {
+    default: "Jets Index — Military Aviation Database",
+    template: "%s | Jets Index",
+  },
   description:
     "A comprehensive index of the world's fighter jet manufacturers, aircraft programs, and military aviation systems.",
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL || "https://jets-index.vercel.app"
+  ),
+  openGraph: {
+    type: "website",
+    siteName: "Jets Index",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
 };
 
 export default function RootLayout({

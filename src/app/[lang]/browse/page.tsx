@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { prisma } from "@/lib/prisma";
 import { formatCurrency, getTranslation } from "@/lib/utils";
@@ -6,6 +7,19 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 
 export const revalidate = 60;
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  const t = await getTranslations({ locale: lang, namespace: "Browse" });
+  return {
+    title: "Browse Aircraft",
+    description: t("hero.description"),
+  };
+}
 
 export default async function BrowsePage({
   params,

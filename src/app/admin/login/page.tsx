@@ -37,7 +37,7 @@ export default function AdminLoginPage(): React.ReactNode {
         {/* Logo */}
         <div className="mb-8 text-center">
           <div className="font-tactical-display text-3xl font-bold text-tactical-accent">
-            JETDEX
+            Jets Index
           </div>
           <div className="mt-2 text-sm text-tactical-text-secondary">
             Admin Panel
@@ -98,7 +98,7 @@ export default function AdminLoginPage(): React.ReactNode {
 
         <div className="mt-4 text-center text-sm text-tactical-text-secondary">
           <a href="/en" className="hover:text-tactical-accent">
-            ← Back to Jetdex
+            ← Back to Jets Index
           </a>
         </div>
       </div>

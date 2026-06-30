@@ -65,7 +65,7 @@ export default function AdminLayout({
             href="/admin"
             className="font-tactical-display text-xl font-bold text-tactical-accent"
           >
-            JETDEX
+            Jets Index
           </Link>
           <div className="text-xs text-tactical-text-secondary">
             Admin Panel

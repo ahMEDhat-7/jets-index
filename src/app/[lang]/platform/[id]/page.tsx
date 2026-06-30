@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { prisma } from "@/lib/prisma";
 import { formatCurrency, formatDate, getTranslation, isValidUUID } from "@/lib/utils";
@@ -7,6 +8,30 @@ import { Footer } from "@/components/Footer";
 import { ImageGallery } from "@/components/ImageGallery";
 
 export const revalidate = 60;
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string; id: string }>;
+}): Promise<Metadata> {
+  const { lang, id } = await params;
+  if (!isValidUUID(id)) return {};
+  const platform = await prisma.platform.findUnique({
+    where: { id },
+    include: {
+      translations: { select: { locale: true, name: true, description: true } },
+    },
+  });
+  if (!platform) return {};
+  const translation = platform.translations.find((tr) => tr.locale === lang);
+  const fallback = platform.translations.find((tr) => tr.locale === "en");
+  const name = translation?.name ?? fallback?.name ?? "Aircraft";
+  const description = translation?.description ?? fallback?.description ?? "";
+  return {
+    title: name,
+    description: description.slice(0, 160),
+  };
+}
 
 export default async function PlatformDetailPage({
   params,
