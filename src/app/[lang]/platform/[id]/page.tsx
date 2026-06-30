@@ -100,11 +100,15 @@ export default async function PlatformDetailPage({
       raw = platform.technicalSpecs as Record<string, unknown>;
     }
 
-    if (raw.en && typeof raw.en === "object") {
-      const localeSpecs = raw[lang] && typeof raw[lang] === "object" ? raw[lang] : raw.en;
-      specs = localeSpecs as Record<string, string>;
-    } else if (raw) {
-      specs = raw as Record<string, string>;
+    if (raw.en && typeof raw.en === "object" && Object.keys(raw.en as object).length > 0) {
+      const localeRaw = raw[lang];
+      if (localeRaw && typeof localeRaw === "object" && Object.keys(localeRaw as object).length > 0) {
+        specs = localeRaw as Record<string, string>;
+      } else {
+        specs = raw.en as Record<string, string>;
+      }
+    } else {
+      specs = Object.keys(raw).length > 0 ? raw as Record<string, string> : null;
     }
   }
 
