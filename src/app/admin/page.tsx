@@ -4,6 +4,14 @@ import { useEffect, useState } from "react";
 import { useAuthStore } from "@/stores/useAuthStore";
 import { fetchStats } from "@/lib/api";
 import type { DashboardStats } from "@/lib/types";
+import {
+  Plane,
+  FolderOpen,
+  Globe,
+  Factory,
+  FileText,
+} from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
 export default function AdminDashboardPage(): React.ReactNode {
   const [stats, setStats] = useState<DashboardStats | null>(null);
@@ -42,12 +50,12 @@ export default function AdminDashboardPage(): React.ReactNode {
     );
   }
 
-  const statCards = [
-    { label: "Total Platforms", value: stats.platforms, icon: "✈️" },
-    { label: "Total Categories", value: stats.categories, icon: "📁" },
-    { label: "Total Countries", value: stats.countries, icon: "🌍" },
-    { label: "Total Manufacturers", value: stats.manufacturers, icon: "🏭" },
-    { label: "Total Blogs", value: stats.blogs, icon: "📝" },
+  const statCards: { label: string; value: number; icon: LucideIcon }[] = [
+    { label: "Total Platforms", value: stats.platforms, icon: Plane },
+    { label: "Total Categories", value: stats.categories, icon: FolderOpen },
+    { label: "Total Countries", value: stats.countries, icon: Globe },
+    { label: "Total Manufacturers", value: stats.manufacturers, icon: Factory },
+    { label: "Total Blogs", value: stats.blogs, icon: FileText },
   ];
 
   return (
@@ -59,7 +67,7 @@ export default function AdminDashboardPage(): React.ReactNode {
             key={card.label}
             className="rounded border border-tactical-border bg-tactical-card p-4 transition-all tactical-glow"
           >
-            <div className="mb-2 text-2xl">{card.icon}</div>
+            <div className="mb-2 text-2xl"><card.icon size={24} className="text-tactical-accent" /></div>
             <div className="font-tactical-display text-2xl font-bold text-tactical-accent">
               {card.value}
             </div>

@@ -5,29 +5,36 @@ import { routing } from "@/i18n/routing";
 
 const handleI18nRouting = createMiddleware(routing);
 
-export function proxy(request: NextRequest): NextResponse {
-  const i18nResponse = handleI18nRouting(request);
-
-  i18nResponse.headers.set("X-Frame-Options", "DENY");
-  i18nResponse.headers.set("X-Content-Type-Options", "nosniff");
-  i18nResponse.headers.set(
+function applySecurityHeaders(response: NextResponse): NextResponse {
+  response.headers.set("X-Frame-Options", "DENY");
+  response.headers.set("X-Content-Type-Options", "nosniff");
+  response.headers.set(
     "Referrer-Policy",
     "strict-origin-when-cross-origin"
   );
-  i18nResponse.headers.set(
+  response.headers.set(
     "Strict-Transport-Security",
     "max-age=63072000; includeSubDomains; preload"
   );
-  i18nResponse.headers.set(
+  response.headers.set(
     "Permissions-Policy",
     "camera=(), microphone=(), geolocation=()"
   );
+  return response;
+}
 
-  if (request.nextUrl.pathname.startsWith("/api/v1")) {
+export function proxy(request: NextRequest): NextResponse {
+  const { pathname } = request.nextUrl;
+
+  if (pathname.startsWith("/admin")) {
+    return applySecurityHeaders(NextResponse.next());
+  }
+
+  if (pathname.startsWith("/api/v1")) {
     const method = request.method;
     const isWriteMethod =
       method === "POST" || method === "PATCH" || method === "DELETE";
-    const isAuthRoute = request.nextUrl.pathname.startsWith("/api/v1/auth");
+    const isAuthRoute = pathname.startsWith("/api/v1/auth");
 
     if (isWriteMethod && !isAuthRoute) {
       const authHeader = request.headers.get("Authorization");
@@ -40,7 +47,8 @@ export function proxy(request: NextRequest): NextResponse {
     }
   }
 
-  return i18nResponse;
+  const i18nResponse = handleI18nRouting(request);
+  return applySecurityHeaders(i18nResponse);
 }
 
 export const config = {
