@@ -32,7 +32,8 @@ export default function NewPlatformPage(): React.ReactNode {
     descriptionAr: "",
   });
 
-  const [specs, setSpecs] = useState<SpecRow[]>([]);
+  const [specsEn, setSpecsEn] = useState<SpecRow[]>([]);
+  const [specsAr, setSpecsAr] = useState<SpecRow[]>([]);
   const [images, setImages] = useState<{ url: string; alt: string; sortOrder: number }[]>([]);
   const [categories, setCategories] = useState<CategoryListItem[]>([]);
   const [manufacturers, setManufacturers] = useState<ManufacturerListItem[]>([]);
@@ -57,16 +58,19 @@ export default function NewPlatformPage(): React.ReactNode {
     setForm((prev) => ({ ...prev, [field]: value }));
   }
 
-  function addSpec(): void {
-    setSpecs((prev) => [...prev, { key: "", value: "" }]);
+  function addSpec(locale: "en" | "ar"): void {
+    const setter = locale === "en" ? setSpecsEn : setSpecsAr;
+    setter((prev) => [...prev, { key: "", value: "" }]);
   }
 
-  function removeSpec(index: number): void {
-    setSpecs((prev) => prev.filter((_, i) => i !== index));
+  function removeSpec(locale: "en" | "ar", index: number): void {
+    const setter = locale === "en" ? setSpecsEn : setSpecsAr;
+    setter((prev) => prev.filter((_, i) => i !== index));
   }
 
-  function updateSpec(index: number, field: "key" | "value", value: string): void {
-    setSpecs((prev) => prev.map((s, i) => (i === index ? { ...s, [field]: value } : s)));
+  function updateSpec(locale: "en" | "ar", index: number, field: "key" | "value", value: string): void {
+    const setter = locale === "en" ? setSpecsEn : setSpecsAr;
+    setter((prev) => prev.map((s, i) => (i === index ? { ...s, [field]: value } : s)));
   }
 
   async function handleSubmit(e: React.FormEvent): Promise<void> {
@@ -75,9 +79,11 @@ export default function NewPlatformPage(): React.ReactNode {
     setSaving(true);
     setError("");
 
-    const technicalSpecs = specs.length > 0
-      ? Object.fromEntries(specs.filter((s) => s.key.trim()).map((s) => [s.key.trim(), s.value]))
-      : undefined;
+    const technicalSpecs: Record<string, Record<string, string>> = {};
+    const enObj = Object.fromEntries(specsEn.filter((s) => s.key.trim()).map((s) => [s.key.trim(), s.value]));
+    const arObj = Object.fromEntries(specsAr.filter((s) => s.key.trim()).map((s) => [s.key.trim(), s.value]));
+    if (Object.keys(enObj).length > 0) technicalSpecs.en = enObj;
+    if (Object.keys(arObj).length > 0) technicalSpecs.ar = arObj;
 
     try {
       await createPlatform(
@@ -88,7 +94,7 @@ export default function NewPlatformPage(): React.ReactNode {
           categoryId: form.categoryId,
           manufacturerId: form.manufacturerId,
           countryId: form.countryId,
-          technicalSpecs,
+          technicalSpecs: Object.keys(technicalSpecs).length > 0 ? technicalSpecs : undefined,
           translations: [
             { locale: "en", name: form.nameEn, description: form.descriptionEn || undefined },
             { locale: "ar", name: form.nameAr, description: form.descriptionAr || undefined },
@@ -221,31 +227,31 @@ export default function NewPlatformPage(): React.ReactNode {
           </div>
         </div>
 
-        {/* Language Fields */}
+        {/* Technical Specs — English */}
         <div className="rounded border border-tactical-border bg-tactical-card p-6">
           <h3 className="mb-4 font-tactical-display font-bold text-tactical-accent">
-            Technical Specs
+            Technical Specs — English
           </h3>
           <div className="space-y-3">
-            {specs.map((spec, index) => (
+            {specsEn.map((spec, index) => (
               <div key={index} className="flex items-center gap-2">
                 <input
                   type="text"
                   placeholder="Key (e.g. maxSpeed)"
                   value={spec.key}
-                  onChange={(e) => updateSpec(index, "key", e.target.value)}
+                  onChange={(e) => updateSpec("en", index, "key", e.target.value)}
                   className="w-1/2 rounded border border-tactical-border bg-tactical-bg px-3 py-2 text-tactical-text focus:border-tactical-accent focus:outline-none"
                 />
                 <input
                   type="text"
                   placeholder="Value (e.g. Mach 2.0)"
                   value={spec.value}
-                  onChange={(e) => updateSpec(index, "value", e.target.value)}
+                  onChange={(e) => updateSpec("en", index, "value", e.target.value)}
                   className="w-1/2 rounded border border-tactical-border bg-tactical-bg px-3 py-2 text-tactical-text focus:border-tactical-accent focus:outline-none"
                 />
                 <button
                   type="button"
-                  onClick={() => removeSpec(index)}
+                  onClick={() => removeSpec("en", index)}
                   className="rounded p-2 text-tactical-text-secondary transition-colors hover:text-tactical-alert"
                 >
                   <Trash2 size={16} />
@@ -254,7 +260,49 @@ export default function NewPlatformPage(): React.ReactNode {
             ))}
             <button
               type="button"
-              onClick={addSpec}
+              onClick={() => addSpec("en")}
+              className="flex items-center gap-2 text-sm text-tactical-accent transition-colors hover:text-tactical-accent/80"
+            >
+              <Plus size={16} /> Add Spec
+            </button>
+          </div>
+        </div>
+
+        {/* Technical Specs — Arabic */}
+        <div className="rounded border border-tactical-border bg-tactical-card p-6">
+          <h3 className="mb-4 font-tactical-display font-bold text-tactical-accent">
+            Technical Specs — العربية
+          </h3>
+          <div className="space-y-3">
+            {specsAr.map((spec, index) => (
+              <div key={index} className="flex items-center gap-2">
+                <input
+                  type="text"
+                  placeholder="Key (e.g. maxSpeed)"
+                  value={spec.key}
+                  onChange={(e) => updateSpec("ar", index, "key", e.target.value)}
+                  className="w-1/2 rounded border border-tactical-border bg-tactical-bg px-3 py-2 text-tactical-text focus:border-tactical-accent focus:outline-none"
+                />
+                <input
+                  type="text"
+                  placeholder="Value (e.g. Mach 2.0)"
+                  value={spec.value}
+                  dir="rtl"
+                  onChange={(e) => updateSpec("ar", index, "value", e.target.value)}
+                  className="w-1/2 rounded border border-tactical-border bg-tactical-bg px-3 py-2 text-tactical-text focus:border-tactical-accent focus:outline-none"
+                />
+                <button
+                  type="button"
+                  onClick={() => removeSpec("ar", index)}
+                  className="rounded p-2 text-tactical-text-secondary transition-colors hover:text-tactical-alert"
+                >
+                  <Trash2 size={16} />
+                </button>
+              </div>
+            ))}
+            <button
+              type="button"
+              onClick={() => addSpec("ar")}
               className="flex items-center gap-2 text-sm text-tactical-accent transition-colors hover:text-tactical-accent/80"
             >
               <Plus size={16} /> Add Spec

@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, Prisma } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
@@ -13,21 +13,27 @@ async function main() {
     const specs = platform.technicalSpecs;
     if (specs === null || specs === undefined) continue;
 
+    let raw: Record<string, unknown>;
     if (typeof specs === "string") {
-      try {
-        const parsed = JSON.parse(specs);
-        await prisma.platform.update({
-          where: { id: platform.id },
-          data: { technicalSpecs: parsed },
-        });
-        console.log(`  Fixed ${platform.id}: parsed string to object`);
-        fixed++;
-      } catch {
-        console.log(`  Skipped ${platform.id}: failed to parse`);
-      }
+      try { raw = JSON.parse(specs); } catch { continue; }
     } else if (typeof specs === "object") {
-      console.log(`  OK ${platform.id}: already an object`);
+      raw = specs as Record<string, unknown>;
+    } else {
+      continue;
     }
+
+    if (raw.en && typeof raw.en === "object") {
+      console.log(`  OK ${platform.id.slice(0, 8)}: already nested`);
+      continue;
+    }
+
+    const nested = { en: raw as Record<string, string>, ar: {} as Record<string, string> };
+    await prisma.platform.update({
+      where: { id: platform.id },
+      data: { technicalSpecs: nested as unknown as Prisma.InputJsonValue },
+    });
+    console.log(`  Fixed ${platform.id.slice(0, 8)}: flat → nested { en, ar }`);
+    fixed++;
   }
 
   console.log(`\nFixed ${fixed} platform(s).`);

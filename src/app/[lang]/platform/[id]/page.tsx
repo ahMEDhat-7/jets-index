@@ -93,14 +93,18 @@ export default async function PlatformDetailPage({
 
   let specs: Record<string, string> | null = null;
   if (platform.technicalSpecs) {
+    let raw: Record<string, unknown>;
     if (typeof platform.technicalSpecs === "string") {
-      try {
-        specs = JSON.parse(platform.technicalSpecs) as Record<string, string>;
-      } catch {
-        specs = null;
-      }
-    } else if (typeof platform.technicalSpecs === "object") {
-      specs = platform.technicalSpecs as Record<string, string>;
+      try { raw = JSON.parse(platform.technicalSpecs) as Record<string, unknown>; } catch { raw = {}; }
+    } else {
+      raw = platform.technicalSpecs as Record<string, unknown>;
+    }
+
+    if (raw.en && typeof raw.en === "object") {
+      const localeSpecs = raw[lang] && typeof raw[lang] === "object" ? raw[lang] : raw.en;
+      specs = localeSpecs as Record<string, string>;
+    } else if (raw) {
+      specs = raw as Record<string, string>;
     }
   }
 
