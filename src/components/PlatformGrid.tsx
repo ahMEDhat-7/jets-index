@@ -71,20 +71,10 @@ export function PlatformGrid({ lang, initialFilters }: PlatformGridProps) {
   const [page, setPage] = useState(1);
 
   const loadPlatforms = useCallback(
-    async (filters: PlatformFilters, forceRefresh: boolean = false) => {
+    async (forceRefresh: boolean = false) => {
       setLoading(true);
       try {
-        const platforms = await fetchAllPlatforms(
-          lang,
-          {
-            categoryId: filters.categoryId,
-            countryId: filters.countryId,
-            manufacturerId: filters.manufacturerId,
-            status: filters.status,
-            search: filters.search,
-          },
-          forceRefresh
-        );
+        const platforms = await fetchAllPlatforms(lang, forceRefresh);
         setAllPlatforms(platforms);
       } catch {
         setAllPlatforms([]);
@@ -97,8 +87,8 @@ export function PlatformGrid({ lang, initialFilters }: PlatformGridProps) {
 
   useEffect(() => {
     setPage(1);
-    loadPlatforms(initialFilters);
-  }, [initialFilters, loadPlatforms]);
+    loadPlatforms();
+  }, [loadPlatforms]);
 
   const filteredPlatforms = useMemo(
     () => allPlatforms.filter((p) => matchesFilter(p, initialFilters)),
@@ -118,7 +108,7 @@ export function PlatformGrid({ lang, initialFilters }: PlatformGridProps) {
 
   function handleRefresh() {
     clearPlatformCache();
-    loadPlatforms(initialFilters, true);
+    loadPlatforms(true);
   }
 
   if (loading) {

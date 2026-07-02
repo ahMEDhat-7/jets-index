@@ -5,14 +5,8 @@ const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
 
 interface PlatformCache {
   platforms: PlatformListItem[];
-  filters: string;
+  lang: string;
   timestamp: number;
-}
-
-function isCacheValid(cache: PlatformCache, filters: string): boolean {
-  return (
-    cache.filters === filters && Date.now() - cache.timestamp < CACHE_TTL
-  );
 }
 
 function readCache(): PlatformCache | null {
@@ -25,11 +19,15 @@ function readCache(): PlatformCache | null {
   }
 }
 
-function writeCache(platforms: PlatformListItem[], filters: string): void {
+function isCacheValid(cache: PlatformCache, lang: string): boolean {
+  return cache.lang === lang && Date.now() - cache.timestamp < CACHE_TTL;
+}
+
+function writeCache(platforms: PlatformListItem[], lang: string): void {
   try {
     const cache: PlatformCache = {
       platforms,
-      filters,
+      lang,
       timestamp: Date.now(),
     };
     sessionStorage.setItem(CACHE_KEY, JSON.stringify(cache));
@@ -46,25 +44,13 @@ export function clearPlatformCache(): void {
   }
 }
 
-function buildFilterKey(
-  filters: Record<string, string | undefined>
-): string {
-  const entries = Object.entries(filters)
-    .filter(([, v]) => v !== undefined && v !== "")
-    .sort(([a], [b]) => a.localeCompare(b));
-  return JSON.stringify(entries);
-}
-
 export async function fetchAllPlatforms(
   lang: string,
-  filters: Record<string, string | undefined>,
   forceRefresh: boolean = false
 ): Promise<PlatformListItem[]> {
-  const filterKey = buildFilterKey(filters);
-
   if (!forceRefresh) {
     const cached = readCache();
-    if (cached && isCacheValid(cached, filterKey)) {
+    if (cached && isCacheValid(cached, lang)) {
       return cached.platforms;
     }
   }
@@ -79,12 +65,6 @@ export async function fetchAllPlatforms(
     params.set("page", String(page));
     params.set("limit", "50");
 
-    if (filters.categoryId) params.set("categoryId", filters.categoryId);
-    if (filters.countryId) params.set("countryId", filters.countryId);
-    if (filters.manufacturerId) params.set("manufacturerId", filters.manufacturerId);
-    if (filters.status) params.set("status", filters.status);
-    if (filters.search) params.set("search", filters.search);
-
     const res = await fetch(`/api/v1/platforms?${params.toString()}`);
     if (!res.ok) break;
 
@@ -94,6 +74,6 @@ export async function fetchAllPlatforms(
     page++;
   }
 
-  writeCache(allPlatforms, filterKey);
+  writeCache(allPlatforms, lang);
   return allPlatforms;
 }
