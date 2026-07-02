@@ -1,11 +1,14 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
-import { Loader2, ChevronLeft, ChevronRight } from "lucide-react";
+import { Loader2, ChevronLeft, ChevronRight, RefreshCw } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
-import type { PlatformListItem, PlatformFilters, PaginatedResponse } from "@/lib/types";
+import { fetchAllPlatforms, clearPlatformCache } from "@/lib/platform-cache";
+import type { PlatformListItem, PlatformFilters } from "@/lib/types";
+
+const PAGE_SIZE = 12;
 
 interface PlatformGridProps {
   lang: string;
@@ -37,40 +40,54 @@ function getTranslation(
   return fallback;
 }
 
+function matchesFilter(
+  platform: PlatformListItem,
+  filters: PlatformFilters
+): boolean {
+  if (filters.categoryId && platform.category.id !== filters.categoryId) return false;
+  if (filters.countryId && platform.country.id !== filters.countryId) return false;
+  if (filters.manufacturerId && platform.manufacturer.id !== filters.manufacturerId) return false;
+  if (filters.status && platform.operationalStatus !== filters.status) return false;
+  if (filters.search) {
+    const q = filters.search.toLowerCase();
+    const nameMatch = platform.translations.some(
+      (tr) => tr.name?.toLowerCase().includes(q)
+    );
+    const descMatch = platform.translations.some(
+      (tr) => tr.description?.toLowerCase().includes(q)
+    );
+    if (!nameMatch && !descMatch) return false;
+  }
+  return true;
+}
+
 export function PlatformGrid({ lang, initialFilters }: PlatformGridProps) {
   const t = useTranslations("Browse");
   const ts = useTranslations("Statuses");
   const tc = useTranslations("Common");
 
-  const [platforms, setPlatforms] = useState<PlatformListItem[]>([]);
+  const [allPlatforms, setAllPlatforms] = useState<PlatformListItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const [total, setTotal] = useState(0);
 
-  const fetchPlatforms = useCallback(
-    async (filters: PlatformFilters, pageNum: number) => {
+  const loadPlatforms = useCallback(
+    async (filters: PlatformFilters, forceRefresh: boolean = false) => {
       setLoading(true);
       try {
-        const params = new URLSearchParams();
-        params.set("locale", lang);
-        params.set("page", String(pageNum));
-        params.set("limit", "12");
-
-        if (filters.categoryId) params.set("categoryId", filters.categoryId);
-        if (filters.countryId) params.set("countryId", filters.countryId);
-        if (filters.manufacturerId) params.set("manufacturerId", filters.manufacturerId);
-        if (filters.status) params.set("status", filters.status);
-        if (filters.search) params.set("search", filters.search);
-
-        const res = await fetch(`/api/v1/platforms?${params.toString()}`);
-        const data: PaginatedResponse<PlatformListItem> = await res.json();
-
-        setPlatforms(data.data);
-        setTotalPages(data.pagination.totalPages);
-        setTotal(data.pagination.total);
+        const platforms = await fetchAllPlatforms(
+          lang,
+          {
+            categoryId: filters.categoryId,
+            countryId: filters.countryId,
+            manufacturerId: filters.manufacturerId,
+            status: filters.status,
+            search: filters.search,
+          },
+          forceRefresh
+        );
+        setAllPlatforms(platforms);
       } catch {
-        setPlatforms([]);
+        setAllPlatforms([]);
       } finally {
         setLoading(false);
       }
@@ -80,12 +97,29 @@ export function PlatformGrid({ lang, initialFilters }: PlatformGridProps) {
 
   useEffect(() => {
     setPage(1);
-    fetchPlatforms(initialFilters, 1);
-  }, [initialFilters, fetchPlatforms]);
+    loadPlatforms(initialFilters);
+  }, [initialFilters, loadPlatforms]);
+
+  const filteredPlatforms = useMemo(
+    () => allPlatforms.filter((p) => matchesFilter(p, initialFilters)),
+    [allPlatforms, initialFilters]
+  );
+
+  const totalPages = Math.max(1, Math.ceil(filteredPlatforms.length / PAGE_SIZE));
+  const safePage = Math.min(page, totalPages);
+  const paginatedPlatforms = useMemo(
+    () => filteredPlatforms.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE),
+    [filteredPlatforms, safePage]
+  );
 
   useEffect(() => {
-    fetchPlatforms(initialFilters, page);
-  }, [page, initialFilters, fetchPlatforms]);
+    setPage(1);
+  }, [initialFilters]);
+
+  function handleRefresh() {
+    clearPlatformCache();
+    loadPlatforms(initialFilters, true);
+  }
 
   if (loading) {
     return (
@@ -100,7 +134,7 @@ export function PlatformGrid({ lang, initialFilters }: PlatformGridProps) {
     );
   }
 
-  if (platforms.length === 0) {
+  if (filteredPlatforms.length === 0) {
     return (
       <section className="px-4 py-8">
         <div className="mx-auto max-w-7xl">
@@ -120,14 +154,23 @@ export function PlatformGrid({ lang, initialFilters }: PlatformGridProps) {
   return (
     <section className="px-4 py-8">
       <div className="mx-auto max-w-7xl">
-        {/* Results count */}
-        <p className="mb-4 text-sm text-tactical-text-secondary">
-          {total} {total === 1 ? "aircraft" : "aircraft"} found
-        </p>
+        {/* Results count + Refresh */}
+        <div className="mb-4 flex items-center justify-between">
+          <p className="text-sm text-tactical-text-secondary">
+            {filteredPlatforms.length} {filteredPlatforms.length === 1 ? "aircraft" : "aircraft"} found
+          </p>
+          <button
+            onClick={handleRefresh}
+            className="flex items-center gap-1 rounded border border-tactical-border bg-tactical-card px-3 py-1.5 text-xs text-tactical-text-secondary transition-colors hover:border-tactical-accent hover:text-tactical-text"
+          >
+            <RefreshCw className="h-3 w-3" />
+            Refresh
+          </button>
+        </div>
 
         {/* Grid */}
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {platforms.map((platform) => (
+          {paginatedPlatforms.map((platform) => (
             <Link
               key={platform.id}
               href={`/${lang}/platform/${platform.id}`}
@@ -226,18 +269,18 @@ export function PlatformGrid({ lang, initialFilters }: PlatformGridProps) {
           <div className="mt-8 flex items-center justify-center gap-4">
             <button
               onClick={() => setPage((p) => Math.max(1, p - 1))}
-              disabled={page === 1}
+              disabled={safePage === 1}
               className="flex items-center gap-1 rounded border border-tactical-border bg-tactical-card px-3 py-2 text-sm text-tactical-text transition-colors hover:border-tactical-accent disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <ChevronLeft className="h-4 w-4" />
               Prev
             </button>
             <span className="text-sm text-tactical-text-secondary">
-              Page {page} of {totalPages}
+              Page {safePage} of {totalPages}
             </span>
             <button
               onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-              disabled={page === totalPages}
+              disabled={safePage === totalPages}
               className="flex items-center gap-1 rounded border border-tactical-border bg-tactical-card px-3 py-2 text-sm text-tactical-text transition-colors hover:border-tactical-accent disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Next
