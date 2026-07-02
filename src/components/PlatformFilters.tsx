@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { Search, X } from "lucide-react";
+import { Search, X, RefreshCw } from "lucide-react";
 import { useTranslations } from "next-intl";
 import type { PlatformFilters } from "@/lib/types";
 
@@ -21,54 +21,61 @@ export function PlatformFilters({ lang, onFiltersChange }: PlatformFiltersProps)
   const [categories, setCategories] = useState<FilterOption[]>([]);
   const [countries, setCountries] = useState<FilterOption[]>([]);
   const [manufacturers, setManufacturers] = useState<FilterOption[]>([]);
+  const [filterError, setFilterError] = useState(false);
   const [search, setSearch] = useState("");
   const [categoryId, setCategoryId] = useState("");
   const [countryId, setCountryId] = useState("");
   const [manufacturerId, setManufacturerId] = useState("");
   const [status, setStatus] = useState("");
 
-  useEffect(() => {
-    async function fetchFilters() {
-      try {
-        const [catRes, countryRes, manuRes] = await Promise.all([
-          fetch(`/api/v1/categories?locale=${lang}&limit=50`),
-          fetch(`/api/v1/countries?locale=${lang}&limit=50`),
-          fetch(`/api/v1/manufacturers?locale=${lang}&limit=50`),
-        ]);
+  const fetchFilters = useCallback(async () => {
+    setFilterError(false);
+    try {
+      const [catRes, countryRes, manuRes] = await Promise.all([
+        fetch(`/api/v1/categories?locale=${lang}&limit=50`),
+        fetch(`/api/v1/countries?locale=${lang}&limit=50`),
+        fetch(`/api/v1/manufacturers?locale=${lang}&limit=50`),
+      ]);
 
-        const [catData, countryData, manuData] = await Promise.all([
-          catRes.json(),
-          countryRes.json(),
-          manuRes.json(),
-        ]);
-
-        setCategories(
-          (catData.data ?? []).map((c: { id: string; translations: { locale: string; name: string }[] }) => ({
-            id: c.id,
-            name: c.translations.find((tr) => tr.locale === lang)?.name ?? c.translations.find((tr) => tr.locale === "en")?.name ?? "",
-          }))
-        );
-
-        setCountries(
-          (countryData.data ?? []).map((c: { id: string; translations: { locale: string; name: string }[] }) => ({
-            id: c.id,
-            name: c.translations.find((tr) => tr.locale === lang)?.name ?? c.translations.find((tr) => tr.locale === "en")?.name ?? "",
-          }))
-        );
-
-        setManufacturers(
-          (manuData.data ?? []).map((m: { id: string; translations: { locale: string; name: string }[] }) => ({
-            id: m.id,
-            name: m.translations.find((tr) => tr.locale === lang)?.name ?? m.translations.find((tr) => tr.locale === "en")?.name ?? "",
-          }))
-        );
-      } catch {
-        // Filters fail silently — dropdowns remain empty
+      if (!catRes.ok || !countryRes.ok || !manuRes.ok) {
+        setFilterError(true);
+        return;
       }
-    }
 
-    fetchFilters();
+      const [catData, countryData, manuData] = await Promise.all([
+        catRes.json(),
+        countryRes.json(),
+        manuRes.json(),
+      ]);
+
+      setCategories(
+        (catData.data ?? []).map((c: { id: string; translations: { locale: string; name: string }[] }) => ({
+          id: c.id,
+          name: c.translations.find((tr) => tr.locale === lang)?.name ?? c.translations.find((tr) => tr.locale === "en")?.name ?? "",
+        }))
+      );
+
+      setCountries(
+        (countryData.data ?? []).map((c: { id: string; translations: { locale: string; name: string }[] }) => ({
+          id: c.id,
+          name: c.translations.find((tr) => tr.locale === lang)?.name ?? c.translations.find((tr) => tr.locale === "en")?.name ?? "",
+        }))
+      );
+
+      setManufacturers(
+        (manuData.data ?? []).map((m: { id: string; translations: { locale: string; name: string }[] }) => ({
+          id: m.id,
+          name: m.translations.find((tr) => tr.locale === lang)?.name ?? m.translations.find((tr) => tr.locale === "en")?.name ?? "",
+        }))
+      );
+    } catch {
+      setFilterError(true);
+    }
   }, [lang]);
+
+  useEffect(() => {
+    fetchFilters();
+  }, [fetchFilters]);
 
   const emitFilters = useCallback(
     (overrides: Partial<PlatformFilters> = {}) => {
@@ -117,6 +124,20 @@ export function PlatformFilters({ lang, onFiltersChange }: PlatformFiltersProps)
   return (
     <section className="border-b border-tactical-border bg-tactical-bg-secondary/50 px-4 py-4">
       <div className="mx-auto max-w-7xl">
+        {/* Filter error banner */}
+        {filterError && (
+          <div className="mb-3 flex items-center gap-2 rounded border border-tactical-alert/30 bg-tactical-alert/10 px-3 py-2 text-sm">
+            <span className="text-tactical-alert">Filters failed to load.</span>
+            <button
+              onClick={fetchFilters}
+              className="flex items-center gap-1 text-tactical-accent hover:underline"
+            >
+              <RefreshCw className="h-3 w-3" />
+              Retry
+            </button>
+          </div>
+        )}
+
         <div className="flex flex-wrap items-center gap-4">
           {/* Search */}
           <div className="relative min-w-[200px] flex-1">

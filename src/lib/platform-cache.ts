@@ -9,6 +9,11 @@ interface PlatformCache {
   timestamp: number;
 }
 
+export interface FetchResult {
+  platforms: PlatformListItem[];
+  error: boolean;
+}
+
 function readCache(): PlatformCache | null {
   try {
     const raw = sessionStorage.getItem(CACHE_KEY);
@@ -47,33 +52,44 @@ export function clearPlatformCache(): void {
 export async function fetchAllPlatforms(
   lang: string,
   forceRefresh: boolean = false
-): Promise<PlatformListItem[]> {
+): Promise<FetchResult> {
   if (!forceRefresh) {
     const cached = readCache();
     if (cached && isCacheValid(cached, lang)) {
-      return cached.platforms;
+      return { platforms: cached.platforms, error: false };
     }
   }
 
   const allPlatforms: PlatformListItem[] = [];
   let page = 1;
   let totalPages = 1;
+  let fetchError = false;
 
-  while (page <= totalPages) {
-    const params = new URLSearchParams();
-    params.set("locale", lang);
-    params.set("page", String(page));
-    params.set("limit", "50");
+  try {
+    while (page <= totalPages) {
+      const params = new URLSearchParams();
+      params.set("locale", lang);
+      params.set("page", String(page));
+      params.set("limit", "50");
 
-    const res = await fetch(`/api/v1/platforms?${params.toString()}`);
-    if (!res.ok) break;
+      const res = await fetch(`/api/v1/platforms?${params.toString()}`);
+      if (!res.ok) {
+        fetchError = true;
+        break;
+      }
 
-    const data: PaginatedResponse<PlatformListItem> = await res.json();
-    allPlatforms.push(...data.data);
-    totalPages = data.pagination.totalPages;
-    page++;
+      const data: PaginatedResponse<PlatformListItem> = await res.json();
+      allPlatforms.push(...data.data);
+      totalPages = data.pagination.totalPages;
+      page++;
+    }
+  } catch {
+    fetchError = true;
   }
 
-  writeCache(allPlatforms, lang);
-  return allPlatforms;
+  if (!fetchError && allPlatforms.length > 0) {
+    writeCache(allPlatforms, lang);
+  }
+
+  return { platforms: allPlatforms, error: fetchError };
 }

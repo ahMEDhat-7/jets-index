@@ -69,16 +69,20 @@ export function PlatformGrid({ lang, initialFilters }: PlatformGridProps) {
 
   const [allPlatforms, setAllPlatforms] = useState<PlatformListItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [fetchError, setFetchError] = useState(false);
   const [page, setPage] = useState(1);
 
   const loadPlatforms = useCallback(
     async (forceRefresh: boolean = false) => {
       setLoading(true);
+      setFetchError(false);
       try {
-        const platforms = await fetchAllPlatforms(lang, forceRefresh);
-        setAllPlatforms(platforms);
+        const result = await fetchAllPlatforms(lang, forceRefresh);
+        setAllPlatforms(result.platforms);
+        setFetchError(result.error);
       } catch {
         setAllPlatforms([]);
+        setFetchError(true);
       } finally {
         setLoading(false);
       }
@@ -121,6 +125,29 @@ export function PlatformGrid({ lang, initialFilters }: PlatformGridProps) {
             {Array.from({ length: 6 }).map((_, i) => (
               <CardSkeleton key={i} />
             ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (fetchError && allPlatforms.length === 0) {
+    return (
+      <section className="px-4 py-8">
+        <div className="mx-auto max-w-7xl">
+          <div className="py-20 text-center">
+            <h3 className="mb-2 font-tactical-display text-xl text-tactical-alert">
+              Failed to load aircraft
+            </h3>
+            <p className="mb-4 text-tactical-text-secondary">
+              The server is temporarily unavailable. Please try again.
+            </p>
+            <button
+              onClick={handleRefresh}
+              className="rounded bg-tactical-accent px-6 py-2 font-tactical-body font-bold text-tactical-bg transition-colors hover:bg-tactical-accent/80"
+            >
+              Retry
+            </button>
           </div>
         </div>
       </section>
