@@ -3,8 +3,9 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
-import { Loader2, ChevronLeft, ChevronRight, RefreshCw } from "lucide-react";
+import { ChevronLeft, ChevronRight, RefreshCw } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
+import { CardSkeleton } from "@/components/Skeletons";
 import { fetchAllPlatforms, clearPlatformCache } from "@/lib/platform-cache";
 import type { PlatformListItem, PlatformFilters } from "@/lib/types";
 
@@ -115,9 +116,11 @@ export function PlatformGrid({ lang, initialFilters }: PlatformGridProps) {
     return (
       <section className="px-4 py-8">
         <div className="mx-auto max-w-7xl">
-          <div className="flex items-center justify-center py-20">
-            <Loader2 className="h-8 w-8 animate-spin text-tactical-accent" />
-            <span className="ml-3 text-tactical-text-secondary">{t("loading")}</span>
+          <div className="mb-4 h-4 w-32 animate-pulse bg-tactical-bg-secondary" />
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <CardSkeleton key={i} />
+            ))}
           </div>
         </div>
       </section>
