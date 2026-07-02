@@ -40,7 +40,7 @@ export async function Header({ lang, activePage }: HeaderProps) {
             {t("hero.ctaSecondary")}
           </Link>
 
-          <LocaleSwitcher lang={lang} pathname={`/${lang}`} />
+          <LocaleSwitcher lang={lang} />
           <ThemeToggle label={tc("toggleTheme")} />
         </div>
       </div>
